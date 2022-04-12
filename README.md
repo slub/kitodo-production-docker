@@ -76,12 +76,6 @@ The docker image can be built with the release assets of Kitodo.Production GitHu
 ### Example
 
 ```
-docker build \
--t markusweigelt/kitodo-production:3.4.1 \ 
---build-arg KITODO_VERSION=3.4.1 \
---build-arg KITODO_WAR_NAME=kitodo-3.4.1 \
---build-arg KITODO_SQL_NAME=kitodo_3-4-1 \
---build-arg KITODO_CONFIG_MODULES_NAME=kitodo_3-4-1_config_modules \
-.
+docker build -t markusweigelt/kitodo-production:3.4.1 --build-arg KITODO_VERSION=3.4.1 --build-arg KITODO_WAR_NAME=kitodo-3.4.1 --build-arg KITODO_SQL_NAME=kitodo_3-4-1 --build-arg KITODO_CONFIG_MODULES_NAME=kitodo_3-4-1_config_modules .
 ```
 
