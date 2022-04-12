@@ -1,4 +1,4 @@
-# Kitodo.Production Docker Documentation
+# Kitodo.Production Docker
 
 With the docker image provided, Kitodo.Production can be started in no time at all. A MySQL/MariaDB database and ElasticSearch must be present to start the application. There is also a docker-compose file for a quick start.
 
