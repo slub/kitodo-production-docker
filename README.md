@@ -1,4 +1,4 @@
-# Kitodo.Production Docker Documentation
+# Kitodo.Production Docker
 
 With the docker image provided, Kitodo.Production can be started in no time at all. A MySQL/MariaDB database and ElasticSearch must be present to start the application. There is also a docker-compose file for a quick start.
 
@@ -22,6 +22,8 @@ After the container has been started Kitodo.Production can be reached at http://
 | KITODO_DB_USER | kitodo | Username to access database |
 | KITODO_DB_PASSWORD | kitodo | Password used by username to access database |
 | KITODO_ES_HOST | localhost | Host of Elasticsearch |
+| KITODO_MQ_HOST | localhost | Host of Active MQ |
+| KITODO_MQ_PORT | 61616 | Port of Active MQ |
 
 ### Targets
 
