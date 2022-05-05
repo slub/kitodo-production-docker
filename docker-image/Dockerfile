@@ -25,8 +25,9 @@ RUN apt-get update && \
 	apt-utils \
 	net-tools \
 	nano \
-	unzip \
+	unzip \ 
 	dos2unix \
+	dnsutils \
 	mariadb-client \
 	openssh-client \
 	imagemagick \
