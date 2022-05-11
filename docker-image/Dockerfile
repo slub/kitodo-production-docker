@@ -2,10 +2,10 @@ FROM tomcat:9.0.56-jre11-openjdk-slim
 
 LABEL maintainer "Markus Weigelt <Markus.Weigelt@slub-dresden.de>"
 
-ARG KITODO_VERSION=3.4.1
-ARG KITODO_WAR_NAME=kitodo-3.4.1
-ARG KITODO_SQL_NAME=kitodo_3-4-1
-ARG KITODO_CONFIG_MODULES_NAME=kitodo_3-4-1_config_modules
+ARG KITODO_VERSION=3.4.2
+ARG KITODO_WAR_NAME=kitodo-3.4.2
+ARG KITODO_SQL_NAME=kitodo_3-4-2
+ARG KITODO_CONFIG_MODULES_NAME=kitodo_3-4-2_config_modules
 
 ENV JAVA_OPTS="-Djava.awt.headless=true -XX:+UseConcMarkSweepGC -Xmx4G -XX:MaxPermSize=256m"
 ENV KITODO_DB_HOST=localhost
