@@ -29,9 +29,10 @@ RUN apt-get update && \
 	apt-utils \
 	net-tools \
 	nano \
-	unzip \
+	unzip \ 
 	procps \
 	dos2unix \
+	dnsutils \
 	mariadb-client \
 	openssh-client \
 	imagemagick \
@@ -45,7 +46,9 @@ COPY deploy.sh /usr/bin/
 RUN mkdir /.ssh && \
 	cat > /etc/ssh/ssh_known_hosts && \
 	dos2unix /usr/bin/startup.sh && \
-	dos2unix /usr/bin/deploy.sh
+	chmod +x /usr/bin/startup.sh && \
+	dos2unix /usr/bin/deploy.sh && \
+	chmod +x /usr/bin/deploy.sh
 
 ADD https://github.com/kitodo/kitodo-production/releases/download/kitodo-production-${KITODO_VERSION}/${KITODO_WAR_NAME}.war /tmp/kitodo/
 
