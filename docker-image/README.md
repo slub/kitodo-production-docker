@@ -17,3 +17,6 @@ The docker image can be built with the release assets of Kitodo.Production GitHu
 docker build -t markusweigelt/kitodo-production:3.4.1 --build-arg KITODO_VERSION=3.4.1 --build-arg KITODO_WAR_NAME=kitodo-3.4.1 --build-arg KITODO_SQL_NAME=kitodo_3-4-1 --build-arg KITODO_CONFIG_MODULES_NAME=kitodo_3-4-1_config_modules .
 ```
 
+```
+docker-compose --env-file C:/Users/weigelt/Work/kitodo/kitodo-production-projects/review-import-configuration/.env -f C:/Users/weigelt/Work/kitodo/kitodo-production-docker/docker-image/docker-compose.yml -f C:/Users/weigelt/Work/kitodo/kitodo-production-docker/docker-image/docker-compose-builder.yml up --build kitodo-builder
+```

@@ -1,14 +1,8 @@
-FROM tomcat:9.0.56-jre11-openjdk-slim
+FROM tomcat:9.0.62-jre11-openjdk-slim 
 
 LABEL maintainer "Markus Weigelt <Markus.Weigelt@slub-dresden.de>"
 
-ARG KITODO_VERSION=3.4.2
-ARG KITODO_WAR_NAME=kitodo-3.4.2
-ARG KITODO_SQL_NAME=kitodo_3-4-2
-ARG KITODO_CONFIG_MODULES_NAME=kitodo_3-4-2_config_modules
-
 ENV JAVA_OPTS="-Djava.awt.headless=true -XX:+UseConcMarkSweepGC -Xmx4G -XX:MaxPermSize=256m"
-
 ENV JPDA=false
 ENV JPDA_ADDRESS=*:5005
 
@@ -39,6 +33,10 @@ RUN apt-get update && \
 	rsyslog \
 	--no-install-recommends
 
+COPY /resources/kitodo.war /tmp/kitodo/kitodo.war
+COPY /resources/kitodo-config-modules.zip /tmp/kitodo/kitodo-config-modules.zip
+COPY /resources/kitodo.sql /tmp/kitodo/kitodo.sql 
+
 COPY tomcat.conf /etc/rsyslog.d/
 COPY startup.sh /usr/bin/
 COPY deploy.sh /usr/bin/
@@ -50,18 +48,9 @@ RUN mkdir /.ssh && \
 	dos2unix /usr/bin/deploy.sh && \
 	chmod +x /usr/bin/deploy.sh
 
-ADD https://github.com/kitodo/kitodo-production/releases/download/kitodo-production-${KITODO_VERSION}/${KITODO_WAR_NAME}.war /tmp/kitodo/
-
-ADD https://github.com/kitodo/kitodo-production/releases/download/kitodo-production-${KITODO_VERSION}/${KITODO_CONFIG_MODULES_NAME}.zip /tmp/kitodo/
-
-ADD https://github.com/kitodo/kitodo-production/releases/download/kitodo-production-${KITODO_VERSION}/${KITODO_SQL_NAME}.sql /tmp/kitodo/
-
 ADD https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh /tmp/wait-for-it.sh
 
-RUN	unzip /tmp/kitodo/${KITODO_CONFIG_MODULES_NAME}.zip -x ${KITODO_CONFIG_MODULES_NAME}/scripts/*.bat -d /tmp/kitodo/ && \
-	mv /tmp/kitodo/${KITODO_CONFIG_MODULES_NAME} /tmp/kitodo/kitodo-config-modules/ && \
-	mv /tmp/kitodo/${KITODO_WAR_NAME}.war /tmp/kitodo/kitodo.war && \
-	mv /tmp/kitodo/${KITODO_SQL_NAME}.sql /tmp/kitodo/kitodo.sql && \
+RUN	unzip /tmp/kitodo/kitodo-config-modules.zip -x kitodo-config-modules/scripts/*.bat -d /tmp/kitodo/kitodo-config-modules && \
 	rm -f /tmp/kitodo/kitodo-config-modules.zip && \
 	chmod +x /tmp/wait-for-it.sh && \
 	dos2unix /tmp/kitodo/kitodo-config-modules/scripts/*.sh && \
