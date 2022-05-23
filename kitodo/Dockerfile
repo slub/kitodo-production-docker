@@ -2,9 +2,9 @@ FROM tomcat:9.0.62-jre11-openjdk-slim
 
 LABEL maintainer "Markus Weigelt <Markus.Weigelt@slub-dresden.de>"
 
-ARG PROJECT_DIR
+ARG BUILD_RESOURCE_DIR
 
-RUN if [[ -z "$PROJECT_DIR" ]] ; then echo PROJECT_DIR not provided ; else echo PROJECT_DIR is $PROJECT_DIR ; fi
+RUN if [[ -z "$BUILD_RESOURCE_DIR" ]] ; then echo BUILD_RESOURCE_DIR not provided ; else echo BUILD_RESOURCE_DIR is $BUILD_RESOURCE_DIR ; fi
 
 ENV JAVA_OPTS="-Djava.awt.headless=true -XX:+UseConcMarkSweepGC -Xmx4G -XX:MaxPermSize=256m"
 ENV JPDA=false
@@ -37,9 +37,9 @@ RUN apt-get update && \
 	rsyslog \
 	--no-install-recommends
 
-COPY ${PROJECT_DIR}/resources/kitodo.war /tmp/kitodo/kitodo.war
-COPY ${PROJECT_DIR}/resources/kitodo-config-modules.zip /tmp/kitodo/kitodo-config-modules.zip
-COPY ${PROJECT_DIR}/resources/kitodo.sql /tmp/kitodo/kitodo.sql 
+COPY ${BUILD_RESOURCE_DIR}/kitodo.war /tmp/kitodo/kitodo.war
+COPY ${BUILD_RESOURCE_DIR}/kitodo-config-modules.zip /tmp/kitodo/kitodo-config-modules.zip
+COPY ${BUILD_RESOURCE_DIR}/kitodo.sql /tmp/kitodo/kitodo.sql 
 
 COPY tomcat.conf /etc/rsyslog.d/
 COPY startup.sh /usr/bin/

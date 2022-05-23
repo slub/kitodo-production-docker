@@ -5,9 +5,8 @@ services:
         
         build:
           context: .
-          dockerfile: ./Dockerfile
           args:
-              PROJECT_DIR: ${PROJECT_DIR}
+              BUILD_RESOURCE_DIR: ${PROJECT_DIR}/build-resources
 
         ports:
             - ${APP_PORT}:8080

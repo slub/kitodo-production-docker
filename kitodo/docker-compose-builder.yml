@@ -27,5 +27,5 @@ services:
         
         volumes:
             - ${BUILDER_MAVEN_REPO}:/root/.m2
-            - ${PROJECT_DIR}/resources/:/data
+            - ${PROJECT_DIR}/build-resources/:/data
  
