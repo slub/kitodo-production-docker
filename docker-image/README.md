@@ -20,3 +20,7 @@ docker build -t markusweigelt/kitodo-production:3.4.1 --build-arg KITODO_VERSION
 ```
 docker-compose --env-file C:/Users/weigelt/Work/kitodo/kitodo-production-projects/review-import-configuration/.env -f C:/Users/weigelt/Work/kitodo/kitodo-production-docker/docker-image/docker-compose.yml -f C:/Users/weigelt/Work/kitodo/kitodo-production-docker/docker-image/docker-compose-builder.yml up --build kitodo-builder
 ```
+
+docker-compose --env-file ./projects/%%COMPOSE_PROJECT_NAME/.env -f ./docker-compose.yml -f ./docker-compose-builder.yml up --build kitodo-builder
+
+docker-compose --env-file ./projects/%%COMPOSE_PROJECT_NAME/.env -f ./docker-compose.yml up --build kitodo-app
