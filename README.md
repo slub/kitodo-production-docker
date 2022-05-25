@@ -1,10 +1,40 @@
 # Kitodo.Production Docker
 
+ * [Prerequisites](#builder)
+ * [Builder](#builder)
+ * [Image](#image)
+
 With the docker image provided, Kitodo.Production can be started in no time at all. A MySQL/MariaDB database and ElasticSearch must be present to start the application. There is also a docker-compose file for a quick start.
+
+## Prerequisites
+
+Install Docker Engine
+https://docs.docker.com/get-docker/
+
+Install Docker Compose
+https://docs.docker.com/compose/install/
+
+Go to the directory where you've put docker-compose.yml.
 
 ## Builder
 
-### Environment Variables
+The builder use a release or git repository archive as source to generate build resources for docker image. 
+
+First you have to decide what source do you prefer.
+
+### Release (default)
+
+Release files will be downloaded, renamed and moved to build resource folder.
+
+### Git
+
+Archive with specified commit / branch and source url will be downloaded. Next builder triggers maven to build sources, creates database and migrate database using flyway migration steps. After build resource files will be renamed and moved to build resource folder.
+
+```
+docker-compose -f ./docker-compose.yml -f ./docker-compose-builder.yml up --build kitodo-builder
+```
+
+### Environment variables
 
 | Name | Default | Description
 | --- | --- | --- |
@@ -23,11 +53,7 @@ With the docker image provided, Kitodo.Production can be started in no time at a
 | DB_USER | kitodo | User of DB_NAME |
 | DB_USER_PASSWORD | kitodo | Password of DB_USER |
 
-```
-docker-compose up -d --build -
-```
-
-## Using Docker Image
+## Image
 
 The image contains the WAR, the database file and the config modules of the corresponding release for the Docker image tag.
 
