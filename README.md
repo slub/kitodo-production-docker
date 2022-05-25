@@ -1,6 +1,6 @@
 # Kitodo.Production Docker
 
- * [Prerequisites](#builder)
+ * [Prerequisites](#prerequisites)
  * [Builder](#builder)
  * [Image](#image)
 
