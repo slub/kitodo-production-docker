@@ -2,6 +2,31 @@
 
 With the docker image provided, Kitodo.Production can be started in no time at all. A MySQL/MariaDB database and ElasticSearch must be present to start the application. There is also a docker-compose file for a quick start.
 
+## Builder
+
+### Environment Variables
+
+| Name | Default | Description
+| --- | --- | --- |
+| APP_BUILD_CONTEXT | . | Directory of Dockerfile-Builder |
+| APP_BUILD_RESOURCES | build-resources | Directory of build resource results for application |
+| BUILDER_TYPE | RELEASE | available types RELEASE and GIT<br/>- RELEASE means build the build resources by a [Kitodo.Production Release](https://github.com/kitodo/kitodo-production/tags) and its assets<br/>- GIT means build the build resources by commit/branch and |
+| BUILDER_RELEASE_VERSION | 3.4.2 | Release version name |
+| BUILDER_RELEASE_WAR_NAME | kitodo-3.4.2 | Release asset war file name |
+| BUILDER_RELEASE_SQL_NAME | kitodo_3-4-2 | Release assets sql file name |
+| BUILDER_RELEASE_CONFIG_MODULES_NAME | kitodo_3-4-2_config_modules | Release asset config modules zip file name |
+| BUILDER_GIT_COMMIT | master | Branch or commit of BUILDER_GIT_SOURCE_URL |
+| BUILDER_GIT_SOURCE_URL | https://github.com/kitodo/kitodo-production/ | Repository of BUILDER_GIT_COMMIT |
+| DB_PORT | 3306 | Port of database |
+| DB_ROOT_PASSWORD | 1234 | Root password |
+| DB_NAME | kitodo | Database name of Kitodo.Production |
+| DB_USER | kitodo | User of DB_NAME |
+| DB_USER_PASSWORD | kitodo | Password of DB_USER |
+
+```
+docker-compose up -d --build -
+```
+
 ## Using Docker Image
 
 The image contains the WAR, the database file and the config modules of the corresponding release for the Docker image tag.
