@@ -4,7 +4,7 @@ services:
     kitodo-builder:
     
         build: 
-          context: .
+          context: ${APP_BUILD_CONTEXT}
           dockerfile: ./Dockerfile-Builder
 
         environment:
@@ -26,6 +26,5 @@ services:
             - kitodo-db
         
         volumes:
-            - ${BUILDER_MAVEN_REPO}:/root/.m2
-            - ${PROJECT_DIR}/build-resources/:/data
+            - ${APP_BUILD_CONTEXT}/${APP_BUILD_RESOURCES}:/data
  

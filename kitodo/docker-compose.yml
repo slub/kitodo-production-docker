@@ -4,16 +4,16 @@ services:
     kitodo-app:
         
         build:
-          context: .
+          context: ${APP_BUILD_CONTEXT}
           args:
-              BUILD_RESOURCE_DIR: ${PROJECT_DIR}/build-resources
+              BUILD_RESOURCE_DIR: ./build-resources
 
         ports:
             - ${APP_PORT}:8080
             - ${APP_DEBUG_PORT}:5005
 
         volumes:
-            - ${PROJECT_DIR}/kitodo/data:/usr/local/kitodo
+            - ./kitodo/data:/usr/local/kitodo
 
         environment:
             - KITODO_DB_HOST=kitodo-db
