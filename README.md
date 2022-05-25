@@ -1,4 +1,4 @@
-# Kitodo.Production Docker
+# Kitodo.Production Docker (still in work)
 
  * [Prerequisites](#prerequisites)
  * [Builder](#builder)
