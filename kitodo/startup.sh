@@ -11,7 +11,7 @@ chmod go-rwx /.ssh/*
 if [ -n "$OCRD_MANAGER" ]; then
     OCRD_MANAGER_HOST=${OCRD_MANAGER%:*}
     OCRD_MANAGER_PORT=${OCRD_MANAGER#*:}
-	OCRD_MANAGER_IP=nslookup $OCRD_MANAGER_HOST | grep 'Address\:' | awk 'NR==2 {print $2}'
+	OCRD_MANAGER_IP=$(nslookup $OCRD_MANAGER_HOST | grep 'Address\:' | awk 'NR==2 {print $2}')
 	
     if test -e /etc/ssh/ssh_known_hosts; then
         ssh-keygen -R $OCRD_MANAGER_HOST -f /etc/ssh/ssh_known_hosts
