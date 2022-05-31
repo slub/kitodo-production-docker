@@ -54,11 +54,11 @@ RUN mkdir /.ssh && \
 
 ADD https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh /tmp/wait-for-it.sh
 
-RUN	unzip /tmp/kitodo/kitodo-config-modules.zip -x kitodo-config-modules/scripts/*.bat -d /tmp/kitodo/kitodo-config-modules && \
+RUN	unzip /tmp/kitodo/kitodo-config-modules.zip -x *.bat -d /tmp/kitodo/ && \
 	rm -f /tmp/kitodo/kitodo-config-modules.zip && \
 	chmod +x /tmp/wait-for-it.sh && \
-	dos2unix /tmp/kitodo/kitodo-config-modules/scripts/*.sh && \
-	chmod 544 /tmp/kitodo/kitodo-config-modules/scripts/*.sh
+	dos2unix /tmp/kitodo/kitodo_3-4-2_config_modules/scripts/*.sh && \
+	chmod 544 /tmp/kitodo/kitodo_3-4-2_config_modules/scripts/*.sh
 
 CMD ["/usr/bin/startup.sh"]	
 
