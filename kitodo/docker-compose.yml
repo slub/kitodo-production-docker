@@ -6,7 +6,7 @@ services:
         build:
           context: ${APP_BUILD_CONTEXT}
           args:
-              BUILD_RESOURCE_DIR: ./build-resources
+              BUILD_RESOURCES: ./build-resources
 
         ports:
             - ${APP_PORT}:8080
