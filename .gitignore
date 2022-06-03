@@ -1,3 +1,6 @@
 **/projects
 **/build-resources
 **/config_modules
+
+# IDE specific
+.vscode/
