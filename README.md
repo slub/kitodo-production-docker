@@ -88,16 +88,6 @@ If the database is still empty, it will be initialized with the database script 
 
 ## Using Docker Compose
 
-### Prerequisites
-
-Install Docker Engine
-https://docs.docker.com/get-docker/
-
-Install Docker Compose
-https://docs.docker.com/compose/install/
-
-Go to the directory where you've put docker-compose.yml.
-
 ### Starting 
 ```
 docker-compose up -d
