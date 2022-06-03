@@ -37,9 +37,13 @@ RUN apt-get update && \
 	rsyslog \
 	--no-install-recommends
 
-COPY ${BUILD_RESOURCES}/kitodo.war /tmp/kitodo/kitodo.war
-COPY ${BUILD_RESOURCES}/kitodo-config-modules.zip /tmp/kitodo/kitodo-config-modules.zip
-COPY ${BUILD_RESOURCES}/kitodo.sql /tmp/kitodo/kitodo.sql 
+ARG BUILD_RESOURCE_WAR=kitodo.war
+ARG BUILD_RESOURCE_CONFIG_MODULES=kitodo-config-modules.zip
+ARG BUILD_RESOURCE_SQL=kitodo.sql
+
+COPY ${BUILD_RESOURCES}/${BUILD_RESOURCE_WAR} /tmp/kitodo/kitodo.war
+COPY ${BUILD_RESOURCES}/${BUILD_RESOURCE_CONFIG_MODULES} /tmp/kitodo/kitodo-config-modules.zip
+COPY ${BUILD_RESOURCES}/${BUILD_RESOURCE_SQL} /tmp/kitodo/kitodo.sql 
 
 COPY tomcat.conf /etc/rsyslog.d/
 COPY startup.sh /usr/bin/
@@ -54,12 +58,12 @@ RUN mkdir /.ssh && \
 
 ADD https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh /tmp/wait-for-it.sh
 
-RUN	unzip /tmp/kitodo/kitodo-config-modules.zip -x *.bat -d /tmp/kitodo/ && \
+RUN	unzip /tmp/kitodo/kitodo-config-modules.zip -x *.bat -d /tmp/kitodo/kitodo-config-modules && \
 	rm -f /tmp/kitodo/kitodo-config-modules.zip && \
 	chmod +x /tmp/wait-for-it.sh && \
-	dos2unix /tmp/kitodo/kitodo_3-4-2_config_modules/scripts/*.sh && \
-	chmod 544 /tmp/kitodo/kitodo_3-4-2_config_modules/scripts/*.sh
-
+	chmod 544 /tmp/kitodo/kitodo-config-modules/*/scripts/*.sh && \
+	dos2unix /tmp/kitodo/kitodo-config-modules/*/scripts/*.sh 
+	
 CMD ["/usr/bin/startup.sh"]	
 
 EXPOSE 8080

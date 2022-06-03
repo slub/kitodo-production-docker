@@ -41,10 +41,10 @@ docker-compose -f ./docker-compose.yml -f ./docker-compose-builder.yml up --buil
 | APP_BUILD_CONTEXT | . | Directory of Dockerfile-Builder |
 | APP_BUILD_RESOURCES | build-resources | Directory of build resource results for application |
 | BUILDER_TYPE | RELEASE | available types RELEASE and GIT<br/>- RELEASE means build the build resources by a [Kitodo.Production Release](https://github.com/kitodo/kitodo-production/tags) and its assets<br/>- GIT means build the build resources by commit/branch and |
-| BUILDER_RELEASE_VERSION | 3.4.2 | Release version name |
-| BUILDER_RELEASE_WAR_NAME | kitodo-3.4.2 | Release asset war file name |
-| BUILDER_RELEASE_SQL_NAME | kitodo_3-4-2 | Release assets sql file name |
-| BUILDER_RELEASE_CONFIG_MODULES_NAME | kitodo_3-4-2_config_modules | Release asset config modules zip file name |
+| BUILDER_RELEASE_VERSION | 3.4.3 | Release version name |
+| BUILDER_RELEASE_WAR_NAME | kitodo-3.4.3 | Release asset war file name |
+| BUILDER_RELEASE_SQL_NAME | kitodo_3-4-3 | Release assets sql file name |
+| BUILDER_RELEASE_CONFIG_MODULES_NAME | kitodo_3-4-3_config_modules | Release asset config modules zip file name |
 | BUILDER_GIT_COMMIT | master | Branch or commit of BUILDER_GIT_SOURCE_URL |
 | BUILDER_GIT_SOURCE_URL | https://github.com/kitodo/kitodo-production/ | Repository of BUILDER_GIT_COMMIT |
 | DB_PORT | 3306 | Port of database |
