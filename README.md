@@ -63,7 +63,16 @@ docker pull markusweigelt/kitodo-production:TAG
 
 After the container has been started Kitodo.Production can be reached at http://localhost:8080/kitodo with initial credentials username "testadmin" and password "test".
 
-### Environment Variables
+### Build arguments
+
+| Name | Default | Description
+| --- | --- | --- |
+| BUILD_RESOURCES |  | Directory of build resources |
+| BUILD_RESOURCE_WAR | kitodo.war | Name of application war in build resource directory |
+| BUILD_RESOURCE_CONFIG_MODULES | kitodo-config-modules.zip | Name of config modules zip in build resource directory |
+| BUILD_RESOURCE_SQL | kitodo.sql | Name of sql dump in build resource directory |
+
+### Environment variables
 
 | Name | Default | Description
 | --- | --- | --- |
