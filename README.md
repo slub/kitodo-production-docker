@@ -18,7 +18,7 @@ Go to the directory where you've put docker-compose.yml.
 
 ## Resource Builder
 
-The resource builder use a git release tag or git repository archive as source to generate build resources. These are provided to the image builder via the build argument BUILD_RESOURCES. 
+The resource builder use a git release tag or git repository archive as source to generate build resources. These are provided to the image builder via the build argument [BUILD_RESOURCES](#build-arguments). 
 
 First you have to decide which type to use for providing the build resources
 
