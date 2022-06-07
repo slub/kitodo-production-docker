@@ -1,4 +1,4 @@
-# Kitodo.Production Docker (still in work)
+# Kitodo.Production Docker
 
  * [Prerequisites](#prerequisites)
  * [Builder](#builder)
@@ -16,11 +16,11 @@ https://docs.docker.com/compose/install/
 
 Go to the directory where you've put docker-compose.yml.
 
-## Builder
+## Resource Builder
 
-The builder use a release or git repository archive as source to generate build resources for docker image. 
+The resource builder use a git release tag or git repository archive as source to generate build resources. These are provided to the image builder via the build argument BUILD_RESOURCES. 
 
-First you have to decide what source do you prefer.
+First you have to decide which type to use for providing the build resources
 
 ### Release (default)
 
@@ -53,7 +53,7 @@ docker-compose -f ./docker-compose.yml -f ./docker-compose-builder.yml up --buil
 | DB_USER | kitodo | User of DB_NAME |
 | DB_USER_PASSWORD | kitodo | Password of DB_USER |
 
-## Image
+## Image Builder
 
 The image contains the WAR, the database file and the config modules of the corresponding release for the Docker image tag.
 
