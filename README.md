@@ -20,19 +20,17 @@ Go to the directory where you've put docker-compose.yml.
 
 The resource builder use a git release tag or git repository archive as source to generate build resources. These are provided to the image builder via the build argument [BUILD_RESOURCES](#build-arguments). 
 
+### Types
+
 First you have to decide which type to use for providing the build resources
 
-### Release (default)
+#### Release (default)
 
 Release files will be downloaded, renamed and moved to build resource folder.
 
-### Git
+#### Git
 
 Archive with specified commit / branch and source url will be downloaded. Next builder triggers maven to build sources, creates database and migrate database using flyway migration steps. After build resource files will be renamed and moved to build resource folder.
-
-```
-docker-compose -f ./docker-compose.yml -f ./docker-compose-builder.yml up --build kitodo-builder
-```
 
 ### Environment variables
 
@@ -52,6 +50,18 @@ docker-compose -f ./docker-compose.yml -f ./docker-compose-builder.yml up --buil
 | DB_NAME | kitodo | Database name of Kitodo.Production |
 | DB_USER | kitodo | User of DB_NAME |
 | DB_USER_PASSWORD | kitodo | Password of DB_USER |
+
+### Usage with docker-compose
+
+Start building resources 
+```
+docker-compose --env-file ./kitodo/.env -f ./kitodo/docker-compose.yml -f ./kitodo/docker-compose-builder.yml up --build kitodo-builder
+```
+
+Remove resource builder 
+```
+docker-compose --env-file ./kitodo/.env -f ./kitodo/docker-compose.yml -f ./kitodo/docker-compose-builder.yml down
+```
 
 ## Image Builder
 
