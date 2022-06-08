@@ -115,13 +115,19 @@ If the database is still empty, it will be initialized with the database script 
 
 ### Single compose project
 
+Build image before and start the container of image.
+
 ```
 docker-compose up -d --build
 ```
 
+Stops the container.
+
 ```
 docker-compose stop
 ```
+
+Stops and remove the container.
 
 ```
 docker-compose down
