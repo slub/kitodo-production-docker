@@ -5,6 +5,8 @@
    * [Resource Builder](#resource-builder)
    * [Image Builder](#image-builder)
  * [Usage](#usage)
+   * [Single compose project](#single-compose-project)
+   * [Multi compose project](#multi-compose-project)
 
 With the docker image provided, Kitodo.Production can be started in no time at all. A MySQL/MariaDB database and ElasticSearch must be present to start the application. There is also a docker-compose file for a quick start.
 
@@ -111,7 +113,7 @@ If the database is still empty, it will be initialized with the database script 
 
 ## Usage 
 
-### Single compose project (default)
+### Single compose project
 
 ```
 docker-compose up -d --build
