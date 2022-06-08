@@ -4,9 +4,9 @@ services:
     kitodo-app:
         
         build:
-          context: ${APP_BUILD_CONTEXT}
+          context: .
           args:
-              BUILD_RESOURCES: {$APP_BUILD_RESOURCES}
+              BUILD_RESOURCES: ${APP_BUILD_RESOURCES}
 
         ports:
             - ${APP_PORT}:8080
@@ -24,7 +24,7 @@ services:
             - kitodo-es
             - kitodo-mq         
             
-    
+
     kitodo-db:
         image: ${DB_IMAGE}
 

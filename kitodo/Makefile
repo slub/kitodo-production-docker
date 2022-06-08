@@ -1,6 +1,6 @@
 build: ./build-resources
 
-./kitodo/build-resources:
+./build-resources:
 	docker-compose -f ./docker-compose.yml -f ./docker-compose-builder.yml up --build kitodo-builder
 	docker-compose -f ./docker-compose.yml -f ./docker-compose-builder.yml down
 

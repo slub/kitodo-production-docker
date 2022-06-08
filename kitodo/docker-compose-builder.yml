@@ -4,7 +4,7 @@ services:
     kitodo-builder:
     
         build: 
-          context: ${APP_BUILD_CONTEXT}
+          context: .
           dockerfile: ./Dockerfile-Builder
 
         environment:
@@ -26,5 +26,5 @@ services:
             - kitodo-db
         
         volumes:
-            - ${APP_BUILD_CONTEXT}/${APP_BUILD_RESOURCES}:/data
+            - ${APP_BUILD_RESOURCES}:/data
  
