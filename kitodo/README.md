@@ -119,16 +119,19 @@ There are the following two options of usage.
 
 If only one project instance is needed or repository is used as submodule in other projects.
 
+Build image before and start the container of image
 ```
-docker-compose up -d --build # Build image before and start the container of image.
-```
-
-```
-docker-compose stop # Stops the container.
+docker-compose up -d --build
 ```
 
+Stops the container
 ```
-docker-compose down # Stops and remove the container.
+docker-compose stop
+```
+
+Stops and remove the container
+```
+docker-compose down
 ```
 
 ### Multi compose project
