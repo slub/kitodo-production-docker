@@ -1,8 +1,8 @@
-# Kitodo.Production Docker (still in work)
+# Kitodo.Production Docker
 
  * [Prerequisites](#prerequisites)
- * [Builder](#builder)
- * [Image](#image)
+ * [Resource Builder](#resource-builder)
+ * [Image Builder](#image-builder)
 
 With the docker image provided, Kitodo.Production can be started in no time at all. A MySQL/MariaDB database and ElasticSearch must be present to start the application. There is also a docker-compose file for a quick start.
 
@@ -16,23 +16,21 @@ https://docs.docker.com/compose/install/
 
 Go to the directory where you've put docker-compose.yml.
 
-## Builder
+## Resource Builder
 
-The builder use a release or git repository archive as source to generate build resources for docker image. 
+The resource builder use a git release tag or git repository archive as source to generate build resources. These are provided to the image builder via the build argument [BUILD_RESOURCES](#build-arguments). 
 
-First you have to decide what source do you prefer.
+### Types
 
-### Release (default)
+First you have to decide which type to use for providing the build resources
+
+#### Release (default)
 
 Release files will be downloaded, renamed and moved to build resource folder.
 
-### Git
+#### Git
 
 Archive with specified commit / branch and source url will be downloaded. Next builder triggers maven to build sources, creates database and migrate database using flyway migration steps. After build resource files will be renamed and moved to build resource folder.
-
-```
-docker-compose -f ./docker-compose.yml -f ./docker-compose-builder.yml up --build kitodo-builder
-```
 
 ### Environment variables
 
@@ -53,7 +51,19 @@ docker-compose -f ./docker-compose.yml -f ./docker-compose-builder.yml up --buil
 | DB_USER | kitodo | User of DB_NAME |
 | DB_USER_PASSWORD | kitodo | Password of DB_USER |
 
-## Image
+### Usage with docker-compose
+
+Start building resources 
+```
+docker-compose --env-file ./kitodo/.env -f ./kitodo/docker-compose.yml -f ./kitodo/docker-compose-builder.yml up --build kitodo-builder
+```
+
+Remove resource builder 
+```
+docker-compose --env-file ./kitodo/.env -f ./kitodo/docker-compose.yml -f ./kitodo/docker-compose-builder.yml down
+```
+
+## Image Builder
 
 The image contains the WAR, the database file and the config modules of the corresponding release for the Docker image tag.
 
@@ -63,7 +73,16 @@ docker pull markusweigelt/kitodo-production:TAG
 
 After the container has been started Kitodo.Production can be reached at http://localhost:8080/kitodo with initial credentials username "testadmin" and password "test".
 
-### Environment Variables
+### Build arguments
+
+| Name | Default | Description
+| --- | --- | --- |
+| BUILD_RESOURCES |  | Directory of build resources |
+| BUILD_RESOURCE_WAR | kitodo.war | Name of application war in build resource directory |
+| BUILD_RESOURCE_CONFIG_MODULES | kitodo-config-modules.zip | Name of config modules zip in build resource directory |
+| BUILD_RESOURCE_SQL | kitodo.sql | Name of sql dump in build resource directory |
+
+### Environment variables
 
 | Name | Default | Description
 | --- | --- | --- |
@@ -87,16 +106,6 @@ After the container has been started Kitodo.Production can be reached at http://
 If the database is still empty, it will be initialized with the database script from the release.
 
 ## Using Docker Compose
-
-### Prerequisites
-
-Install Docker Engine
-https://docs.docker.com/get-docker/
-
-Install Docker Compose
-https://docs.docker.com/compose/install/
-
-Go to the directory where you've put docker-compose.yml.
 
 ### Starting 
 ```
