@@ -111,17 +111,31 @@ If the database is still empty, it will be initialized with the database script 
 
 ## Usage 
 
-### Starting 
+### Single compose project (default)
+
 ```
-docker-compose up -d
+docker-compose up -d --build
 ```
 
-### Stopping 
 ```
 docker-compose stop
 ```
 
-### View Logs 
 ```
-docker-compose logs -f
+docker-compose down
+```
+
+### Multi compose project
+
+Go to the directory where you've put docker-compose.yml. Create subdirectory where you want to store your compose projects.
+In our examples we named it "projects". Create project directory (e.g. my-compose-project) in subdirectory where you want to store your compose project data.
+
+#### Usage 
+
+#### Usage with seperate env file
+
+Copy the env file of the repository to project directory and change value of `COMPOSE_PROJECT_NAME` env to the name of project directory and `APP_BUILD_CONTEXT` to `./projects/${COMPOSE_PROJECT_NAME}`.
+
+```
+docker-compose --env-file ./projects/my-compose-project/.env ...
 ```
