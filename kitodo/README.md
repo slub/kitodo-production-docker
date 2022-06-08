@@ -130,7 +130,7 @@ docker-compose down
 Go to the directory where you've put docker-compose.yml. Create subdirectory where you want to store your compose projects.
 In our examples we named it "projects". Create project directory (e.g. my-compose-project) in subdirectory where you want to store your compose project data.
 
-#### Usage with provided env file
+#### Usage with single env file
 
 Copy `.env.example`, rename file to `.env`, uncomment ${COMPOSE_PROJECT_NAME} and change value `APP_BUILD_CONTEXT` to `./projects/${COMPOSE_PROJECT_NAME}`. 
 
