@@ -55,12 +55,12 @@ Archive with specified commit / branch and source url will be downloaded. Next b
 
 Start building resources 
 ```
-docker-compose --env-file ./kitodo/.env -f ./kitodo/docker-compose.yml -f ./kitodo/docker-compose-builder.yml up --build kitodo-builder
+docker-compose -f ./docker-compose.yml -f ./docker-compose-builder.yml up --build kitodo-builder
 ```
 
 Remove resource builder 
 ```
-docker-compose --env-file ./kitodo/.env -f ./kitodo/docker-compose.yml -f ./kitodo/docker-compose-builder.yml down
+docker-compose -f ./docker-compose.yml -f ./docker-compose-builder.yml down
 ```
 
 ## Image Builder
