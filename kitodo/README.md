@@ -135,7 +135,7 @@ In our examples we named it "projects". Create project directory (e.g. my-compos
 Copy `.env.example`, rename file to `.env`, uncomment ${COMPOSE_PROJECT_NAME} and change value `APP_BUILD_CONTEXT` to `./projects/${COMPOSE_PROJECT_NAME}`. 
 
 ```
-docker-compose -p my-compose-project ...
+docker-compose -p my-compose-project ... # ... means command e.g. up -d --build
 ```
 
 #### Usage with seperate env file
@@ -143,5 +143,5 @@ docker-compose -p my-compose-project ...
 Copy the `.env.example` to project directory, rename file to `.env` and change value of `COMPOSE_PROJECT_NAME` env to the name of project directory and `APP_BUILD_CONTEXT` to `./projects/${COMPOSE_PROJECT_NAME}`.
 
 ```
-docker-compose --env-file ./projects/my-compose-project/.env ...
+docker-compose --env-file ./projects/my-compose-project/.env ... # ... means command e.g. up -d --build
 ```
