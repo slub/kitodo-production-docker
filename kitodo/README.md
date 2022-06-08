@@ -1,8 +1,10 @@
 # Kitodo.Production Docker
 
  * [Prerequisites](#prerequisites)
- * [Resource Builder](#resource-builder)
- * [Image Builder](#image-builder)
+ * [Builder](#builder)
+   * [Resource Builder](#resource-builder)
+   * [Image Builder](#image-builder)
+ * [Usage](#usage)
 
 With the docker image provided, Kitodo.Production can be started in no time at all. A MySQL/MariaDB database and ElasticSearch must be present to start the application. There is also a docker-compose file for a quick start.
 
@@ -16,23 +18,25 @@ https://docs.docker.com/compose/install/
 
 Go to the directory where you've put docker-compose.yml.
 
-## Resource Builder
+## Builder
+
+### Resource Builder
 
 The resource builder use a git release tag or git repository archive as source to generate build resources. These are provided to the image builder via the build argument [BUILD_RESOURCES](#build-arguments). 
 
-### Types
+#### Types
 
 First you have to decide which type to use for providing the build resources
 
-#### Release (default)
+##### Release (default)
 
 Release files will be downloaded, renamed and moved to build resource folder.
 
-#### Git
+##### Git
 
 Archive with specified commit / branch and source url will be downloaded. Next builder triggers maven to build sources, creates database and migrate database using flyway migration steps. After build resource files will be renamed and moved to build resource folder.
 
-### Environment variables
+#### Environment variables
 
 | Name | Default | Description
 | --- | --- | --- |
@@ -51,7 +55,7 @@ Archive with specified commit / branch and source url will be downloaded. Next b
 | DB_USER | kitodo | User of DB_NAME |
 | DB_USER_PASSWORD | kitodo | Password of DB_USER |
 
-### Usage with docker-compose
+#### Usage with docker-compose
 
 Start building resources 
 ```
@@ -63,7 +67,7 @@ Remove resource builder
 docker-compose -f ./docker-compose.yml -f ./docker-compose-builder.yml down
 ```
 
-## Image Builder
+### Image Builder
 
 The image contains the WAR, the database file and the config modules of the corresponding release for the Docker image tag.
 
@@ -73,7 +77,7 @@ docker pull markusweigelt/kitodo-production:TAG
 
 After the container has been started Kitodo.Production can be reached at http://localhost:8080/kitodo with initial credentials username "testadmin" and password "test".
 
-### Build arguments
+#### Build arguments
 
 | Name | Default | Description
 | --- | --- | --- |
@@ -82,7 +86,7 @@ After the container has been started Kitodo.Production can be reached at http://
 | BUILD_RESOURCE_CONFIG_MODULES | kitodo-config-modules.zip | Name of config modules zip in build resource directory |
 | BUILD_RESOURCE_SQL | kitodo.sql | Name of sql dump in build resource directory |
 
-### Environment variables
+#### Environment variables
 
 | Name | Default | Description
 | --- | --- | --- |
@@ -95,29 +99,43 @@ After the container has been started Kitodo.Production can be reached at http://
 | KITODO_MQ_HOST | localhost | Host of Active MQ |
 | KITODO_MQ_PORT | 61616 | Port of Active MQ |
 
-### Targets
+#### Targets
 
 | Name | Path | Description
 | --- | --- | --- |
 | Config Modules | /usr/local/kitodo | If the directory is mounted or bind per volume and is empty, then it will be prefilled with the provided config modules of the release. |
 
-### Database 
+#### Database 
 
 If the database is still empty, it will be initialized with the database script from the release.
 
-## Using Docker Compose
+## Usage 
 
-### Starting 
+### Single compose project (default)
+
 ```
-docker-compose up -d
+docker-compose up -d --build
 ```
 
-### Stopping 
 ```
 docker-compose stop
 ```
 
-### View Logs 
 ```
-docker-compose logs -f
+docker-compose down
+```
+
+### Multi compose project
+
+Go to the directory where you've put docker-compose.yml. Create subdirectory where you want to store your compose projects.
+In our examples we named it "projects". Create project directory (e.g. my-compose-project) in subdirectory where you want to store your compose project data.
+
+#### Usage 
+
+#### Usage with seperate env file
+
+Copy the env file of the repository to project directory and change value of `COMPOSE_PROJECT_NAME` env to the name of project directory and `APP_BUILD_CONTEXT` to `./projects/${COMPOSE_PROJECT_NAME}`.
+
+```
+docker-compose --env-file ./projects/my-compose-project/.env ...
 ```
