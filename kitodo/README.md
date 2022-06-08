@@ -113,24 +113,22 @@ If the database is still empty, it will be initialized with the database script 
 
 ## Usage 
 
+There are the following two options of usage.
+
 ### Single compose project
 
-Build image before and start the container of image.
+If only one project instance is needed or repository is used as submodule in other projects.
 
 ```
-docker-compose up -d --build
+docker-compose up -d --build # Build image before and start the container of image.
 ```
 
-Stops the container.
-
 ```
-docker-compose stop
+docker-compose stop # Stops the container.
 ```
 
-Stops and remove the container.
-
 ```
-docker-compose down
+docker-compose down # Stops and remove the container.
 ```
 
 ### Multi compose project
