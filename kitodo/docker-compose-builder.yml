@@ -2,17 +2,17 @@ services:
  
     kitodo-builder:
         extends:
-            file: .kitodo-services.yml
+            file: kitodo-services.yml
             service: kitodo-builder
 
         depends_on:
             - kitodo-db
             
         volumes:
-            - ${APP_BUILD_RESOURCES}:/data    
+            - ${BUILDER_BUILD_RESOURCES}:/data    
 
 
     kitodo-db:
         extends:
-            file: .kitodo-services.yml
+            file: kitodo-services.yml
             service: kitodo-db

@@ -3,7 +3,7 @@ services:
     kitodo-builder:
 
         build: 
-          context: .
+          context: ${APP_BUILD_CONTEXT}
           dockerfile: ./Dockerfile-Builder
 
         environment:
@@ -25,7 +25,7 @@ services:
     kitodo-app:
         
         build:
-          context: .
+          context: ${APP_BUILD_CONTEXT}
           args:
               BUILD_RESOURCES: ${APP_BUILD_RESOURCES}
 

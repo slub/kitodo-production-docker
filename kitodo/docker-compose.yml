@@ -2,7 +2,7 @@ services:
  
     kitodo-app:
         extends:
-            file: .kitodo-services.yml
+            file: kitodo-services.yml
             service: kitodo-app
             
         depends_on:
@@ -16,22 +16,22 @@ services:
     
     kitodo-db:
         extends:
-            file: .kitodo-services.yml
+            file: kitodo-services.yml
             service: kitodo-db
     
     
     kitodo-es:
         extends:
-            file: .kitodo-services.yml
+            file: kitodo-services.yml
             service: kitodo-es
     
     
     kitodo-mq:
         extends:
-            file: .kitodo-services.yml
+            file: kitodo-services.yml
             service: kitodo-mq
             
         volumes:   
             - type: bind
               source: ./kitodo-activemq.xml
-              target: /opt/activemq/conf/activemq.xml        
+              target: /opt/activemq/conf/activemq.xml
