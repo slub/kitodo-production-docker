@@ -1,7 +1,6 @@
 services:
  
     kitodo-builder:
-
         build: 
           context: ${APP_BUILD_CONTEXT}
           dockerfile: ./Dockerfile-Builder
@@ -23,7 +22,6 @@ services:
         
 
     kitodo-app:
-        
         build:
           context: ${APP_BUILD_CONTEXT}
           args:
@@ -54,7 +52,6 @@ services:
 
 
     kitodo-es:
-
         image: ${ES_IMAGE}
         
         hostname: ${ES_HOST}

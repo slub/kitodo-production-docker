@@ -34,7 +34,7 @@ WORKDIR /build
 ADD https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh /tmp/wait-for-it.sh
 
 COPY build.sh /build.sh
-RUN chmod a+x /build.sh && \
+RUN chmod +x /build.sh && \
 	chmod +x /tmp/wait-for-it.sh
 	
 CMD /build.sh

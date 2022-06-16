@@ -34,12 +34,24 @@ echo "Wait for database container."
 /tmp/wait-for-it.sh -t 0 ${KITODO_DB_HOST}:${KITODO_DB_PORT}
 
 echo "Initalize database."
-echo "SELECT 1 FROM user LIMIT 1;" \
-    | mysql -h "${KITODO_DB_HOST}" -P "${KITODO_DB_PORT}" -u ${KITODO_DB_USER} --password=${KITODO_DB_PASSWORD} ${KITODO_DB_NAME} >/dev/null 2>&1 \
-    || mysql -h "${KITODO_DB_HOST}" -P "${KITODO_DB_PORT}" -u ${KITODO_DB_USER} --password=${KITODO_DB_PASSWORD} ${KITODO_DB_NAME} < /tmp/kitodo/kitodo.sql
+
+if [ ! -f "/tmp/kitodo/kitodo_all_files.sql" ]; then
+	cat /tmp/kitodo/kitodo.sql /tmp/kitodo/overwrites/sql/kitodo_post_init.sql > /tmp/kitodo/kitodo_all_files.sql
+
+	EXITS_QUERY_RESULT = $(echo "SELECT 1 FROM user LIMIT 1" | mysql -h "${KITODO_DB_HOST}" -P "${KITODO_DB_PORT}" -u ${KITODO_DB_USER} --password=${KITODO_DB_PASSWORD} ${KITODO_DB_NAME} -N)
+
+  if [ "EXITS_QUERY_RESULT" -eq "1" ]; then
+      # run only kitodo_post_init.sql if database and tables already exist
+      mysql -h "${KITODO_DB_HOST}" -P "${KITODO_DB_PORT}" -u ${KITODO_DB_USER} --password=${KITODO_DB_PASSWORD} ${KITODO_DB_NAME} < /tmp/kitodo/overwrites/sql/kitodo_post_init.sql
+  else
+      mysql -h "${KITODO_DB_HOST}" -P "${KITODO_DB_PORT}" -u ${KITODO_DB_USER} --password=${KITODO_DB_PASSWORD} ${KITODO_DB_NAME} < /tmp/kitodo/kitodo_all_files.sql
+  fi
+
+fi
 
 if [ -z "$(ls -A /usr/local/kitodo)" ]; then
-   cp -R /tmp/kitodo/kitodo-config-modules/. /usr/local/kitodo/
+   cp -r /tmp/kitodo/kitodo-config-modules/* /usr/local/kitodo/
+   cp -r /tmp/kitodo/overwrites/data/* /usr/local/kitodo/
 fi
 
 /usr/bin/deploy.sh #deploy and start
