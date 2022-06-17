@@ -1,6 +1,6 @@
-FROM tomcat:9.0.62-jre11-openjdk-slim 
+FROM tomcat:9.0.62-jre11-openjdk-slim
 
-LABEL maintainer "Markus Weigelt <Markus.Weigelt@slub-dresden.de>"
+LABEL maintainer = "Markus Weigelt <Markus.Weigelt@slub-dresden.de>"
 
 ARG BUILD_RESOURCES
 
@@ -60,7 +60,7 @@ RUN mkdir /.ssh && \
 # application configs
 RUN	unzip /tmp/kitodo/kitodo-config-modules.zip -x *.bat -d /tmp/kitodo/kitodo-config-modules-unzipped && \
     mkdir -p /tmp/kitodo/kitodo-config-modules /tmp/kitodo/overwrites/data /tmp/kitodo/overwrites/sql && \
-    echo "# hook for sql commands to run after database is initialized" >/tmp/kitodo/overwrites/sql/kitodo_post_init.sql && \
+    touch /tmp/kitodo/overwrites/sql/kitodo_post_init.sql && \
     mv /tmp/kitodo/kitodo-config-modules-unzipped/* /tmp/kitodo/kitodo-config-modules && \
 	chmod 544 /tmp/kitodo/kitodo-config-modules/scripts/*.sh && \
 	rm -f /tmp/kitodo/kitodo-config-modules.zip && \
