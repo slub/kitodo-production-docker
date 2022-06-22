@@ -1,6 +1,6 @@
-FROM tomcat:9.0.62-jre11-openjdk-slim 
+FROM tomcat:9.0.62-jre11-openjdk-slim
 
-LABEL maintainer "Markus Weigelt <Markus.Weigelt@slub-dresden.de>"
+LABEL maintainer = "Markus Weigelt <Markus.Weigelt@slub-dresden.de>"
 
 ARG BUILD_RESOURCES
 
@@ -27,9 +27,8 @@ RUN apt-get update && \
 	apt-utils \
 	net-tools \
 	nano \
-	unzip \ 
+	unzip \
 	procps \
-	dos2unix \
 	dnsutils \
 	mariadb-client \
 	openssh-client \
@@ -49,24 +48,24 @@ COPY tomcat.conf /etc/rsyslog.d/
 COPY startup.sh /usr/bin/
 COPY deploy.sh /usr/bin/
 
-RUN mkdir /.ssh && \
-	cat > /etc/ssh/ssh_known_hosts && \
-	dos2unix /usr/bin/startup.sh && \
-	chmod +x /usr/bin/startup.sh && \
-	dos2unix /usr/bin/deploy.sh && \
-	chmod +x /usr/bin/deploy.sh
-
 ADD https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh /tmp/wait-for-it.sh
 
-RUN	unzip /tmp/kitodo/kitodo-config-modules.zip -x *.bat -d /tmp/kitodo/kitodo-config-modules-unzipped && \
-	mv /tmp/kitodo/kitodo-config-modules-unzipped/* /tmp/kitodo/kitodo-config-modules && \
-	chmod 544 /tmp/kitodo/kitodo-config-modules/scripts/*.sh && \
-	dos2unix /tmp/kitodo/kitodo-config-modules/scripts/*.sh && \
-	rm -f /tmp/kitodo/kitodo-config-modules.zip && \
-	rm -d /tmp/kitodo/kitodo-config-modules-unzipped && \
-	chmod +x /tmp/wait-for-it.sh
+# system configs
+RUN mkdir /.ssh && \
+	cat > /etc/ssh/ssh_known_hosts && \
+	chmod +x /usr/bin/startup.sh && \
+	chmod +x /usr/bin/deploy.sh && \
+    chmod +x /tmp/wait-for-it.sh
 
-	
+# application configs
+RUN	unzip /tmp/kitodo/kitodo-config-modules.zip -x *.bat -d /tmp/kitodo/kitodo-config-modules-unzipped && \
+    mkdir -p /tmp/kitodo/kitodo-config-modules /tmp/kitodo/overwrites/data /tmp/kitodo/overwrites/sql && \
+    touch /tmp/kitodo/overwrites/sql/kitodo_post_init.sql && \
+    mv /tmp/kitodo/kitodo-config-modules-unzipped/* /tmp/kitodo/kitodo-config-modules && \
+	chmod 544 /tmp/kitodo/kitodo-config-modules/scripts/*.sh && \
+	rm -f /tmp/kitodo/kitodo-config-modules.zip && \
+	rm -d /tmp/kitodo/kitodo-config-modules-unzipped
+
 CMD ["/usr/bin/startup.sh"]	
 
 EXPOSE 8080

@@ -1,30 +1,18 @@
-version: "3.9"
 services:
  
     kitodo-builder:
-    
-        build: 
-          context: .
-          dockerfile: ./Dockerfile-Builder
+        extends:
+            file: kitodo-services.yml
+            service: kitodo-builder
 
-        environment:
-            - BUILDER_TYPE=${BUILDER_TYPE}
-            - BUILDER_RELEASE_VERSION=${BUILDER_RELEASE_VERSION}
-            - BUILDER_RELEASE_WAR_NAME=${BUILDER_RELEASE_WAR_NAME}
-            - BUILDER_RELEASE_SQL_NAME=${BUILDER_RELEASE_SQL_NAME}
-            - BUILDER_RELEASE_CONFIG_MODULES_NAME=${BUILDER_RELEASE_CONFIG_MODULES_NAME}
-            - BUILDER_GIT_COMMIT=${BUILDER_GIT_COMMIT}
-            - BUILDER_GIT_SOURCE_URL=${BUILDER_GIT_SOURCE_URL}
-            - DB_HOST=kitodo-db
-            - DB_PORT=${DB_PORT}
-            - DB_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
-            - DB_NAME=${DB_NAME}
-            - DB_USER=${DB_USER}
-            - DB_USER_PASSWORD=${DB_USER_PASSWORD}
-        
         depends_on:
             - kitodo-db
-        
+            
         volumes:
-            - ${APP_BUILD_RESOURCES}:/data
- 
+            - ${BUILDER_BUILD_RESOURCES}:/data    
+
+
+    kitodo-db:
+        extends:
+            file: kitodo-services.yml
+            service: kitodo-db
