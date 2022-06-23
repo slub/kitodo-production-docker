@@ -42,7 +42,7 @@ ARG BUILD_RESOURCE_SQL=kitodo.sql
 
 COPY ${BUILD_RESOURCES}/${BUILD_RESOURCE_WAR} /tmp/kitodo/kitodo.war
 COPY ${BUILD_RESOURCES}/${BUILD_RESOURCE_CONFIG_MODULES} /tmp/kitodo/kitodo-config-modules.zip
-COPY ${BUILD_RESOURCES}/${BUILD_RESOURCE_SQL} /tmp/kitodo/kitodo.sql 
+COPY ${BUILD_RESOURCES}/${BUILD_RESOURCE_SQL} /tmp/kitodo/kitodo.sql
 
 COPY tomcat.conf /etc/rsyslog.d/
 COPY startup.sh /usr/bin/
@@ -52,21 +52,22 @@ ADD https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.s
 
 # system configs
 RUN mkdir /.ssh && \
-	cat > /etc/ssh/ssh_known_hosts && \
-	chmod +x /usr/bin/startup.sh && \
-	chmod +x /usr/bin/deploy.sh && \
+    cat > /etc/ssh/ssh_known_hosts && \
+    chmod +x /usr/bin/startup.sh && \
+    chmod +x /usr/bin/deploy.sh && \
     chmod +x /tmp/wait-for-it.sh
 
 # application configs
-RUN	unzip /tmp/kitodo/kitodo-config-modules.zip -x *.bat -d /tmp/kitodo/kitodo-config-modules-unzipped && \
+RUN unzip /tmp/kitodo/kitodo-config-modules.zip -x *.bat -d /tmp/kitodo/kitodo-config-modules-unzipped && \
+    chmod -R go+w /tmp/kitodo/kitodo-config-modules-unzipped && \
     mkdir -p /tmp/kitodo/kitodo-config-modules /tmp/kitodo/overwrites/data /tmp/kitodo/overwrites/sql && \
     touch /tmp/kitodo/overwrites/sql/kitodo_post_init.sql && \
     mv /tmp/kitodo/kitodo-config-modules-unzipped/* /tmp/kitodo/kitodo-config-modules && \
-	chmod 544 /tmp/kitodo/kitodo-config-modules/scripts/*.sh && \
-	rm -f /tmp/kitodo/kitodo-config-modules.zip && \
-	rm -d /tmp/kitodo/kitodo-config-modules-unzipped
+    chmod 544 /tmp/kitodo/kitodo-config-modules/scripts/*.sh && \
+    rm -f /tmp/kitodo/kitodo-config-modules.zip && \
+    rm -d /tmp/kitodo/kitodo-config-modules-unzipped
 
-CMD ["/usr/bin/startup.sh"]	
+CMD ["/usr/bin/startup.sh"]
 
 EXPOSE 8080
 
