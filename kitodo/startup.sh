@@ -47,11 +47,11 @@ if [ ! -f "/tmp/kitodo/kitodo_all_files.sql" ]; then
   fi
 
   echo "Initialize config modules directory."
-  cp -r /tmp/kitodo/kitodo-config-modules/* /usr/local/kitodo/
+  cp -pr /tmp/kitodo/kitodo-config-modules/* /usr/local/kitodo/
 
   if [ "$(ls -A /tmp/kitodo/overwrites/data)" ]; then
     echo "Overwrite config modules directory data with data of /tmp/kitodo/overwrites/data."
-    cp -r /tmp/kitodo/overwrites/data/* /usr/local/kitodo/
+    cp -pr /tmp/kitodo/overwrites/data/* /usr/local/kitodo/
   fi
 
 fi
