@@ -10,9 +10,8 @@ chmod go-rwx /.ssh/*
 # Add ocrd manager as global and known_hosts if env exist
 if [ -n "$OCRD_MANAGER" ]; then
   # export for using in scripts
-  export OCRD_MANAGER_HOST=${OCRD_MANAGER%:*}
+  OCRD_MANAGER_HOST=${OCRD_MANAGER%:*}
   OCRD_MANAGER_PORT=${OCRD_MANAGER#*:}
-  export OCRD_MANAGER_PORT=${OCRD_MANAGER_PORT:-22}
   OCRD_MANAGER_IP=$(nslookup $OCRD_MANAGER_HOST | grep 'Address\:' | awk 'NR==2 {print $2}')
 
   if test -e /etc/ssh/ssh_known_hosts; then
@@ -20,7 +19,7 @@ if [ -n "$OCRD_MANAGER" ]; then
     ssh-keygen -R $OCRD_MANAGER_IP -f /etc/ssh/ssh_known_hosts
   fi
 
-  ssh-keyscan -H -p ${OCRD_MANAGER_PORT} $OCRD_MANAGER_HOST,$OCRD_MANAGER_IP >>/etc/ssh/ssh_known_hosts
+  ssh-keyscan -H -p ${OCRD_MANAGER_PORT:-22} $OCRD_MANAGER_HOST,$OCRD_MANAGER_IP >>/etc/ssh/ssh_known_hosts
 fi
 
 # Replace imklog to prevent starting problems of rsyslog

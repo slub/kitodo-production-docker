@@ -22,6 +22,8 @@ services:
         
 
     kitodo-app:
+        image: ${APP_IMAGE}
+    
         build:
           context: ${APP_BUILD_CONTEXT}
           args:
