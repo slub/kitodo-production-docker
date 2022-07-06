@@ -1,6 +1,13 @@
 FROM tomcat:9.0.62-jre11-openjdk-slim
 
-LABEL maintainer = "Markus Weigelt <Markus.Weigelt@slub-dresden.de>"
+MAINTAINER markus.weigelt@slub-dresden.de
+ARG VCS_REF
+ARG BUILD_DATE
+LABEL \
+    maintainer="https://slub-dresden.de" \
+    org.label-schema.vcs-ref=$VCS_REF \
+    org.label-schema.vcs-url="https://github.com/markusweigelt/kitodo-production-docker/tree/main/kitodo" \
+    org.label-schema.build-date=$BUILD_DATE
 
 ARG BUILD_RESOURCES
 
