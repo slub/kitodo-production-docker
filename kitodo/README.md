@@ -141,7 +141,7 @@ In our examples we named it "projects". Create project directory (e.g. my-compos
 
 #### Usage with single env file
 
-Copy `.env.example`, rename file to `.env`, uncomment ${COMPOSE_PROJECT_NAME} and comment out the single compose project variables and uncomment the multiple compose project variables
+Copy `.env.example`, rename file to `.env`, uncomment `COMPOSE_PROJECT_NAME` and comment out the single compose project variables and uncomment the multiple compose project variables
 
 ```
 docker-compose -p my-compose-project ... # ... means command e.g. up -d --build
