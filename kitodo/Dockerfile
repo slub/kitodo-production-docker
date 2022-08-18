@@ -1,4 +1,68 @@
-FROM tomcat:9.0.62-jre11-openjdk-slim
+ARG BUILDER_TYPE=release
+
+# Kitodo.Production Release Local
+FROM alpine:latest AS kitodo-builder-local
+
+RUN apk update
+
+ARG BUILDER_LOCAL_WAR=build-resources/kitodo.war
+ARG BUILDER_LOCAL_SQL=build-resources/kitodo.sql
+ARG BUILDER_LOCAL_CONFIG_MODULES_ZIP=build-resources/kitodo-config-modules.zip
+
+COPY ${BUILDER_LOCAL_WAR} /data/kitodo.war
+COPY ${BUILDER_LOCAL_SQL} /data/kitodo.sql
+COPY ${BUILDER_LOCAL_CONFIG_MODULES_ZIP} /data/kitodo-config-modules.zip
+
+
+# Kitodo.Production Release Builder
+FROM alpine:latest AS kitodo-builder-release
+
+RUN apk update && \
+	apk --no-cache add curl
+
+ARG BUILDER_RELEASE_VERSION=3.4.3
+ARG BUILDER_RELEASE_WAR=kitodo-3.4.3.war
+ARG BUILDER_RELEASE_SQL=kitodo_3-4-3.sql
+ARG BUILDER_RELEASE_CONFIG_MODULES_ZIP=kitodo_3-4-3_config_modules.zip
+
+COPY build-release.sh build.sh
+
+RUN mkdir /data/ && \
+	chmod +x /build.sh && \
+	sh build.sh
+
+
+# Kitodo.Production Git Builder
+FROM maven:3.8.5-openjdk-11 AS kitodo-builder-git
+
+RUN apt-get update && \
+	apt-get install -y \
+	zip \
+	unzip \
+	mariadb-server \
+	wget \
+	supervisor
+
+ARG BUILDER_GIT_COMMIT=master
+ARG BUILDER_GIT_SOURCE_URL=https://github.com/kitodo/kitodo-production/
+
+ENV JAVA_OPTS="-Djava.awt.headless=true -XX:+UseConcMarkSweepGC -Xmx2048m -Xms1024m -XX:MaxPermSize=512m"
+
+COPY wait-for-it.sh /wait-for-it.sh
+COPY build-git.sh /build.sh
+
+RUN mkdir /data/ && \
+	chmod +x /build.sh && \
+	chmod +x /wait-for-it.sh && \
+	sh build.sh
+
+
+# Kitodo Builder - alias for builder type cause COPY --from does not allow build arguments
+FROM kitodo-builder-${BUILDER_TYPE} AS kitodo-builder
+
+
+# Kitodo.Production
+FROM tomcat:9.0.62-jre11-openjdk-slim AS kitodo
 
 MAINTAINER markus.weigelt@slub-dresden.de
 ARG VCS_REF
@@ -9,22 +73,18 @@ LABEL \
     org.label-schema.vcs-url="https://github.com/markusweigelt/kitodo-production-docker/tree/main/kitodo" \
     org.label-schema.build-date=$BUILD_DATE
 
-ARG BUILD_RESOURCES
-
-RUN if [[ -z "$BUILD_RESOURCES" ]] ; then echo BUILD_RESOURCES not provided ; else echo BUILD_RESOURCES is $BUILD_RESOURCES ; fi
-
-ENV JAVA_OPTS="-Djava.awt.headless=true -XX:+UseConcMarkSweepGC -Xmx4G -XX:MaxPermSize=256m"
+ENV JAVA_OPTS="-Djava.awt.headless=true -XX:+UseConcMarkSweepGC -Xmx2048m -Xms1024m -XX:MaxPermSize=512m"
 ENV JPDA=false
 ENV JPDA_ADDRESS=*:5005
 
-ENV KITODO_DB_HOST=localhost
-ENV KITODO_DB_PORT=3306
-ENV KITODO_DB_NAME=kitodo
-ENV KITODO_DB_USER=kitodo
-ENV KITODO_DB_PASSWORD=kitodo
-ENV KITODO_ES_HOST=localhost
-ENV KITODO_MQ_HOST=localhost
-ENV KITODO_MQ_PORT=61616
+ENV DB_HOST=localhost
+ENV DB_PORT=3306
+ENV DB_NAME=kitodo
+ENV DB_USER=kitodo
+ENV DB_PASSWORD=kitodo
+ENV ES_HOST=localhost
+ENV MQ_HOST=localhost
+ENV MQ_PORT=61616
 
 # make apt run non-interactive during build
 ENV DEBIAN_FRONTEND noninteractive
@@ -43,26 +103,20 @@ RUN apt-get update && \
 	rsyslog \
 	--no-install-recommends
 
-ARG BUILD_RESOURCE_WAR=kitodo.war
-ARG BUILD_RESOURCE_CONFIG_MODULES=kitodo-config-modules.zip
-ARG BUILD_RESOURCE_SQL=kitodo.sql
-
-COPY ${BUILD_RESOURCES}/${BUILD_RESOURCE_WAR} /tmp/kitodo/kitodo.war
-COPY ${BUILD_RESOURCES}/${BUILD_RESOURCE_CONFIG_MODULES} /tmp/kitodo/kitodo-config-modules.zip
-COPY ${BUILD_RESOURCES}/${BUILD_RESOURCE_SQL} /tmp/kitodo/kitodo.sql
+# copy build resources of kitodo-builder stage
+COPY --from=kitodo-builder /data /tmp/kitodo
 
 COPY tomcat.conf /etc/rsyslog.d/
 COPY startup.sh /usr/bin/
 COPY deploy.sh /usr/bin/
-
-ADD https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh /tmp/wait-for-it.sh
+COPY wait-for-it.sh /wait-for-it.sh
 
 # system configs
 RUN mkdir /.ssh && \
     cat > /etc/ssh/ssh_known_hosts && \
     chmod +x /usr/bin/startup.sh && \
     chmod +x /usr/bin/deploy.sh && \
-    chmod +x /tmp/wait-for-it.sh
+    chmod +x /wait-for-it.sh
 
 # application configs
 RUN unzip /tmp/kitodo/kitodo-config-modules.zip -x *.bat -d /tmp/kitodo/kitodo-config-modules-unzipped && \
