@@ -4,7 +4,11 @@ services:
         extends:
             file: kitodo-services.yml
             service: kitodo-app
-            
+        
+        build:
+            args:
+                BUILDER_TYPE: local
+
         depends_on:
             - kitodo-db
             - kitodo-es

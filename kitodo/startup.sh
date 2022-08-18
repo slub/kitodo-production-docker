@@ -31,20 +31,20 @@ fi
 echo "Starting rsyslog."
 service rsyslog start
 
-echo "Wait for database container."
-/tmp/wait-for-it.sh -t 0 ${KITODO_DB_HOST}:${KITODO_DB_PORT}
+echo "Wait for external database container."
+/wait-for-it.sh -t 0 ${DB_HOST}:${DB_PORT}
 
-if [ ! -f "/tmp/kitodo/kitodo_all_files.sql" ]; then
-  cat /tmp/kitodo/kitodo.sql /tmp/kitodo/overwrites/sql/kitodo_post_init.sql >/tmp/kitodo/kitodo_all_files.sql
+if [ ! -f "/tmp/kitodo/all_files.sql" ]; then
+  cat /tmp/kitodo/kitodo.sql /tmp/kitodo/overwrites/sql/post_init.sql >/tmp/kitodo/all_files.sql
 
-  TBL_QUERY_RESULT=$(echo "SHOW TABLES LIKE 'user'" | mysql -h "${KITODO_DB_HOST}" -P "${KITODO_DB_PORT}" -u ${KITODO_DB_USER} --password=${KITODO_DB_PASSWORD} ${KITODO_DB_NAME} -N)
+  TBL_QUERY_RESULT=$(echo "SHOW TABLES LIKE 'user'" | mysql -h "${DB_HOST}" -P "${DB_PORT}" -u ${DB_USER} --password=${DB_PASSWORD} ${DB_NAME} -N)
 
   if [ "$TBL_QUERY_RESULT" != "user" ]; then # check if table already exits
     echo "Initialize database."
-    mysql -h "${KITODO_DB_HOST}" -P "${KITODO_DB_PORT}" -u ${KITODO_DB_USER} --password=${KITODO_DB_PASSWORD} ${KITODO_DB_NAME} </tmp/kitodo/kitodo_all_files.sql
-  elif [ -s /tmp/kitodo/overwrites/sql/kitodo_post_init.sql ]; then
-    echo "Overwrite exiting database with sql file /tmp/kitodo/overwrites/sql/kitodo_post_init.sql"
-    mysql -h "${KITODO_DB_HOST}" -P "${KITODO_DB_PORT}" -u ${KITODO_DB_USER} --password=${KITODO_DB_PASSWORD} ${KITODO_DB_NAME} </tmp/kitodo/overwrites/sql/kitodo_post_init.sql
+    mysql -h "${DB_HOST}" -P "${DB_PORT}" -u ${DB_USER} --password=${DB_PASSWORD} ${DB_NAME} </tmp/kitodo/all_files.sql
+  elif [ -s /tmp/kitodo/overwrites/sql/post_init.sql ]; then
+    echo "Overwrite exiting database with sql file /tmp/kitodo/overwrites/sql/post_init.sql"
+    mysql -h "${DB_HOST}" -P "${DB_PORT}" -u ${DB_USER} --password=${DB_PASSWORD} ${DB_NAME} </tmp/kitodo/overwrites/sql/post_init.sql
   fi
 
   echo "Initialize config modules directory."
