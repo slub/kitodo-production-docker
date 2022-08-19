@@ -58,13 +58,13 @@ For example to build image with specific Git branch and run Tomcat in debug mode
 docker-compose up -d -f docker-compose.yml -f ./overwrites/docker-compose-app-builder-git.yml -f ./overwrites/docker-compose-app-debug.yml --build
 ```
 
-### Builder
+#### Builder
 
 The builder defines the source to get the resources to create the image. The builder overwrites provide a preset to customize the appropriate builder using the `.env` file.
 
 You can only overwrite the default `docker-compose.yml` with one of these builder overwrites.
 
-#### Release
+##### Release
 
 Release files of any [release of Kitodo.Production](https://github.com/kitodo/kitodo-production/releases) will be used to build Kitodo.Production image.
 
@@ -74,7 +74,7 @@ The variables of the Release Builder can be found in the `.env` file with the pr
 docker-compose up -d -f docker-compose.yml -f ./overwrites/docker-compose-app-builder-release.yml --build
 ```
 
-#### Git
+##### Git
 
 Archive with specified commit / branch and source url will be downloaded. Futhermore builder triggers maven to build sources, creates database using temporary database and migrate database using flyway migration steps.
 
@@ -84,7 +84,7 @@ The variables of the Git Builder can be found in the `.env` file with the prefix
 docker-compose up -d -f docker-compose.yml -f ./overwrites/docker-compose-app-builder-git.yml --build
 ```
 
-#### Local
+##### Local
 
 Local WAR, SQL and ZIP files will be used to build Kitodo.Production image.
 
@@ -94,7 +94,7 @@ The variables of the Local Builder can be found in the `.env` file with the pref
 docker-compose up -d -f docker-compose.yml -f ./overwrites/docker-compose-app-builder-local.yml --build
 ```
 
-### Debug
+#### Debug
 
 This overwrite configures tomcat to run in debug mode after building and when starting container.
 
@@ -104,7 +104,7 @@ The variables of the debug overwrite file can be found in the `.env` file with t
 docker-compose up -d -f docker-compose.yml -f ./overwrites/docker-compose-app-debug.yml
 ```
 
-### Dev
+#### Dev
 
 This overwrite overwrites WAR file with linked local one at runtime. 
 
