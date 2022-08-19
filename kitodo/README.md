@@ -1,10 +1,10 @@
 # Kitodo.Production Docker
 
  * [Prerequisites](#prerequisites)
- * [Builder](#builder)
-   * [Resource Builder](#resource-builder)
-   * [Image Builder](#image-builder)
- * [Usage](#usage)
+ * [Quickstart](#quickstart)
+ * [Services](#services)
+ * [Configuration](#configuration)
+  * [Structure](#usage)
    * [Single compose project](#single-compose-project)
    * [Multi compose project](#multi-compose-project)
 
@@ -39,9 +39,57 @@ Stops and remove all service containers
 docker-compose down
 ```
 
-## Docker Compose Overwrites
+## Services
 
 
+
+## Configuration
+
+## Structure
+
+There are the following two options of usage.
+
+### Single compose project (default)
+
+If only one project instance is needed or repository is used as submodule in other projects.
+
+Build image before and start the container of image
+```
+docker-compose up -d --build
+```
+
+Stops the container
+```
+docker-compose stop
+```
+
+Stops and remove the container
+```
+docker-compose down
+```
+
+### Multi compose project
+
+Go to the directory where you've put docker-compose.yml. Create subdirectory where you want to store your compose projects.
+In our examples we named it "projects". Create project directory (e.g. my-compose-project) in subdirectory where you want to store your compose project data.
+
+##### Usage with project name parameter
+
+Copy `.env.example`, rename file to `.env`, uncomment `COMPOSE_PROJECT_NAME` and comment out the single compose project variables and uncomment the multiple compose project variables
+
+```
+docker-compose -p my-compose-project ... # ... means command e.g. up -d --build
+```
+
+##### Usage with env file in project folder
+
+Copy the `.env.example` to project directory, rename file to `.env` and change value of `COMPOSE_PROJECT_NAME` env to the name of project directory and comment out the single compose project variables and uncomment the multiple compose project variables
+
+```
+docker-compose --env-file ./projects/my-compose-project/.env ... # ... means command e.g. up -d --build
+```
+
+## Application Service Overwrites
 
 ### Builder
 
@@ -60,6 +108,11 @@ Archive with specified commit / branch and source url will be downloaded. Futher
 ### Debug
 
 ### Dev
+
+
+
+
+
 
 
 
@@ -129,53 +182,3 @@ After the container has been started Kitodo.Production can be reached at http://
 #### Database 
 
 If the database is still empty, it will be initialized with the database script from the release.
-
-
-## Usage
-
-
-
-## Structure
-
-There are the following two options of usage.
-
-#### Single compose project (default)
-
-If only one project instance is needed or repository is used as submodule in other projects.
-
-Build image before and start the container of image
-```
-docker-compose up -d --build
-```
-
-Stops the container
-```
-docker-compose stop
-```
-
-Stops and remove the container
-```
-docker-compose down
-```
-
-#### Multi compose project
-
-Go to the directory where you've put docker-compose.yml. Create subdirectory where you want to store your compose projects.
-In our examples we named it "projects". Create project directory (e.g. my-compose-project) in subdirectory where you want to store your compose project data.
-
-##### Usage with project name parameter
-
-Copy `.env.example`, rename file to `.env`, uncomment `COMPOSE_PROJECT_NAME` and comment out the single compose project variables and uncomment the multiple compose project variables
-
-```
-docker-compose -p my-compose-project ... # ... means command e.g. up -d --build
-```
-
-##### Usage with env file in project folder
-
-Copy the `.env.example` to project directory, rename file to `.env` and change value of `COMPOSE_PROJECT_NAME` env to the name of project directory and comment out the single compose project variables and uncomment the multiple compose project variables
-
-```
-docker-compose --env-file ./projects/my-compose-project/.env ... # ... means command e.g. up -d --build
-```
-
