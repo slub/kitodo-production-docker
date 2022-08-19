@@ -118,11 +118,11 @@ If you go into the container (with `docker exec -it CONTAINERNAME bash`) the tom
 
 ## Structure
 
-There are the following two options of usage.
+There are two serveral ways to structure the Compose Project.
 
 ### Single compose project
 
-If only one project instance is needed or repository is used as submodule in other projects.
+If only one project instance is needed or repository is used e.g. as submodule in other projects.
 
 Build image before and start the container of image
 ```
@@ -140,6 +140,8 @@ docker-compose down
 ```
 
 ### Multi compose project
+
+When different projects are needed e.g. to do a review without breaking the existing environment for the current projects of a customer and a feature.
 
 Go to the directory where you've put docker-compose.yml. Create subdirectory where you want to store your compose projects.
 In our examples we named it "projects". Create project directory (e.g. my-compose-project) in subdirectory where you want to store your compose project data.
