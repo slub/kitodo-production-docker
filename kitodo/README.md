@@ -5,7 +5,7 @@
  * [Services](#services)
    * [Environment file](#environment-file) 
    * [Application Service Overwrites](#application-service-overwrites) 
-  * [Structure](#usage)
+ * [Structure](#usage)
    * [Single compose project](#single-compose-project)
    * [Multi compose project](#multi-compose-project)
 
