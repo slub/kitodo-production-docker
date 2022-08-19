@@ -45,11 +45,11 @@ docker-compose down
 
 ## Configuration
 
-## Structure
+### Structure
 
 There are the following two options of usage.
 
-### Single compose project (default)
+#### Single compose project (default)
 
 If only one project instance is needed or repository is used as submodule in other projects.
 
@@ -68,12 +68,12 @@ Stops and remove the container
 docker-compose down
 ```
 
-### Multi compose project
+#### Multi compose project
 
 Go to the directory where you've put docker-compose.yml. Create subdirectory where you want to store your compose projects.
 In our examples we named it "projects". Create project directory (e.g. my-compose-project) in subdirectory where you want to store your compose project data.
 
-##### Usage with project name parameter
+###### Usage with project name parameter
 
 Copy `.env.example`, rename file to `.env`, uncomment `COMPOSE_PROJECT_NAME` and comment out the single compose project variables and uncomment the multiple compose project variables
 
@@ -81,7 +81,7 @@ Copy `.env.example`, rename file to `.env`, uncomment `COMPOSE_PROJECT_NAME` and
 docker-compose -p my-compose-project ... # ... means command e.g. up -d --build
 ```
 
-##### Usage with env file in project folder
+###### Usage with env file in project folder
 
 Copy the `.env.example` to project directory, rename file to `.env` and change value of `COMPOSE_PROJECT_NAME` env to the name of project directory and comment out the single compose project variables and uncomment the multiple compose project variables
 
@@ -89,25 +89,25 @@ Copy the `.env.example` to project directory, rename file to `.env` and change v
 docker-compose --env-file ./projects/my-compose-project/.env ... # ... means command e.g. up -d --build
 ```
 
-## Application Service Overwrites
+### Application Service Overwrites
 
-### Builder
+#### Builder
 
 First you have to decide which type to use for providing the build resources
 
-#### Release
+##### Release
 
 Release files of any [release of Kitodo.Production](https://github.com/kitodo/kitodo-production/releases) will be used to build Kitodo.Production image.
 
-#### Git
+##### Git
 
 Archive with specified commit / branch and source url will be downloaded. Futhermore builder triggers maven to build sources, creates database and migrate database using flyway migration steps. After build resource files will be renamed and moved to build resource folder.
 
-#### Local
+##### Local
 
-### Debug
+#### Debug
 
-### Dev
+#### Dev
 
 
 
