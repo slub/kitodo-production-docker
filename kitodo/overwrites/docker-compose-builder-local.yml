@@ -1,0 +1,10 @@
+services:
+ 
+    kitodo-app:
+        
+        build:
+            args:
+                BUILDER_TYPE: local
+                BUILDER_LOCAL_WAR: ${APP_BUILDER_LOCAL_WAR}
+                BUILDER_LOCAL_SQL: ${APP_BUILDER_LOCAL_SQL}
+                BUILDER_LOCAL_CONFIG_MODULES_ZIP: ${APP_BUILDER_LOCAL_CONFIG_MODULES_ZIP}

@@ -1,0 +1,9 @@
+services:
+ 
+    kitodo-app:
+        
+        build:
+            args:
+                BUILDER_TYPE: git
+                BUILDER_GIT_VERSION: ${APP_BUILDER_GIT_COMMIT}
+                BUILDER_GIT_WAR: ${APP_BUILDER_GIT_SOURCE_URL}

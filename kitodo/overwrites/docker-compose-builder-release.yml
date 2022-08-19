@@ -1,0 +1,12 @@
+services:
+ 
+    kitodo-app:
+        
+        build:
+            args:
+                BUILDER_TYPE: release
+                BUILDER_RELEASE_VERSION: ${APP_BUILDER_RELEASE_CONFIG_MODULES_ZIP}
+                BUILDER_RELEASE_WAR: ${APP_BUILDER_RELEASE_CONFIG_MODULES_ZIP}
+                BUILDER_RELEASE_SQL: ${APP_BUILDER_RELEASE_CONFIG_MODULES_ZIP}
+                BUILDER_RELEASE_CONFIG_MODULES_ZIP: ${APP_BUILDER_RELEASE_CONFIG_MODULES_ZIP}
+
