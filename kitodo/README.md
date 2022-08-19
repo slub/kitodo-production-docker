@@ -60,7 +60,7 @@ docker-compose up -d -f docker-compose.yml -f ./overwrites/docker-compose-app-bu
 
 #### Builder
 
-The builder defines the source to get the resources to create the image. The builder overwrites provide a preset to customize the appropriate builder using the `.env` file.
+The builder defines the source to get the resources to create the image. The builder provides a preset to customize the appropriate builder using the `.env` file.
 
 You can only overwrite the default `docker-compose.yml` with one of these builder overwrites.
 
