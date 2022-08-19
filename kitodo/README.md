@@ -20,7 +20,7 @@ https://docs.docker.com/compose/install/
 
 ## Quickstart 
 
-Go to the directory where you've put docker-compose.yml.
+Go to the directory where you've put `docker-compose.yml`.
 
 Copy the environment file `.env.example` inside the directory and rename it to `.env`. 
 
@@ -47,25 +47,72 @@ When running `docker-compose up` all services Kitodo.Production (APP), Database 
 
 To configure our services copy the environment file `.env.example` inside the directory and rename it to `.env`. Adjust the configuration of the respective service to suit your needs. The variables are marked with the prefix of the service e.g. `APP_` for our Kitodo.Production Application.
 
-## Application Service Overwrites
+### Application Service Overwrites
+
+In the folder overwrites are configurations to overwrite our default Kitodo.Production configuration of `docker-compose.yml`. 
+
+
+For example to build image with specific Git branch and run Tomcat in debug mode use following `docker-compose` command with parameters.
+
+```
+docker-compose up -d -f docker-compose.yml -f ./overwrites/docker-compose-app-builder-git.yml -f ./overwrites/docker-compose-app-debug.yml --build
+```
 
 ### Builder
 
-First you have to decide which type to use for providing the build resources
+The builder defines the source to get the resources to create the image. The builder overwrites provide a preset to customize the appropriate builder using the `.env` file.
+
+You can only overwrite the default `docker-compose.yml` with one of these builder overwrites.
 
 #### Release
 
 Release files of any [release of Kitodo.Production](https://github.com/kitodo/kitodo-production/releases) will be used to build Kitodo.Production image.
 
+The variables of the Release Builder can be found in the `.env` file with the prefix `APP_BUILDER_RELEASE_`.
+
+```
+docker-compose up -d -f docker-compose.yml -f ./overwrites/docker-compose-app-builder-release.yml --build
+```
+
 #### Git
 
-Archive with specified commit / branch and source url will be downloaded. Futhermore builder triggers maven to build sources, creates database and migrate database using flyway migration steps. After build resource files will be renamed and moved to build resource folder.
+Archive with specified commit / branch and source url will be downloaded. Futhermore builder triggers maven to build sources, creates database using temporary database and migrate database using flyway migration steps.
+
+The variables of the Git Builder can be found in the `.env` file with the prefix `APP_BUILDER_GIT_`.
+
+```
+docker-compose up -d -f docker-compose.yml -f ./overwrites/docker-compose-app-builder-git.yml --build
+```
 
 #### Local
 
+Local WAR, SQL and ZIP files will be used to build Kitodo.Production image.
+
+The variables of the Local Builder can be found in the `.env` file with the prefix `APP_BUILDER_LOCAL_`.
+
+```
+docker-compose up -d -f docker-compose.yml -f ./overwrites/docker-compose-app-builder-local.yml --build
+```
+
 ### Debug
 
+This overwrite configures tomcat to run in debug mode after building and when starting container.
+
+The variables of the debug overwrite file can be found in the `.env` file with the prefix `APP_DEBUG_`.
+
+```
+docker-compose up -d -f docker-compose.yml -f ./overwrites/docker-compose-app-debug.yml
+```
+
 ### Dev
+
+This overwrite overwrites WAR file with linked local one at runtime. 
+
+```
+docker-compose up -d -f docker-compose.yml -f ./overwrites/docker-compose-app-dev.yml
+```
+
+If you go into the container (with `docker exec -it CONTAINERNAME bash`) the tomcat can be restarted with the new application using the command `/deploy.sh`.
 
 
 ## Structure
