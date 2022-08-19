@@ -65,7 +65,7 @@ The builder defines the source to get the resources to create the image. The bui
 
 You can only overwrite the default `docker-compose.yml` with one of these builder overwrites.
 
-##### Release (default)
+##### Release
 
 Release files of any [release of Kitodo.Production](https://github.com/kitodo/kitodo-production/releases) will be used to build Kitodo.Production image.
 
@@ -120,7 +120,7 @@ If you go into the container (with `docker exec -it CONTAINERNAME bash`) the tom
 
 There are the following two options of usage.
 
-### Single compose project (default)
+### Single compose project
 
 If only one project instance is needed or repository is used as submodule in other projects.
 
