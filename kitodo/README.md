@@ -107,7 +107,7 @@ docker-compose up -d -f docker-compose.yml -f ./overwrites/docker-compose-app-de
 
 #### Dev
 
-This overwrite overwrites WAR file with linked local one at runtime. 
+This overwrite overwrites WAR file and bind local one at runtime. 
 
 ```
 docker-compose up -d -f docker-compose.yml -f ./overwrites/docker-compose-app-dev.yml
