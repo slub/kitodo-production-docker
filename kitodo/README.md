@@ -3,10 +3,11 @@
  * [Prerequisites](#prerequisites)
  * [Quickstart](#quickstart)
  * [Services](#services)
- * [Configuration](#configuration)
-   * [Structure](#usage)
-     * [Single compose project](#single-compose-project)
-     * [Multi compose project](#multi-compose-project)
+   * [Environment file](#environment-file) 
+   * [Application Service Overwrites](#application-service-overwrites) 
+  * [Structure](#usage)
+   * [Single compose project](#single-compose-project)
+   * [Multi compose project](#multi-compose-project)
 
 With the docker image provided, Kitodo.Production can be started in no time at all. A MySQL/MariaDB database and ElasticSearch must be present to start the application. There is also a docker-compose file for a quick start.
 
@@ -64,7 +65,7 @@ The builder defines the source to get the resources to create the image. The bui
 
 You can only overwrite the default `docker-compose.yml` with one of these builder overwrites.
 
-##### Release
+##### Release (default)
 
 Release files of any [release of Kitodo.Production](https://github.com/kitodo/kitodo-production/releases) will be used to build Kitodo.Production image.
 
