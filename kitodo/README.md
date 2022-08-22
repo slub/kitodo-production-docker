@@ -56,7 +56,7 @@ In the folder overwrites are configurations to overwrite our default Kitodo.Prod
 For example to build image with specific Git branch and run Tomcat in debug mode use following `docker-compose` command with parameters.
 
 ```
-docker-compose up -d -f docker-compose.yml -f ./overwrites/docker-compose-app-builder-git.yml -f ./overwrites/docker-compose-app-debug.yml --build
+docker-compose -f docker-compose.yml -f ./overwrites/docker-compose-app-builder-git.yml -f ./overwrites/docker-compose-app-debug.yml up -d --build
 ```
 
 #### Builder
@@ -72,7 +72,7 @@ Release files of any [release of Kitodo.Production](https://github.com/kitodo/ki
 The variables of the Release Builder can be found in the `.env` file with the prefix `APP_BUILDER_RELEASE_`.
 
 ```
-docker-compose up -d -f docker-compose.yml -f ./overwrites/docker-compose-app-builder-release.yml --build
+docker-compose -f docker-compose.yml -f ./overwrites/docker-compose-app-builder-release.yml up -d --build
 ```
 
 ##### Git
@@ -82,7 +82,7 @@ Archive with specified commit / branch and source url will be downloaded. Futher
 The variables of the Git Builder can be found in the `.env` file with the prefix `APP_BUILDER_GIT_`.
 
 ```
-docker-compose up -d -f docker-compose.yml -f ./overwrites/docker-compose-app-builder-git.yml --build
+docker-compose -f docker-compose.yml -f ./overwrites/docker-compose-app-builder-git.yml up -d --build
 ```
 
 ##### Local
@@ -92,7 +92,7 @@ Local WAR, SQL and ZIP files will be used to build Kitodo.Production image.
 The variables of the Local Builder can be found in the `.env` file with the prefix `APP_BUILDER_LOCAL_`.
 
 ```
-docker-compose up -d -f docker-compose.yml -f ./overwrites/docker-compose-app-builder-local.yml --build
+docker-compose -f docker-compose.yml -f ./overwrites/docker-compose-app-builder-local.yml up -d --build
 ```
 
 #### Debug
@@ -102,7 +102,7 @@ This overwrite configures tomcat to run in debug mode after building and when st
 The variables of the debug overwrite file can be found in the `.env` file with the prefix `APP_DEBUG_`.
 
 ```
-docker-compose up -d -f docker-compose.yml -f ./overwrites/docker-compose-app-debug.yml
+docker-compose -f docker-compose.yml -f ./overwrites/docker-compose-app-debug.yml up -d
 ```
 
 #### Dev
@@ -110,7 +110,7 @@ docker-compose up -d -f docker-compose.yml -f ./overwrites/docker-compose-app-de
 This overwrite overwrites WAR file and bind local one at runtime. 
 
 ```
-docker-compose up -d -f docker-compose.yml -f ./overwrites/docker-compose-app-dev.yml
+docker-compose -f docker-compose.yml -f ./overwrites/docker-compose-app-dev.yml up -d
 ```
 
 If you go into the container (with `docker exec -it CONTAINERNAME bash`) the tomcat can be restarted with the new application using the command `/deploy.sh`.
