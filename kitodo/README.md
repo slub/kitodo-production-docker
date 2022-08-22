@@ -1,10 +1,11 @@
 # Kitodo.Production Docker
 
  * [Prerequisites](#prerequisites)
- * [Builder](#builder)
-   * [Resource Builder](#resource-builder)
-   * [Image Builder](#image-builder)
- * [Usage](#usage)
+ * [Quickstart](#quickstart)
+ * [Services](#services)
+   * [Environment file](#environment-file) 
+   * [Application Service Overwrites](#application-service-overwrites) 
+ * [Structure](#usage)
    * [Single compose project](#single-compose-project)
    * [Multi compose project](#multi-compose-project)
 
@@ -18,99 +19,110 @@ https://docs.docker.com/get-docker/
 Install Docker Compose
 https://docs.docker.com/compose/install/
 
-Go to the directory where you've put docker-compose.yml.
+## Quickstart 
 
-## Builder
+Go to the directory where you've put `docker-compose.yml`.
 
-First you have to decide which type to use for providing the build resources
-The resource builder use a git release tag or git repository archive as source to generate build resources. These are provided to the image builder via 
+Copy the environment file `.env.example` inside the directory and rename it to `.env`. 
 
-Argument
+Build and start all service containers
+```
+docker-compose up -d --build
+```
 
-| Name | Default | Description
-| --- | --- | --- |
-| BUILDER_TYPE | RELEASE | available types RELEASE and GIT<br/>- RELEASE means build the build resources by a [Kitodo.Production Release](https://github.com/kitodo/kitodo-production/tags) and its assets<br/>- GIT means build the build resources by commit/branch and |
+Stops all service containers
+```
+docker-compose stop
+```
 
-| Name | Default | Description
-| --- | --- | --- |
-| BUILDER_LOCAL_WAR | build-resources/kitodo.war | Relative WAR file path |
-| BUILDER_LOCAL_SQL | build-resources/kitodo.sql | Relative SQL file path |
-| BUILDER_LOCAL_CONFIG_MODULES_ZIP | build-resources/kitodo-config-modules.zip | Relative config modules ZIP file path |
+Stops and remove all service containers
+```
+docker-compose down
+```
 
-### Resource Builder (default)
+## Services
+
+When running `docker-compose up` all services Kitodo.Production (APP), Database (DB), Elastic Search (ES) and Active MQ (MQ) in our `docker-compose.yml` will be started and each as seperate Docker container.
+
+### Environment file
+
+To configure our services copy the environment file `.env.example` inside the directory and rename it to `.env`. Adjust the configuration of the respective service to suit your needs. The variables are marked with the prefix of the service e.g. `APP_` for our Kitodo.Production Application.
+
+### Application Service Overwrites
+
+In the folder overwrites are configurations to overwrite our default Kitodo.Production configuration of `docker-compose.yml`. 
+
+
+For example to build image with specific Git branch and run Tomcat in debug mode use following `docker-compose` command with parameters.
+
+```
+docker-compose -f docker-compose.yml -f ./overwrites/docker-compose-app-builder-git.yml -f ./overwrites/docker-compose-app-debug.yml up -d --build
+```
+
+#### Builder
+
+The builder defines the source to get the resources to create the image. The builder provides a preset to customize the appropriate builder using the `.env` file.
+
+You can only overwrite the default `docker-compose.yml` with one of these builder overwrites.
+
+##### Release
 
 Release files of any [release of Kitodo.Production](https://github.com/kitodo/kitodo-production/releases) will be used to build Kitodo.Production image.
 
-#### Arguments
-
-| Name | Default | Description
-| --- | --- | --- |
-| BUILDER_RELEASE_VERSION | 3.4.3 | Release version name |
-| BUILDER_RELEASE_WAR_NAME | kitodo-3.4.3 | Release asset WAR file name |
-| BUILDER_RELEASE_SQL_NAME | kitodo_3-4-3 | Release assets SQL file name |
-| BUILDER_RELEASE_CONFIG_MODULES_NAME | kitodo_3-4-3_config_modules | Release asset config modules zip file name |
-
-### Git Builder
-
-Archive with specified commit / branch and source url will be downloaded. Next builder triggers maven to build sources, creates database and migrate database using flyway migration steps. After build resource files will be renamed and moved to build resource folder.
-
-#### Arguments
-
-| Name | Default | Description
-| --- | --- | --- |
-| BUILDER_GIT_COMMIT | master | Branch or commit of BUILDER_GIT_SOURCE_URL |
-| BUILDER_GIT_SOURCE_URL | https://github.com/kitodo/kitodo-production/ | Repository of BUILDER_GIT_COMMIT |
-
-### Local Builder
-
-#### Arguments
-
-| Name | Default | Description
-| --- | --- | --- |
-| BUILDER_LOCAL_WAR | build-resources/kitodo.war | Relative WAR file path |
-| BUILDER_LOCAL_SQL | build-resources/kitodo.sql | Relative SQL file path |
-| BUILDER_LOCAL_CONFIG_MODULES_ZIP | build-resources/kitodo-config-modules.zip | Relative config modules ZIP file path |
-
-## Image Builder
-
-The image contains the WAR, the database file and the config modules of the corresponding release for the Docker image tag.
+The variables of the Release Builder can be found in the `.env` file with the prefix `APP_BUILDER_RELEASE_`.
 
 ```
-docker pull markusweigelt/kitodo-production:TAG
+docker-compose -f docker-compose.yml -f ./overwrites/docker-compose-app-builder-release.yml up -d --build
 ```
 
-After the container has been started Kitodo.Production can be reached at http://localhost:8080/kitodo with initial credentials username "testadmin" and password "test".
+##### Git
 
-#### Environment variables
+Archive with specified commit / branch and source url will be downloaded. Futhermore builder triggers maven to build sources, creates database using temporary database and migrate database using flyway migration steps.
 
-| Name | Default | Description
-| --- | --- | --- |
-| DB_HOST | localhost | Host of MySQL or MariaDB database |
-| DB_PORT | 3306 | Port of MySQL or MariaDB database |
-| DB_NAME | kitodo | Name of database used by Kitodo.Productions |
-| DB_USER | kitodo | Username to access database |
-| DB_PASSWORD | kitodo | Password used by username to access database |
-| ES_HOST | localhost | Host of Elasticsearch |
-| MQ_HOST | localhost | Host of Active MQ |
-| MQ_PORT | 61616 | Port of Active MQ |
+The variables of the Git Builder can be found in the `.env` file with the prefix `APP_BUILDER_GIT_`.
 
-#### Targets
+```
+docker-compose -f docker-compose.yml -f ./overwrites/docker-compose-app-builder-git.yml up -d --build
+```
 
-| Name | Path | Description
-| --- | --- | --- |
-| Config Modules | /usr/local/kitodo | If the directory is mounted or bind per volume and is empty, then it will be prefilled with the provided config modules of the release. |
+##### Local
 
-#### Database 
+Local WAR, SQL and ZIP files will be used to build Kitodo.Production image.
 
-If the database is still empty, it will be initialized with the database script from the release.
+The variables of the Local Builder can be found in the `.env` file with the prefix `APP_BUILDER_LOCAL_`.
 
-## Usage 
+```
+docker-compose -f docker-compose.yml -f ./overwrites/docker-compose-app-builder-local.yml up -d --build
+```
 
-There are the following two options of usage.
+#### Debug
+
+This overwrite configures tomcat to run in debug mode after building and when starting container.
+
+The variables of the debug overwrite file can be found in the `.env` file with the prefix `APP_DEBUG_`.
+
+```
+docker-compose -f docker-compose.yml -f ./overwrites/docker-compose-app-debug.yml up -d
+```
+
+#### Dev
+
+This overwrite overwrites WAR file and bind local one at runtime. 
+
+```
+docker-compose -f docker-compose.yml -f ./overwrites/docker-compose-app-dev.yml up -d
+```
+
+If you go into the container (with `docker exec -it CONTAINERNAME bash`) the tomcat can be restarted with the new application using the command `/deploy.sh`.
+
+
+## Structure
+
+There are two serveral ways to structure the Compose Project.
 
 ### Single compose project
 
-If only one project instance is needed or repository is used as submodule in other projects.
+If only one project instance is needed or repository is used e.g. as submodule in other projects.
 
 Build image before and start the container of image
 ```
@@ -129,10 +141,12 @@ docker-compose down
 
 ### Multi compose project
 
+When different projects are needed e.g. to do a review without breaking the existing environment for the current projects of a customer and a feature.
+
 Go to the directory where you've put docker-compose.yml. Create subdirectory where you want to store your compose projects.
 In our examples we named it "projects". Create project directory (e.g. my-compose-project) in subdirectory where you want to store your compose project data.
 
-#### Usage with project name parameter
+##### Usage with project name parameter
 
 Copy `.env.example`, rename file to `.env`, uncomment `COMPOSE_PROJECT_NAME` and comment out the single compose project variables and uncomment the multiple compose project variables
 
@@ -140,7 +154,7 @@ Copy `.env.example`, rename file to `.env`, uncomment `COMPOSE_PROJECT_NAME` and
 docker-compose -p my-compose-project ... # ... means command e.g. up -d --build
 ```
 
-#### Usage with env file in project folder
+##### Usage with env file in project folder
 
 Copy the `.env.example` to project directory, rename file to `.env` and change value of `COMPOSE_PROJECT_NAME` env to the name of project directory and comment out the single compose project variables and uncomment the multiple compose project variables
 
