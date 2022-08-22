@@ -6,7 +6,7 @@ $(error PROJECT_NAME is not set)
 endif
 
 BUILDER ?= 
-ifndef PROJECT_NAME
+ifndef BUILDER
 $(error BUILDER is not set)
 endif
 
@@ -49,6 +49,7 @@ prepare: ./projects/${PROJECT_NAME}/.env
 	cp .env.example $@
 # Multiple compose projects variables
 	sed -i 's/COMPOSE_PROJECT_NAME=kitodo-production-docker/COMPOSE_PROJECT_NAME=${PROJECT_NAME}/g' $@
+	sed -i 's/kitodo-production:latest/kitodo-production\/${PROJECT_NAME}:latest/g' $@
 	sed -i 's/#APP_PROJECT_PATH/APP_PROJECT_PATH/g' $@
 	sed -i 's/#APP_DATA/APP_DATA/g' $@
 

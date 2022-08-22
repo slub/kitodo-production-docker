@@ -19,16 +19,16 @@ do
 done
 
 echo "Replace database config parameters with environment variables"
-/bin/sed -i "s,\(jdbc:mysql://\)[^/]*\(/.*\),\1${KITODO_DB_HOST}:${KITODO_DB_PORT}\2," $HIBERNATE_CONFIG
-/bin/sed -i "s/kitodo?useSSL=false/${KITODO_DB_NAME}?useSSL=false\&amp;allowPublicKeyRetrieval=true/g" $HIBERNATE_CONFIG
-/bin/sed -i "s/hibernate.connection.username\">kitodo/hibernate.connection.username\">${KITODO_DB_USER}/g" $HIBERNATE_CONFIG
-/bin/sed -i "s/hibernate.connection.password\">kitodo/hibernate.connection.password\">${KITODO_DB_PASSWORD}/g" $HIBERNATE_CONFIG
+/bin/sed -i "s,\(jdbc:mysql://\)[^/]*\(/.*\),\1${DB_HOST}:${DB_PORT}\2," $HIBERNATE_CONFIG
+/bin/sed -i "s/kitodo?useSSL=false/${DB_NAME}?useSSL=false\&amp;allowPublicKeyRetrieval=true\&amp;serverTimezone=UTC/g" $HIBERNATE_CONFIG
+/bin/sed -i "s/hibernate.connection.username\">kitodo/hibernate.connection.username\">${DB_USER}/g" $HIBERNATE_CONFIG
+/bin/sed -i "s/hibernate.connection.password\">kitodo/hibernate.connection.password\">${DB_PASSWORD}/g" $HIBERNATE_CONFIG
 
 echo "Replace elasticsearch config parameters with environment variables"
-/bin/sed -i "s,^\(elasticsearch.host\)=.*,\1=${KITODO_ES_HOST}," $KITODO_CONFIG
+/bin/sed -i "s,^\(elasticsearch.host\)=.*,\1=${ES_HOST}," $KITODO_CONFIG
 
 echo "Replace activemq config parameters with environment variables"
-/bin/sed -i "s/localhost:61616/${KITODO_MQ_HOST}:${KITODO_MQ_PORT}/g" $KITODO_CONFIG
+/bin/sed -i "s/localhost:61616/${MQ_HOST}:${MQ_PORT}/g" $KITODO_CONFIG
 /bin/sed -i "s/#activeMQ.hostURL=/activeMQ.hostURL=/g" $KITODO_CONFIG
 /bin/sed -i "s/#activeMQ.results.topic=/activeMQ.results.topic=/g" $KITODO_CONFIG
 /bin/sed -i "s/#activeMQ.results.timeToLive=/activeMQ.results.timeToLive=/g" $KITODO_CONFIG
