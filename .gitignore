@@ -2,7 +2,7 @@
 **/build-resources
 **/config_modules
 *.env
-kitodo/*
+/kitodo/kitodo
 
 # IDE specific
 .vscode/

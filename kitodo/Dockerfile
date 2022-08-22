@@ -40,9 +40,8 @@ RUN apt-get update && \
 	zip \
 	unzip \
 	mariadb-server \
-	wget \
-	supervisor
-
+	wget
+	
 ARG BUILDER_GIT_COMMIT=master
 ARG BUILDER_GIT_SOURCE_URL=https://github.com/kitodo/kitodo-production/
 
