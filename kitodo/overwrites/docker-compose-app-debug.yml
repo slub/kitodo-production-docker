@@ -1,11 +1,6 @@
 services:
  
     kitodo-app:
-        volumes:
-            - type: bind
-              source: ${APP_DEV_LOCAL_WAR}
-              target: /tmp/kitodo/kitodo.war
-
         environment:
             - JPDA=${APP_DEBUG}
         

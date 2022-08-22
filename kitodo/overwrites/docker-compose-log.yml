@@ -1,0 +1,13 @@
+services:
+
+    kitodo-log:
+        image: amir20/dozzle:latest
+        volumes:
+            # double slash is mandatory to support windows
+            - //var/run/docker.sock:/var/run/docker.sock
+        ports:
+            - ${LOG_PORT}:8080
+        environment:
+            - DOZZLE_FILTER=name=${COMPOSE_PROJECT_NAME}
+            # DOZZLE_USERNAME=
+            # DOZZLE_PASSWORD=

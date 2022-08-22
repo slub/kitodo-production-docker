@@ -5,19 +5,30 @@ ifndef PROJECT_NAME
 $(error PROJECT_NAME is not set)
 endif
 
-BUILDER ?=
+BUILDER ?= 
 ifndef PROJECT_NAME
 $(error BUILDER is not set)
 endif
 
 ENVFILE = ./projects/${PROJECT_NAME}/.env
 ifeq (git,$(BUILDER))
-COMPOSE_FILE = docker-compose.yml:./overwrites/docker-compose-app-builder-git.yml
+COMPOSE_FILE = docker-compose.yml:./overwrites/docker-compose-app-builder-git.yml:./overwrites/docker-compose-log.yml
 else ifeq (local,$(BUILDER))
-COMPOSE_FILE = docker-compose.yml:./overwrites/docker-compose-app-builder-local.yml
+COMPOSE_FILE = docker-compose.yml:./overwrites/docker-compose-app-builder-local.yml:./overwrites/docker-compose-log.yml
 else
-COMPOSE_FILE = docker-compose.yml:./overwrites/docker-compose-app-builder-release.yml
+COMPOSE_FILE = docker-compose.yml:./overwrites/docker-compose-app-builder-release.yml:./overwrites/docker-compose-log.yml
 endif
+
+DEBUG ?= false
+ifeq (true,$(DEBUG))
+COMPOSE_FILE += :./overwrites/docker-compose-app-debug.yml
+endif
+
+DEV ?= false
+ifeq (true,$(DEV))
+COMPOSE_FILE += :./overwrites/docker-compose-app-dev.yml
+endif
+
 COMPOSE_PATH_SEPARATOR = :
 
 .EXPORT_ALL_VARIABLES:
@@ -25,6 +36,8 @@ COMPOSE_PATH_SEPARATOR = :
 info:
 	$(info    PROJECT_NAME is $(PROJECT_NAME))
 	$(info    BUILDER is $(BUILDER))
+	$(info    DEBUG is $(DEBUG))
+	$(info    DEV is $(DEV))
 
 clean:
 	$(RM) -r ./projects/${PROJECT_NAME}
