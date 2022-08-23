@@ -12,6 +12,9 @@ services:
             
         volumes:
             - ${APP_DATA}:/usr/local/kitodo
+            - type: bind
+              source: ./overwrites/app
+              target: /tmp/kitodo/overwrites/data
     
     
     kitodo-db:
