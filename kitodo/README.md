@@ -175,3 +175,13 @@ Copy `.env.example`, rename file to `.env`, uncomment `COMPOSE_PROJECT_NAME` and
 ```
 docker-compose -p my-compose-project ... # ... means command e.g. up -d --build
 ```
+
+## Makefile
+
+To facilitate the use of Docker Compose, the Makefile can be used. It takes care of the creation of the project folder and provides various targets to manage the Compose project.
+
+For more informations using following command:
+
+```
+make help
+```
