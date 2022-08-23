@@ -4,7 +4,7 @@
  * [Quickstart](#quickstart)
  * [Services](#services)
    * [Environment file](#environment-file) 
-   * [Application Service Overwrites](#application-service-overwrites) 
+   * [Application service overwrites](#application-service-overwrites) 
    * [Using the log viewer service](#using-the-log-viewer-service) 
  * [Structure](#usage)
    * [Single compose project](#single-compose-project)
@@ -49,7 +49,7 @@ When running `docker-compose up` all services Kitodo.Production (APP), Database 
 
 To configure our services copy the environment file `.env.example` inside the directory and rename it to `.env`. Adjust the configuration of the respective service to suit your needs. The variables are marked with the prefix of the service e.g. `APP_` for our Kitodo.Production Application.
 
-### Application Service Overwrites
+### Application service overwrites
 
 In the folder overwrites are configurations to overwrite our default Kitodo.Production configuration of `docker-compose.yml`. 
 
