@@ -1,8 +1,10 @@
-**/projects
-**/build-resources
-**/config_modules
-*.env
 /kitodo/kitodo
+/kitodo/projects
+/kitodo/build-resources
+/kitodo/overwrites/app/*
+!/kitodo/overwrites/app/.gitkeep
+*.env
+
 
 # IDE specific
 .vscode/

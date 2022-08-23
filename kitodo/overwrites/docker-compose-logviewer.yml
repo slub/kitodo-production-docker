@@ -1,6 +1,6 @@
 services:
 
-    kitodo-log:
+    kitodo-logviewer:
         image: amir20/dozzle:latest
         volumes:
             # double slash is mandatory to support windows

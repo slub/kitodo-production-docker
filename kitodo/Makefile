@@ -14,12 +14,12 @@ BUILDER_GIT_SOURCE_URL ?= https://github.com/kitodo/kitodo-production/
 
 ENVFILE = ./projects/${PROJECT_NAME}/.env
 ifeq (git,$(BUILDER))
-COMPOSE_FILE = docker-compose.yml:./overwrites/docker-compose-app-builder-git.yml:./overwrites/docker-compose-log.yml
+COMPOSE_FILE = docker-compose.yml:./overwrites/docker-compose-app-builder-git.yml:./overwrites/docker-compose-logviewer.yml
 
 else ifeq (local,$(BUILDER))
-COMPOSE_FILE = docker-compose.yml:./overwrites/docker-compose-app-builder-local.yml:./overwrites/docker-compose-log.yml
+COMPOSE_FILE = docker-compose.yml:./overwrites/docker-compose-app-builder-local.yml:./overwrites/docker-compose-logviewer.yml
 else
-COMPOSE_FILE = docker-compose.yml:./overwrites/docker-compose-app-builder-release.yml:./overwrites/docker-compose-log.yml
+COMPOSE_FILE = docker-compose.yml:./overwrites/docker-compose-app-builder-release.yml:./overwrites/docker-compose-logviewer.yml
 endif
 
 DEBUG ?= false
