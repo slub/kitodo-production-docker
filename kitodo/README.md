@@ -4,10 +4,12 @@
  * [Quickstart](#quickstart)
  * [Services](#services)
    * [Environment file](#environment-file) 
-   * [Application Service Overwrites](#application-service-overwrites) 
+   * [Application service overwrites](#application-service-overwrites) 
+   * [Using the log viewer service](#using-the-log-viewer-service) 
  * [Structure](#usage)
    * [Single compose project](#single-compose-project)
    * [Multi compose project](#multi-compose-project)
+ * [Makefile](#makefile)
 
 With the docker image provided, Kitodo.Production can be started in no time at all. A MySQL/MariaDB database and ElasticSearch must be present to start the application. There is also a docker-compose file for a quick start.
 
@@ -48,7 +50,7 @@ When running `docker-compose up` all services Kitodo.Production (APP), Database 
 
 To configure our services copy the environment file `.env.example` inside the directory and rename it to `.env`. Adjust the configuration of the respective service to suit your needs. The variables are marked with the prefix of the service e.g. `APP_` for our Kitodo.Production Application.
 
-### Application Service Overwrites
+### Application service overwrites
 
 In the folder overwrites are configurations to overwrite our default Kitodo.Production configuration of `docker-compose.yml`. 
 
@@ -58,7 +60,7 @@ For example to build image with specific Git branch and run Tomcat in debug mode
 docker-compose -f docker-compose.yml -f ./overwrites/docker-compose-app-builder-git.yml -f ./overwrites/docker-compose-app-debug.yml up -d --build
 ```
 
-### Logs
+### Using the log viewer service
 
 The logs of the respective container can be accessed via the following command:
 
@@ -173,4 +175,14 @@ Copy `.env.example`, rename file to `.env`, uncomment `COMPOSE_PROJECT_NAME` and
 
 ```
 docker-compose -p my-compose-project ... # ... means command e.g. up -d --build
+```
+
+## Makefile
+
+To facilitate the use of Docker Compose, the Makefile can be used. It takes care of the creation of the project folder and provides various targets to manage the Compose project.
+
+For more informations using following command:
+
+```
+make help
 ```
