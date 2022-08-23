@@ -82,7 +82,30 @@ status:
 	docker-compose --env-file ${ENVFILE} ps
 
 
-.PHONY: info clean prepare build start down stop config status
+define HELP
+cat <<"EOF"
+Targets:
+	- info:	show current set environment variables
+	- prepare: create project directory, add .env file and overwrite values with project specific ones
+	- build: `docker-compose build` all images (using parameter --no-cache)
+	- start: `docker-compose up` all containers (in detached mode)
+	- down:	`docker-compose down` all containers (i.e. stop and remove)
+	- stop:	`docker-compose stop` all containers (i.e. only stop)
+	- config: dump all the composed files
+	- status: list running containers
+
+Variables:
+	- PROJECT_NAME name of project 
+	- BUILDER type of builder (e.g. release, git, local)
+	- BUILDER_GIT_COMMIT branch or commit number (is used when BUILDER=git)
+	- BUILDER_GIT_SOURCE_URL repository url of BUILDER_GIT_COMMIT (is used when BUILDER=git)
+EOF
+endef
+export HELP
+help: ; @eval "$$HELP"
+
+
+.PHONY: info clean prepare build start down stop config status help
 
 # do not search for implicit rules here:
 %.zip: ;
