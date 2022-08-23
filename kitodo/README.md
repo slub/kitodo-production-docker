@@ -52,11 +52,24 @@ To configure our services copy the environment file `.env.example` inside the di
 
 In the folder overwrites are configurations to overwrite our default Kitodo.Production configuration of `docker-compose.yml`. 
 
-
 For example to build image with specific Git branch and run Tomcat in debug mode use following `docker-compose` command with parameters.
 
 ```
 docker-compose -f docker-compose.yml -f ./overwrites/docker-compose-app-builder-git.yml -f ./overwrites/docker-compose-app-debug.yml up -d --build
+```
+
+### Logs
+
+The logs of the respective container can be accessed via the following command:
+
+```
+docker logs CONTAINER
+```
+
+It is more convenient to use the log viewer service "Dozzle" with the following overwrite: 
+
+```
+docker-compose -f docker-compose.yml -f ./overwrites/docker-compose-logviewer.yml up -d
 ```
 
 #### Builder
@@ -146,18 +159,18 @@ When different projects are needed e.g. to do a review without breaking the exis
 Go to the directory where you've put docker-compose.yml. Create subdirectory where you want to store your compose projects.
 In our examples we named it "projects". Create project directory (e.g. my-compose-project) in subdirectory where you want to store your compose project data.
 
-##### Usage with project name parameter
-
-Copy `.env.example`, rename file to `.env`, uncomment `COMPOSE_PROJECT_NAME` and comment out the single compose project variables and uncomment the multiple compose project variables
-
-```
-docker-compose -p my-compose-project ... # ... means command e.g. up -d --build
-```
-
-##### Usage with env file in project folder
+#### Usage with env file in project folder 
 
 Copy the `.env.example` to project directory, rename file to `.env` and change value of `COMPOSE_PROJECT_NAME` env to the name of project directory and comment out the single compose project variables and uncomment the multiple compose project variables
 
 ```
 docker-compose --env-file ./projects/my-compose-project/.env ... # ... means command e.g. up -d --build
+```
+
+#### Usage with one env file in base folder and project name parameter 
+
+Copy `.env.example`, rename file to `.env`, uncomment `COMPOSE_PROJECT_NAME` and comment out the single compose project variables and uncomment the multiple compose project variables
+
+```
+docker-compose -p my-compose-project ... # ... means command e.g. up -d --build
 ```
