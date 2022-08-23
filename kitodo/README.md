@@ -58,7 +58,7 @@ For example to build image with specific Git branch and run Tomcat in debug mode
 docker-compose -f docker-compose.yml -f ./overwrites/docker-compose-app-builder-git.yml -f ./overwrites/docker-compose-app-debug.yml up -d --build
 ```
 
-### Logs
+### Using the log viewer service
 
 The logs of the respective container can be accessed via the following command:
 
