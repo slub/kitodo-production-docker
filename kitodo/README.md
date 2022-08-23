@@ -52,11 +52,24 @@ To configure our services copy the environment file `.env.example` inside the di
 
 In the folder overwrites are configurations to overwrite our default Kitodo.Production configuration of `docker-compose.yml`. 
 
-
 For example to build image with specific Git branch and run Tomcat in debug mode use following `docker-compose` command with parameters.
 
 ```
 docker-compose -f docker-compose.yml -f ./overwrites/docker-compose-app-builder-git.yml -f ./overwrites/docker-compose-app-debug.yml up -d --build
+```
+
+### Logs
+
+The logs of the respective container can be accessed via the following command:
+
+```
+docker logs CONTAINER
+```
+
+It is more convenient to use the log viewer service "Dozzle" with the following overwrite: 
+
+```
+docker-compose -f docker-compose.yml -f ./overwrites/docker-compose-logviewer.yml up -d
 ```
 
 #### Builder
