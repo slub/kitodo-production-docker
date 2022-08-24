@@ -15,7 +15,6 @@ BUILDER_GIT_SOURCE_URL ?= https://github.com/kitodo/kitodo-production/
 ENVFILE = ./projects/${PROJECT_NAME}/.env
 ifeq (git,$(BUILDER))
 COMPOSE_FILE = docker-compose.yml:./overwrites/docker-compose-app-builder-git.yml:./overwrites/docker-compose-logviewer.yml
-
 else ifeq (local,$(BUILDER))
 COMPOSE_FILE = docker-compose.yml:./overwrites/docker-compose-app-builder-local.yml:./overwrites/docker-compose-logviewer.yml
 else
@@ -24,12 +23,12 @@ endif
 
 DEBUG ?= false
 ifeq (true,$(DEBUG))
-COMPOSE_FILE += :./overwrites/docker-compose-app-debug.yml
+COMPOSE_FILE := $(COMPOSE_FILE):./overwrites/docker-compose-app-debug.yml
 endif
 
 DEV ?= false
 ifeq (true,$(DEV))
-COMPOSE_FILE += :./overwrites/docker-compose-app-dev.yml
+COMPOSE_FILE := $(COMPOSE_FILE):./overwrites/docker-compose-app-dev.yml
 endif
 
 COMPOSE_PATH_SEPARATOR = :
@@ -45,6 +44,7 @@ info:
 	fi
 	$(info    DEBUG is $(DEBUG))
 	$(info    DEV is $(DEV))
+	$(info    COMPOSE_FILE is $(COMPOSE_FILE))
 
 clean:
 	$(RM) -r ./projects/${PROJECT_NAME}

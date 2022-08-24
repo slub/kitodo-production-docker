@@ -11,3 +11,4 @@ services:
             - DOZZLE_FILTER=name=${COMPOSE_PROJECT_NAME}
             # DOZZLE_USERNAME=
             # DOZZLE_PASSWORD=
+ 
