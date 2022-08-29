@@ -5,10 +5,7 @@ ifndef PROJECT_NAME
 $(error PROJECT_NAME is not set)
 endif
 
-BUILDER ?= 
-ifndef BUILDER
-$(error BUILDER is not set)
-endif
+BUILDER ?= release
 BUILDER_GIT_COMMIT ?= master
 BUILDER_GIT_SOURCE_URL ?= https://github.com/kitodo/kitodo-production/
 
