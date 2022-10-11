@@ -10,6 +10,7 @@
    * [Single compose project](#single-compose-project)
    * [Multi compose project](#multi-compose-project)
  * [Makefile](#makefile)
+   * [Project specific overwrites in multi compose projects](#project-specific-overwrites-in-multi-compose-projects)
 
 With the docker image provided, Kitodo.Production can be started in no time at all. A MySQL/MariaDB database and ElasticSearch must be present to start the application. There is also a docker-compose file for a quick start.
 
@@ -187,7 +188,7 @@ For more informations using following command:
 make help
 ```
 
-### Project specific compose overwrites in multi compose projects
+### Project specific overwrites in multi compose projects
 
 Add compose file with name `docker-compose.yml` to your project directory. The compose file is added as last file to `COMPOSE_FILE` variable of Makefile so it overwrites existing ones.
 
