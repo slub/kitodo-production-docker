@@ -28,6 +28,12 @@ ifeq (true,$(DEV))
 COMPOSE_FILE := $(COMPOSE_FILE):./overwrites/docker-compose-app-dev.yml
 endif
 
+# add compose file in project folder to compose files
+PROJECT_COMPOSE_FILE=./projects/${PROJECT_NAME}/docker-compose.yml
+ifneq ("$(wildcard $(PROJECT_COMPOSE_FILE))","")
+COMPOSE_FILE := $(COMPOSE_FILE):$(PROJECT_COMPOSE_FILE)
+endif
+
 COMPOSE_PATH_SEPARATOR = :
 
 .EXPORT_ALL_VARIABLES:
