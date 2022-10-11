@@ -186,3 +186,8 @@ For more informations using following command:
 ```
 make help
 ```
+
+### Project specific compose overwrites in multi compose projects
+
+Add compose file with name `docker-compose.yml` to your project directory. The compose file is added as last file to `COMPOSE_FILE` variable of Makefile so it overwrites existing ones.
+
