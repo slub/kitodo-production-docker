@@ -61,20 +61,6 @@ For example to build image with specific Git branch and run Tomcat in debug mode
 docker-compose -f docker-compose.yml -f ./overwrites/docker-compose-app-builder-git.yml -f ./overwrites/docker-compose-app-debug.yml up -d --build
 ```
 
-### Using the log viewer service
-
-The logs of the respective container can be accessed via the following command:
-
-```
-docker logs CONTAINER
-```
-
-It is more convenient to use the log viewer service "Dozzle" with the following overwrite: 
-
-```
-docker-compose -f docker-compose.yml -f ./overwrites/docker-compose-logviewer.yml up -d
-```
-
 #### Builder
 
 The builder defines the source to get the resources to create the image. The builder provides a preset to customize the appropriate builder using the `.env` file.
@@ -131,6 +117,19 @@ docker-compose -f docker-compose.yml -f ./overwrites/docker-compose-app-dev.yml 
 
 If you go into the container (with `docker exec -it CONTAINERNAME bash`) the tomcat can be restarted with the new application using the command `/deploy.sh`.
 
+#### Log Viewer 
+
+The logs of the respective container can be accessed via the following command:
+
+```
+docker logs CONTAINER
+```
+
+It is more convenient to use the log viewer service "Dozzle" with the following overwrite: 
+
+```
+docker-compose -f docker-compose.yml -f ./overwrites/docker-compose-logviewer.yml up -d
+```
 
 ## Structure
 
