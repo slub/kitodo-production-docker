@@ -5,7 +5,6 @@
  * [Services](#services)
    * [Environment file](#environment-file) 
    * [Compose overwrites](#compose-overwrites) 
-   * [Using the log viewer service](#using-the-log-viewer-service) 
  * [Structure](#usage)
    * [Single compose project](#single-compose-project)
    * [Multi compose project](#multi-compose-project)
