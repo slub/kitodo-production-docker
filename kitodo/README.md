@@ -5,6 +5,7 @@
  * [Services](#services)
    * [Environment file](#environment-file) 
    * [Compose overwrites](#compose-overwrites) 
+   * [Hooks to extend and overwrite app data](#hooks-to-extend-and-overwrite-app-data) 
  * [Structure](#usage)
    * [Single compose project](#single-compose-project)
    * [Multi compose project](#multi-compose-project)
@@ -128,6 +129,31 @@ It is more convenient to use the log viewer service "Dozzle" with the following 
 
 ```
 docker-compose -f docker-compose.yml -f ./overwrites/docker-compose-logviewer.yml up -d
+```
+### Hooks to extend and overwrite app data
+
+The are some hooks available to modify and extend default data when running Kitodo.Production container for the first time. 
+
+#### Modify data directory
+
+All files and subdirectories of directory binded to `/tmp/kitodo/overwrites/data` are copied to the `/usr/local/kitodo` folder. For example you can overwrite default ruleset files or add your custom ruleset files to ruleset folder.
+
+```
+      - type: bind
+        source: ...
+        target: /tmp/kitodo/overwrites/data
+```
+
+Under `/overwrites/app` we implemented these mechanism so you can add the files and directories to modify your project. This hook is especially helpful when you want to a first basic configuration for your [multi compose project](#multi-compose-project).
+
+#### Modify database after initialisation
+
+This hook runs after database is initialized. For example you can add import configurations for your custom catalogues or example data for development purposes to to database.
+
+```
+      - type: bind
+        source: ...
+        target: /tmp/kitodo/overwrites/sql/post_init.sql
 ```
 
 ## Structure
