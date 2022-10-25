@@ -69,7 +69,7 @@ ARG BUILD_DATE
 LABEL \
     maintainer="https://slub-dresden.de" \
     org.label-schema.vcs-ref=$VCS_REF \
-    org.label-schema.vcs-url="https://github.com/markusweigelt/kitodo-production-docker/tree/main/kitodo" \
+    org.label-schema.vcs-url="https://github.com/slub/kitodo-production-docker/tree/main/kitodo" \
     org.label-schema.build-date=$BUILD_DATE
 
 ENV JAVA_OPTS="-Djava.awt.headless=true -XX:+UseConcMarkSweepGC -Xmx2048m -Xms1024m -XX:MaxPermSize=512m"

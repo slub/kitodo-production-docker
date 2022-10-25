@@ -59,7 +59,7 @@ prepare: ./projects/${PROJECT_NAME}/.env
 	cp .env.example $@
 # Multiple compose projects variables
 	sed -i 's,COMPOSE_PROJECT_NAME=kitodo-production-docker,COMPOSE_PROJECT_NAME=${PROJECT_NAME},g' $@
-	sed -i 's,markusweigelt/kitodo-production,kitodo-production/${PROJECT_NAME},g' $@
+	sed -i 's,slub/kitodo-production,kitodo-production/${PROJECT_NAME},g' $@
 	sed -i 's,#APP_PROJECT_PATH,APP_PROJECT_PATH,g' $@
 	sed -i 's,#APP_DATA,APP_DATA,g' $@
 # Git builder variables
@@ -67,22 +67,22 @@ prepare: ./projects/${PROJECT_NAME}/.env
 	sed -i 's,APP_BUILDER_GIT_SOURCE_URL=https://github.com/kitodo/kitodo-production/,APP_BUILDER_GIT_SOURCE_URL=$(BUILDER_GIT_SOURCE_URL),g' $@
 
 build:
-	docker-compose --env-file ${ENVFILE} build --no-cache
+	docker compose --env-file ${ENVFILE} build --no-cache
 
 start:
-	docker-compose --env-file ${ENVFILE} up -d
+	docker compose --env-file ${ENVFILE} up -d
 
 down:
-	docker-compose --env-file ${ENVFILE} down
+	docker compose --env-file ${ENVFILE} down
 
 stop:
-	docker-compose --env-file ${ENVFILE} stop
+	docker compose --env-file ${ENVFILE} stop
 
 config:
-	docker-compose --env-file ${ENVFILE} config
+	docker compose --env-file ${ENVFILE} config
 
 status:
-	docker-compose --env-file ${ENVFILE} ps
+	docker compose --env-file ${ENVFILE} ps
 
 
 define HELP
@@ -90,10 +90,10 @@ cat <<"EOF"
 Targets:
 	- info:	show current set environment variables
 	- prepare: create project directory, add .env file and overwrite values with project specific ones
-	- build: `docker-compose build` all images (using parameter --no-cache)
-	- start: `docker-compose up` all containers (in detached mode)
-	- down:	`docker-compose down` all containers (i.e. stop and remove)
-	- stop:	`docker-compose stop` all containers (i.e. only stop)
+	- build: `docker compose build` all images (using parameter --no-cache)
+	- start: `docker compose up` all containers (in detached mode)
+	- down:	`docker compose down` all containers (i.e. stop and remove)
+	- stop:	`docker compose stop` all containers (i.e. only stop)
 	- config: dump all the composed files
 	- status: list running containers
 
