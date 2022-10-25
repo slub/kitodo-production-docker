@@ -4,12 +4,13 @@
  * [Quickstart](#quickstart)
  * [Services](#services)
    * [Environment file](#environment-file) 
-   * [Application service overwrites](#application-service-overwrites) 
-   * [Using the log viewer service](#using-the-log-viewer-service) 
+   * [Compose overwrites](#compose-overwrites) 
+   * [Hooks to extend and overwrite app data](#hooks-to-extend-and-overwrite-app-data) 
  * [Structure](#usage)
    * [Single compose project](#single-compose-project)
    * [Multi compose project](#multi-compose-project)
  * [Makefile](#makefile)
+   * [Project specific overwrites in multi compose projects](#project-specific-overwrites-in-multi-compose-projects)
 
 With the docker image provided, Kitodo.Production can be started in no time at all. A MySQL/MariaDB database and ElasticSearch must be present to start the application. There is also a Docker Compose file for a quick start.
 
@@ -50,7 +51,7 @@ When running `docker compose up` all services Kitodo.Production (APP), Database 
 
 To configure our services copy the environment file `.env.example` inside the directory and rename it to `.env`. Adjust the configuration of the respective service to suit your needs. The variables are marked with the prefix of the service e.g. `APP_` for our Kitodo.Production Application.
 
-### Application service overwrites
+### Compose overwrites
 
 In the folder overwrites are configurations to overwrite our default Kitodo.Production configuration of `docker-compose.yml`. 
 
@@ -58,20 +59,6 @@ For example to build image with specific Git branch and run Tomcat in debug mode
 
 ```
 docker compose -f docker-compose.yml -f ./overwrites/docker-compose-app-builder-git.yml -f ./overwrites/docker-compose-app-debug.yml up -d --build
-```
-
-### Using the log viewer service
-
-The logs of the respective container can be accessed via the following command:
-
-```
-docker logs CONTAINER
-```
-
-It is more convenient to use the log viewer service "Dozzle" with the following overwrite: 
-
-```
-docker compose -f docker-compose.yml -f ./overwrites/docker-compose-logviewer.yml up -d
 ```
 
 #### Builder
@@ -130,6 +117,45 @@ docker compose -f docker-compose.yml -f ./overwrites/docker-compose-app-dev.yml 
 
 If you go into the container (with `docker exec -it CONTAINERNAME bash`) the tomcat can be restarted with the new application using the command `/deploy.sh`.
 
+#### Log Viewer 
+
+The logs of the respective container can be accessed via the following command:
+
+```
+docker logs CONTAINER
+```
+
+It is more convenient to use the log viewer service "Dozzle" with the following overwrite: 
+
+```
+docker-compose -f docker-compose.yml -f ./overwrites/docker-compose-logviewer.yml up -d
+```
+
+### Hooks to extend and overwrite app data
+
+The are some hooks available to modify and extend default data when running Kitodo.Production container for the first time. 
+
+#### Modify data directory
+
+All files and subdirectories of directory binded to `/tmp/kitodo/overwrites/data` are copied to the `/usr/local/kitodo` folder. For example you can overwrite default ruleset files or add your custom ruleset files to ruleset folder.
+
+```
+      - type: bind
+        source: ...
+        target: /tmp/kitodo/overwrites/data
+```
+
+Under `/overwrites/app` we implemented these mechanism so you can add the files and directories to modify your project. This hook is especially helpful when you want to a first basic configuration for your [multi compose project](#multi-compose-project).
+
+#### Modify database after initialisation
+
+This hook runs after database is initialized. For example you can add import configurations for your custom catalogues or example data for development purposes to to database.
+
+```
+      - type: bind
+        source: ...
+        target: /tmp/kitodo/overwrites/sql/post_init.sql
+```
 
 ## Structure
 
@@ -186,3 +212,8 @@ For more informations using following command:
 ```
 make help
 ```
+
+### Project specific overwrites in multi compose projects
+
+Add compose file with name `docker-compose.yml` to your project directory. The compose file is added as last file to `COMPOSE_FILE` variable of Makefile so it overwrites existing ones.
+
