@@ -14,12 +14,12 @@ Go to the directory where you've put docker-compose.yml.
 
 ### Starting 
 ```
-docker-compose up -d
+docker compose up
 ```
 
 ### Stopping 
 ```
-docker-compose stop
+docker compose stop
 ```
 
 ## Overwrite Host

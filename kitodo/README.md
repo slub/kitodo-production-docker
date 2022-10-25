@@ -11,7 +11,7 @@
    * [Multi compose project](#multi-compose-project)
  * [Makefile](#makefile)
 
-With the docker image provided, Kitodo.Production can be started in no time at all. A MySQL/MariaDB database and ElasticSearch must be present to start the application. There is also a docker-compose file for a quick start.
+With the docker image provided, Kitodo.Production can be started in no time at all. A MySQL/MariaDB database and ElasticSearch must be present to start the application. There is also a Docker Compose file for a quick start.
 
 ## Prerequisites
 
@@ -29,22 +29,22 @@ Copy the environment file `.env.example` inside the directory and rename it to `
 
 Build and start all service containers
 ```
-docker-compose up -d --build
+docker compose up -d --build
 ```
 
 Stops all service containers
 ```
-docker-compose stop
+docker compose stop
 ```
 
 Stops and remove all service containers
 ```
-docker-compose down
+docker compose down
 ```
 
 ## Services
 
-When running `docker-compose up` all services Kitodo.Production (APP), Database (DB), Elastic Search (ES) and Active MQ (MQ) in our `docker-compose.yml` will be started and each as seperate Docker container.
+When running `docker compose up` all services Kitodo.Production (APP), Database (DB), Elastic Search (ES) and Active MQ (MQ) in our `docker-compose.yml` will be started and each as seperate Docker container.
 
 ### Environment file
 
@@ -54,10 +54,10 @@ To configure our services copy the environment file `.env.example` inside the di
 
 In the folder overwrites are configurations to overwrite our default Kitodo.Production configuration of `docker-compose.yml`. 
 
-For example to build image with specific Git branch and run Tomcat in debug mode use following `docker-compose` command with parameters.
+For example to build image with specific Git branch and run Tomcat in debug mode use following Docker Compose command with parameters.
 
 ```
-docker-compose -f docker-compose.yml -f ./overwrites/docker-compose-app-builder-git.yml -f ./overwrites/docker-compose-app-debug.yml up -d --build
+docker compose -f docker-compose.yml -f ./overwrites/docker-compose-app-builder-git.yml -f ./overwrites/docker-compose-app-debug.yml up -d --build
 ```
 
 ### Using the log viewer service
@@ -71,7 +71,7 @@ docker logs CONTAINER
 It is more convenient to use the log viewer service "Dozzle" with the following overwrite: 
 
 ```
-docker-compose -f docker-compose.yml -f ./overwrites/docker-compose-logviewer.yml up -d
+docker compose -f docker-compose.yml -f ./overwrites/docker-compose-logviewer.yml up -d
 ```
 
 #### Builder
@@ -87,7 +87,7 @@ Release files of any [release of Kitodo.Production](https://github.com/kitodo/ki
 The variables of the Release Builder can be found in the `.env` file with the prefix `APP_BUILDER_RELEASE_`.
 
 ```
-docker-compose -f docker-compose.yml -f ./overwrites/docker-compose-app-builder-release.yml up -d --build
+docker compose -f docker-compose.yml -f ./overwrites/docker-compose-app-builder-release.yml up -d --build
 ```
 
 ##### Git
@@ -97,7 +97,7 @@ Archive with specified commit / branch and source url will be downloaded. Futher
 The variables of the Git Builder can be found in the `.env` file with the prefix `APP_BUILDER_GIT_`.
 
 ```
-docker-compose -f docker-compose.yml -f ./overwrites/docker-compose-app-builder-git.yml up -d --build
+docker compose -f docker-compose.yml -f ./overwrites/docker-compose-app-builder-git.yml up -d --build
 ```
 
 ##### Local
@@ -107,7 +107,7 @@ Local WAR, SQL and ZIP files will be used to build Kitodo.Production image.
 The variables of the Local Builder can be found in the `.env` file with the prefix `APP_BUILDER_LOCAL_`.
 
 ```
-docker-compose -f docker-compose.yml -f ./overwrites/docker-compose-app-builder-local.yml up -d --build
+docker compose -f docker-compose.yml -f ./overwrites/docker-compose-app-builder-local.yml up -d --build
 ```
 
 #### Debug
@@ -117,7 +117,7 @@ This overwrite configures tomcat to run in debug mode after building and when st
 The variables of the debug overwrite file can be found in the `.env` file with the prefix `APP_DEBUG_`.
 
 ```
-docker-compose -f docker-compose.yml -f ./overwrites/docker-compose-app-debug.yml up -d
+docker compose -f docker-compose.yml -f ./overwrites/docker-compose-app-debug.yml up -d
 ```
 
 #### Dev
@@ -125,7 +125,7 @@ docker-compose -f docker-compose.yml -f ./overwrites/docker-compose-app-debug.ym
 This overwrite overwrites WAR file and bind local one at runtime. 
 
 ```
-docker-compose -f docker-compose.yml -f ./overwrites/docker-compose-app-dev.yml up -d
+docker compose -f docker-compose.yml -f ./overwrites/docker-compose-app-dev.yml up -d
 ```
 
 If you go into the container (with `docker exec -it CONTAINERNAME bash`) the tomcat can be restarted with the new application using the command `/deploy.sh`.
@@ -141,17 +141,17 @@ If only one project instance is needed or repository is used e.g. as submodule i
 
 Build image before and start the container of image
 ```
-docker-compose up -d --build
+docker compose up -d --build
 ```
 
 Stops the container
 ```
-docker-compose stop
+docker compose stop
 ```
 
 Stops and remove the container
 ```
-docker-compose down
+docker compose down
 ```
 
 ### Multi compose project
@@ -166,7 +166,7 @@ In our examples we named it "projects". Create project directory (e.g. my-compos
 Copy the `.env.example` to project directory, rename file to `.env` and change value of `COMPOSE_PROJECT_NAME` env to the name of project directory and comment out the single compose project variables and uncomment the multiple compose project variables
 
 ```
-docker-compose --env-file ./projects/my-compose-project/.env ... # ... means command e.g. up -d --build
+docker compose --env-file ./projects/my-compose-project/.env ... # ... means command e.g. up -d --build
 ```
 
 #### Usage with one env file in base folder and project name parameter 
@@ -174,7 +174,7 @@ docker-compose --env-file ./projects/my-compose-project/.env ... # ... means com
 Copy `.env.example`, rename file to `.env`, uncomment `COMPOSE_PROJECT_NAME` and comment out the single compose project variables and uncomment the multiple compose project variables
 
 ```
-docker-compose -p my-compose-project ... # ... means command e.g. up -d --build
+docker compose -p my-compose-project ... # ... means command e.g. up -d --build
 ```
 
 ## Makefile

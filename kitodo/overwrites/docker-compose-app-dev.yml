@@ -2,6 +2,4 @@ services:
  
     kitodo-app:
         volumes:
-            - type: bind
-              source: ${APP_DEV_WAR}
-              target: /tmp/kitodo/kitodo.war
+            - ${APP_DEV_WAR}:/tmp/kitodo/kitodo.war:ro
