@@ -1,8 +1,8 @@
-/kitodo/kitodo
-/kitodo/projects
-/kitodo/build-resources
-/kitodo/overwrites/app/*
-!/kitodo/overwrites/app/.gitkeep
+/kitodo
+/projects
+/build-resources
+/overwrites/app/*
+!/overwrites/app/.gitkeep
 *.env
 
 
