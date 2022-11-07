@@ -45,7 +45,7 @@ docker compose down
 
 ## Services
 
-When running `docker compose up` all services Kitodo.Production (APP), Database (DB), Elastic Search (ES) and Active MQ (MQ) in our `docker-compose.yml` will be started and each as seperate Docker container.
+When running `docker compose up` all services Kitodo.Production (APP), Database (DB), Elastic Search (ES) and Active MQ (MQ) in our `docker-compose.yml` will be started and each as separate Docker container.
 
 ### Environment file
 
@@ -79,7 +79,7 @@ docker compose -f docker-compose.yml -f ./overwrites/docker-compose-app-builder-
 
 ##### Git
 
-Archive with specified commit / branch and source url will be downloaded. Futhermore builder triggers maven to build sources, creates database using temporary database and migrate database using flyway migration steps.
+Archive with specified commit / branch and source url will be downloaded. Furthermore builder triggers maven to build sources, creates database using temporary database and migrate database using flyway migration steps.
 
 The variables of the Git Builder can be found in the `.env` file with the prefix `APP_BUILDER_GIT_`.
 
@@ -159,7 +159,7 @@ This hook runs after database is initialized. For example you can add import con
 
 ## Structure
 
-There are two serveral ways to structure the Compose Project.
+There are two several ways to structure the Compose Project.
 
 ### Single compose project
 
@@ -207,7 +207,7 @@ docker compose -p my-compose-project ... # ... means command e.g. up -d --build
 
 To facilitate the use of Docker Compose, the Makefile can be used. It takes care of the creation of the project folder and provides various targets to manage the Compose project.
 
-For more informations using following command:
+For more information use the following command:
 
 ```
 make help
