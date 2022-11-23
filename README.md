@@ -197,7 +197,11 @@ When different projects are needed e.g. to do a review without breaking the exis
 Go to the directory where you've put docker-compose.yml. Create subdirectory where you want to store your compose projects.
 In our examples we named it "projects". Create project directory (e.g. my-compose-project) in subdirectory where you want to store your compose project data.
 
-#### Usage with env file in project folder 
+### Project specific Docker Compose file
+
+Add compose file with name `docker-compose.yml` to your project directory. The compose file is added as last file to `COMPOSE_FILE` variable of Makefile so it overwrites existing ones.
+
+#### Project specific environment file
 
 Copy the `.env.example` to project directory, rename file to `.env` and change value of `COMPOSE_PROJECT_NAME` env to the name of project directory and comment out the single compose project variables and uncomment the multiple compose project variables
 
@@ -205,7 +209,7 @@ Copy the `.env.example` to project directory, rename file to `.env` and change v
 docker compose --env-file ./projects/my-compose-project/.env ... # ... means command e.g. up -d --build
 ```
 
-#### Usage with one env file in base folder and project name parameter 
+#### General enviroment file (same config for projects)
 
 Copy `.env.example`, rename file to `.env`, uncomment `COMPOSE_PROJECT_NAME` and comment out the single compose project variables and uncomment the multiple compose project variables
 
@@ -222,8 +226,3 @@ For more information use the following command:
 ```
 make help
 ```
-
-### Project specific overwrites in multi compose projects
-
-Add compose file with name `docker-compose.yml` to your project directory. The compose file is added as last file to `COMPOSE_FILE` variable of Makefile so it overwrites existing ones.
-
