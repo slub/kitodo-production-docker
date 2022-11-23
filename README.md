@@ -79,7 +79,7 @@ docker compose -f docker-compose.yml -f ./overwrites/docker-compose-app-builder-
 
 ##### Git
 
-Archive with specified commit / branch and source url will be downloaded. Furthermore builder triggers maven to build sources, creates database using temporary database and migrate database using flyway migration steps.
+Archive with specified commit / branch and source url will be downloaded. Furthermore, builder triggers maven to build sources, creates database using temporary database and migrate database using flyway migration steps.
 
 The variables of the Git Builder can be found in the `.env` file with the prefix `APP_BUILDER_GIT_`.
 
@@ -99,7 +99,7 @@ docker compose -f docker-compose.yml -f ./overwrites/docker-compose-app-builder-
 
 #### Debug
 
-This overwrite configures tomcat to run in debug mode after building and when starting container.
+This configures tomcat to run in debug mode after building and when starting container.
 
 The variables of the debug overwrite file can be found in the `.env` file with the prefix `APP_DEBUG_`.
 
@@ -109,7 +109,7 @@ docker compose -f docker-compose.yml -f ./overwrites/docker-compose-app-debug.ym
 
 #### Dev
 
-This overwrite overwrites WAR file and bind local one at runtime. 
+This overwrites WAR file and bind local one at runtime. 
 
 ```
 docker compose -f docker-compose.yml -f ./overwrites/docker-compose-app-dev.yml up -d
@@ -133,11 +133,11 @@ docker-compose -f docker-compose.yml -f ./overwrites/docker-compose-logviewer.ym
 
 ### Hooks to extend and overwrite app data
 
-The are some hooks available to modify and extend default data when running Kitodo.Production container for the first time. 
+There are some hooks available to modify and extend default data when running Kitodo.Production container for the first time. 
 
 #### Modify data directory
 
-All files and subdirectories of directory binded to `/tmp/kitodo/overwrites/data` are copied to the `/usr/local/kitodo` folder. For example you can overwrite default ruleset files or add your custom ruleset files to ruleset folder.
+All files and subdirectories of directory bind to `/tmp/kitodo/overwrites/data` are copied to the `/usr/local/kitodo` folder. For example, you can overwrite default ruleset files or add your custom ruleset files to ruleset folder.
 
 ```
       - type: bind
@@ -145,11 +145,21 @@ All files and subdirectories of directory binded to `/tmp/kitodo/overwrites/data
         target: /tmp/kitodo/overwrites/data
 ```
 
-Under `/overwrites/app` we implemented these mechanism so you can add the files and directories to modify your project. This hook is especially helpful when you want to a first basic configuration for your [multi compose project](#multi-compose-project).
+Under `/overwrites/app` we implemented these mechanism, so you can add the files and directories to modify your project. This hook is especially helpful when you want to a first basic configuration for your [multi compose project](#multi-compose-project).
+
+#### Modify config directory
+
+All files and subdirectories of directory bind to `/tmp/kitodo/overwrites/config` are copied to the `/usr/local/tomcat/webapps/kitodo/WEB-INF/classes` folder. For example, you can overwrite default `kitodo_config.properties`, add your log4j2 config to `log4j2.xml` or add file formats with adjusting `kitodo_fileFormats.xml`. 
+
+```
+      - type: bind
+        source: ...
+        target: /tmp/kitodo/overwrites/config
+```
 
 #### Modify database after initialisation
 
-This hook runs after database is initialized. For example you can add import configurations for your custom catalogues or example data for development purposes to to database.
+This hook runs after database is initialized. For example, you can add import configurations for your custom catalogues or example data for development purposes to database.
 
 ```
       - type: bind

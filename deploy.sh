@@ -18,6 +18,11 @@ do
      sleep 2
 done
 
+if [ "$(ls -A /tmp/kitodo/overwrites/config)" ]; then
+  echo "Overwrite /usr/local/tomcat/webapps/kitodo/WEB-INF/classes/ with data of /tmp/kitodo/overwrites/config."
+  cp -pr /tmp/kitodo/overwrites/config/* /usr/local/tomcat/webapps/kitodo/WEB-INF/classes/
+fi
+
 echo "Replace database config parameters with environment variables"
 /bin/sed -i "s,\(jdbc:mysql://\)[^/]*\(/.*\),\1${DB_HOST}:${DB_PORT}\2," $HIBERNATE_CONFIG
 /bin/sed -i "s/kitodo?useSSL=false/${DB_NAME}?useSSL=false\&amp;allowPublicKeyRetrieval=true\&amp;serverTimezone=UTC/g" $HIBERNATE_CONFIG

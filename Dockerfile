@@ -120,7 +120,7 @@ RUN mkdir /.ssh && \
 # application configs
 RUN unzip /tmp/kitodo/kitodo-config-modules.zip -x *.bat -d /tmp/kitodo/kitodo-config-modules-unzipped && \
     chmod -R go+w /tmp/kitodo/kitodo-config-modules-unzipped && \
-    mkdir -p /tmp/kitodo/kitodo-config-modules /tmp/kitodo/overwrites/data /tmp/kitodo/overwrites/sql && \
+    mkdir -p /tmp/kitodo/kitodo-config-modules /tmp/kitodo/overwrites/data /tmp/kitodo/overwrites/config /tmp/kitodo/overwrites/sql && \
     touch /tmp/kitodo/overwrites/sql/post_init.sql && \
     mv /tmp/kitodo/kitodo-config-modules-unzipped/*/* /tmp/kitodo/kitodo-config-modules/ && \
     chmod 544 /tmp/kitodo/kitodo-config-modules/scripts/*.sh && \

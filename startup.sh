@@ -54,9 +54,10 @@ if [ ! -f "$ALL_FILES" ]; then
   cp -pr /tmp/kitodo/kitodo-config-modules/* /usr/local/kitodo/
 
   if [ "$(ls -A /tmp/kitodo/overwrites/data)" ]; then
-    echo "Overwrite config modules directory data with data of /tmp/kitodo/overwrites/data."
+    echo "Overwrite /usr/local/kitodo/ with data of /tmp/kitodo/overwrites/data."
     cp -pr /tmp/kitodo/overwrites/data/* /usr/local/kitodo/
   fi
+
 else
     echo "Initialisation of environment already completed"
 fi
