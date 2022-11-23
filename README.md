@@ -197,7 +197,7 @@ When different projects are needed e.g. to do a review without breaking the exis
 Go to the directory where you've put docker-compose.yml. Create subdirectory where you want to store your compose projects.
 In our examples we named it "projects". Create project directory (e.g. my-compose-project) in subdirectory where you want to store your compose project data.
 
-### Project specific Docker Compose file
+#### Project specific Docker Compose file
 
 Add compose file with name `docker-compose.yml` to your project directory. The compose file is added as last file to `COMPOSE_FILE` variable of Makefile so it overwrites existing ones.
 
