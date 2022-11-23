@@ -128,7 +128,7 @@ docker logs CONTAINER
 It is more convenient to use the log viewer service "Dozzle" with the following overwrite: 
 
 ```
-docker-compose -f docker-compose.yml -f ./overwrites/docker-compose-logviewer.yml up -d
+docker compose -f docker-compose.yml -f ./overwrites/docker-compose-logviewer.yml up -d
 ```
 
 ### Hooks to extend and overwrite app data
@@ -199,7 +199,13 @@ In our examples we named it "projects". Create project directory (e.g. my-compos
 
 #### Project specific Docker Compose file
 
-Add compose file with name `docker-compose.yml` to your project directory. The compose file is added as last file to `COMPOSE_FILE` variable of Makefile so it overwrites existing ones.
+Add compose file with name `docker-compose.yml` to your project directory and maybe add this as config file to overwrite them all with your project specific settings.
+
+```
+docker compose ... -f ./projects/my-compose-project/docker-compose.yml 
+```
+
+When using our [Make](#makefile) the compose file is added automatically as last file to `COMPOSE_FILE` variable of Makefile so it overwrites existing configs.
 
 #### Project specific environment file
 
