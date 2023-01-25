@@ -7,7 +7,7 @@ on:
      - cron: '0 0 * * *'
 
 env:
-  REGISTRY_PATH: ghcr.io/slub
+  REGISTRY_PATH: ghcr.io/slub/kitodo-production-docker
 
 jobs:
 
