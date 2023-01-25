@@ -1,0 +1,18 @@
+name: Publish Kitodo.Production
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Kitodo.Production Repository
+        uses: actions/checkout@v3
+        with:
+          repository: kitodo/kitodo-production
+          path: _tmp/kitodo-production
