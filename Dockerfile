@@ -65,11 +65,12 @@ FROM tomcat:9.0.62-jre11-openjdk-slim AS kitodo
 
 MAINTAINER markus.weigelt@slub-dresden.de
 ARG VCS_REF
+ARG VCS_URL
 ARG BUILD_DATE
 LABEL \
     maintainer="https://slub-dresden.de" \
     org.label-schema.vcs-ref=$VCS_REF \
-    org.label-schema.vcs-url="https://github.com/slub/kitodo-production-docker/tree/main/kitodo" \
+    org.label-schema.vcs-url=$VCS_URL \
     org.label-schema.build-date=$BUILD_DATE
 
 ENV JAVA_OPTS="-Djava.awt.headless=true -XX:+UseConcMarkSweepGC -Xmx2048m -Xms1024m -XX:MaxPermSize=512m"
