@@ -25,6 +25,12 @@ jobs:
           repository: kitodo/kitodo-production
           path: _tmp/kitodo-production
           
+      - name: Overwrite README.md with README.md of Kitodo.Production Repository
+        uses: canastro/copy-file-action@master
+        with:
+          source: "_tmp/kitodo-production/README.md"
+          target: "README.md"    
+          
       - # Activate cache export feature to reduce build time of images
         name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
