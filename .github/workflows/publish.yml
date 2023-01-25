@@ -17,7 +17,7 @@ jobs:
 
     steps:
       - name: Checkout Kitodo.Production Docker Repository
-      - uses: actions/checkout@v3
+        uses: actions/checkout@v3
     
       - name: Checkout Kitodo.Production Repository
         uses: actions/checkout@v3
