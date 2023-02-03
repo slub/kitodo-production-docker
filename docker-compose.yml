@@ -35,8 +35,3 @@ services:
         extends:
             file: kitodo-services.yml
             service: kitodo-mq
-            
-        volumes:   
-            - type: bind
-              source: ./kitodo-activemq.xml
-              target: /opt/activemq/conf/activemq.xml
