@@ -114,6 +114,8 @@ COPY wait-for-it.sh /wait-for-it.sh
 # system configs
 RUN mkdir /.ssh && \
     cat > /etc/ssh/ssh_known_hosts && \
+    cat > /usr/bin/before_startup.sh && \
+    chmod +x /usr/bin/before_startup.sh && \
     chmod +x /usr/bin/startup.sh && \
     chmod +x /usr/bin/deploy.sh && \
     chmod +x /wait-for-it.sh
