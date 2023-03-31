@@ -135,6 +135,16 @@ docker compose -f docker-compose.yml -f ./overwrites/docker-compose-logviewer.ym
 
 There are some hooks available to modify and extend default data when running Kitodo.Production container for the first time. 
 
+#### Modify container before startup
+
+This hook runs before startup.sh is executed. For example, you can add some SSH configuration here.
+
+```
+      - type: bind
+        source: ...
+        target: /usr/bin/before_startup.sh
+```
+
 #### Modify data directory
 
 All files and subdirectories of directory bind to `/tmp/kitodo/overwrites/data` are copied to the `/usr/local/kitodo` folder. For example, you can overwrite default ruleset files or add your custom ruleset files to ruleset folder.
