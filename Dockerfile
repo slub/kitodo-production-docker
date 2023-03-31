@@ -130,7 +130,7 @@ RUN unzip /tmp/kitodo/kitodo-config-modules.zip -x *.bat -d /tmp/kitodo/kitodo-c
     rm /tmp/kitodo/kitodo-config-modules.zip && \
     rm -fr /tmp/kitodo/kitodo-config-modules-unzipped
 
-CMD ["/usr/bin/startup.sh"]
+CMD ["/bin/bash", "-c", "/usr/bin/before_startup.sh && /usr/bin/startup.sh"]
 
 EXPOSE 8080
 
