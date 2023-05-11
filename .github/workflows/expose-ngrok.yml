@@ -1,1 +1,36 @@
+name: Expose ngrok
 
+on:
+  # Allows you to run this workflow manually
+  workflow_dispatch:
+    inputs:
+      ref: 
+        description: The short ref name of the branch or tag that triggered the workflow run.
+        required: true
+        default: 'master'
+      repository: 
+        description: The owner and repository name. For example, octocat/Hello-World.
+        required: true
+        default: 'kitodo/kitodo-production'
+        
+jobs:
+  build:
+  
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout Kitodo.Production Docker Repository
+        uses: actions/checkout@v3
+
+      - name: Prepare environment
+        run: |
+          # Rename example .env file
+          mv .env.example .env
+          
+          # Update .env
+          sed 's|APP_BUILDER_GIT_COMMIT=master|APP_BUILDER_GIT_COMMIT=${{ github.event.inputs.ref }}|g' .env
+          sed 's|APP_BUILDER_GIT_SOURCE_URL=https://github.com/kitodo/kitodo-production/|APP_BUILDER_GIT_SOURCE_URL=https://github.com/${{ github.event.inputs.repository }}/|g' .env
+          
+      - name: Run using docker
+        run: docker compose -f docker-compose.yml -f ./overwrites/docker-compose-app-builder-git.yml up -d --build
+        
