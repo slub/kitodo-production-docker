@@ -20,10 +20,10 @@ FROM alpine:latest AS kitodo-builder-release
 RUN apk update && \
 	apk --no-cache add curl
 
-ARG BUILDER_RELEASE_VERSION=3.4.3
-ARG BUILDER_RELEASE_WAR=kitodo-3.4.3.war
-ARG BUILDER_RELEASE_SQL=kitodo_3-4-3.sql
-ARG BUILDER_RELEASE_CONFIG_MODULES_ZIP=kitodo_3-4-3_config_modules.zip
+ARG BUILDER_RELEASE_VERSION=3.5.0
+ARG BUILDER_RELEASE_WAR=kitodo-3.5.0.war
+ARG BUILDER_RELEASE_SQL=kitodo_3-5-0.sql
+ARG BUILDER_RELEASE_CONFIG_MODULES_ZIP=kitodo_3-5-0_config_modules.zip
 
 COPY build-release.sh build.sh
 
@@ -61,7 +61,7 @@ FROM kitodo-builder-${BUILDER_TYPE} AS kitodo-builder
 
 
 # Kitodo.Production
-FROM tomcat:9.0.62-jre11-openjdk-slim AS kitodo
+FROM tomcat:9.0-jre11 AS kitodo
 
 MAINTAINER markus.weigelt@slub-dresden.de
 
