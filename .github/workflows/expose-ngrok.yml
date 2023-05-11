@@ -15,8 +15,9 @@ on:
         
 jobs:
   build:
-  
+    name: Kitodo.Production with ngrok tunnel
     runs-on: ubuntu-latest
+    needs: cancel
     
     steps:
       - name: Checkout Kitodo.Production Docker Repository
@@ -34,3 +35,9 @@ jobs:
       - name: Run using docker
         run: docker compose -f docker-compose.yml -f ./overwrites/docker-compose-app-builder-git.yml up -d --build
         
+      - uses: luisboto/ngrok-tunnel-action@v0.1.7.2
+        with:
+          timeout: 1h
+          port: 8080
+          ngrok_authtoken: ${{ secrets.NGROK_AUTHTOKEN }}
+          tunnel_type: http
