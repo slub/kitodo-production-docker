@@ -64,14 +64,25 @@ FROM kitodo-builder-${BUILDER_TYPE} AS kitodo-builder
 FROM tomcat:9.0.62-jre11-openjdk-slim AS kitodo
 
 MAINTAINER markus.weigelt@slub-dresden.de
-ARG VCS_REF
-ARG VCS_URL
+
+ARG GH_REF
+ARG GH_REPOSITORY
 ARG BUILD_DATE
+
 LABEL \
     maintainer="https://slub-dresden.de" \
-    org.label-schema.vcs-ref=$VCS_REF \
-    org.label-schema.vcs-url=$VCS_URL \
-    org.label-schema.build-date=$BUILD_DATE
+    org.label-schema.vendor="Saxon State and University Library Dresden" \
+    org.label-schema.name="Kitodo.Production" \
+    org.label-schema.vcs-ref=$GH_REF \
+    org.label-schema.vcs-url="https://github.com/${GH_REPOSITORY}/" \
+    org.label-schema.build-date=$BUILD_DATE \
+    org.opencontainers.image.vendor="Saxon State and University Library Dresden" \
+    org.opencontainers.image.title="Kitodo.Production" \
+    org.opencontainers.image.description="Kitodo.Production is the workflow management module in the Kitodo suite." \
+    org.opencontainers.image.source="https://github.com/${GH_REPOSITORY}/" \
+    org.opencontainers.image.documentation="https://github.com/${GH_REPOSITORY}/blob/${GH_REF}/README.md" \
+    org.opencontainers.image.revision=$GH_REF \
+    org.opencontainers.image.created=$BUILD_DATE
 
 ENV JAVA_OPTS="-Djava.awt.headless=true -XX:+UseConcMarkSweepGC -Xmx2048m -Xms1024m -XX:MaxPermSize=512m"
 ENV JPDA=false
