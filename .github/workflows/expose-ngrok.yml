@@ -34,7 +34,10 @@ jobs:
       - name: Run using docker
         run: | 
           docker compose -f docker-compose.yml -f ./overwrites/docker-compose-app-builder-git.yml up -d --build
-        
+      
+      - name: Setup upterm session when failure
+        uses: lhotari/action-upterm@v1
+      
       - name: Install ngrok
         run: |
           curl -s https://ngrok-agent.s3.amazonaws.com/ngrok.asc | \
@@ -43,7 +46,7 @@ jobs:
           sudo tee /etc/apt/sources.list.d/ngrok.list && \
           sudo apt update && sudo apt install ngrok
 
-      - name: Install ngrok
+      - name: Run ngrok
         run: |
           ngrok config add-authtoken ${{ secrets.NGROK_AUTH_TOKEN }}
           ngrok http 8080
