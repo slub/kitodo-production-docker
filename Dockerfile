@@ -61,7 +61,7 @@ FROM kitodo-builder-${BUILDER_TYPE} AS kitodo-builder
 
 
 # Kitodo.Production
-FROM tomcat:9.0-jre11 AS kitodo
+FROM tomcat:9.0.62-jre11-openjdk-slim AS kitodo
 
 MAINTAINER markus.weigelt@slub-dresden.de
 
