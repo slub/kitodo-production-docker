@@ -46,7 +46,7 @@ jobs:
       - name: Install ngrok
         run: |
           ngrok config add-authtoken ${{ secrets.NGROK_AUTH_TOKEN }}
-          ngrok http 8000
+          ngrok http 8080
 
       - name: Wait
         run: sleep 600
