@@ -34,9 +34,16 @@ jobs:
       - name: Run using docker
         run: docker compose -f docker-compose.yml -f ./overwrites/docker-compose-app-builder-git.yml up -d --build
         
-      - uses: luisboto/ngrok-tunnel-action@v0.1.7.2
+      - name: Start tunnel
+        uses: overhead-actions/live-preview-frp@main
         with:
-          timeout: 1h
+          protocol: http
           port: 8080
-          ngrok_authtoken: ${{ secrets.NGROK_AUTHTOKEN }}
-          tunnel_type: http
+          ngrok_auth_token: ${{ secrets.NGROK_AUTH_TOKEN }}
+
+      - name: Get URL
+        id: vars
+        run: echo "::set-output name=url::$(curl -s localhost:4040/api/tunnels | jq -r .tunnels[0].public_url)"
+
+      - name: Wait
+        run: sleep 300
