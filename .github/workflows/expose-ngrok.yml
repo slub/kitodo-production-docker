@@ -19,6 +19,12 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+      - name: "Check for NGROK_AUTH_TOKEN"
+        env: 
+            NGROK_AUTH_TOKEN: ${{ secrets.NGROK_AUTH_TOKEN }}
+        if: ${{ env.NGROK_AUTH_TOKEN == '' }}
+        run: 'echo "echo the secret \"NGROK_AUTH_TOKEN\" has not been made; echo please go to \"settings \> secrets \> actions\" to create it"
+
       - name: Checkout Kitodo.Production Docker Repository
         uses: actions/checkout@v3
 
@@ -48,5 +54,3 @@ jobs:
           ngrok config add-authtoken ${{ secrets.NGROK_AUTH_TOKEN }}
           ngrok http 8080
 
-      - name: Wait
-        run: sleep 600
