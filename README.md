@@ -130,6 +130,14 @@ It is more convenient to use the log viewer service "Dozzle" with the following 
 docker compose -f docker-compose.yml -f ./overwrites/docker-compose-logviewer.yml up -d
 ```
 
+#### File Browser 
+
+File Browser provides a file managing interface for Kitodo.Production config and data directories. It can be used to upload, delete, preview, rename and edit files of these directories.
+
+```
+docker compose -f docker-compose.yml -f ./overwrites/docker-compose-filebrowser.yml up -d
+```
+
 ### Hooks to extend and overwrite app data
 
 There are some hooks available to modify and extend default data when running Kitodo.Production container for the first time. 
