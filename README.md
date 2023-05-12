@@ -269,7 +269,7 @@ When the workflow step `Run ngrok` is active, navigate to [ngrok Dashboard and o
 
 ![image](https://github.com/slub/kitodo-production-docker/assets/3832618/b96debe4-1b76-43dc-903e-cda4d1dae4c0)
 
-In the panel you will see all exposed ports (Kitodo.Production for 8080, Log Viewer for 8088 and the File Browser 8090) mapped to a ngrok URL's. Click on the URL to navigate to the appropriate application and click on `Visit Site`. Don`t forget to add the slug `/kitodo` to the Kitodo.Production URL.
+In the panel you will see all exposed ports (Kitodo.Production for 8080, Log Viewer for 8088 and the File Browser 8090) mapped to a ngrok URL's. Click on the URL to navigate to the appropriate application and click on `Visit Site`. Don't forget to add the slug `/kitodo` to the Kitodo.Production URL.
 
 The stop the workflow navigate to [ngrok Dashboard and open the agents](https://dashboard.ngrok.com/tunnels/agents) again and click the stop icon on the active agent and confirm this with the click `Stop session` in the displayed popup.
 
