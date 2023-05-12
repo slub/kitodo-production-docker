@@ -10,7 +10,6 @@
    * [Single compose project](#single-compose-project)
    * [Multi compose project](#multi-compose-project)
  * [Makefile](#makefile)
-   * [Project specific overwrites in multi compose projects](#project-specific-overwrites-in-multi-compose-projects)
 
 With the docker image provided, Kitodo.Production can be started in no time at all. A MySQL/MariaDB database and ElasticSearch must be present to start the application. There is also a Docker Compose file for a quick start.
 
