@@ -1,4 +1,4 @@
-name: Expose ngrok
+name: Build and run Kitodo.Production over ngrok
 
 on:
   # Allows you to run this workflow manually
@@ -14,7 +14,7 @@ on:
         default: 'kitodo/kitodo-production'
         
 jobs:
-  build:
+  build-and-run:
     name: Kitodo.Production with ngrok tunnel
     runs-on: ubuntu-latest
     
@@ -33,7 +33,7 @@ jobs:
           
       - name: Run using docker
         run: | 
-          docker compose -f docker-compose.yml -f ./overwrites/docker-compose-app-builder-git.yml up -d --build
+          docker compose -f docker-compose.yml -f ./overwrites/docker-compose-app-builder-git.yml -f ./overwrites/docker-compose-logviewer.yml up -d --build
       
       - name: Install ngrok
         run: |
