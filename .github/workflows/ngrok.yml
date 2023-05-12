@@ -28,8 +28,8 @@ jobs:
           mv .env.example .env
           
           # Update .env
-          sed -i 's|APP_BUILDER_GIT_COMMIT=master|APP_BUILDER_GIT_COMMIT=${{ github.event.inputs.ref }}|g' .env
-          sed -i 's|APP_BUILDER_GIT_SOURCE_URL=https://github.com/kitodo/kitodo-production/|APP_BUILDER_GIT_SOURCE_URL=https://github.com/${{ github.event.inputs.repository }}/|g' .env
+          sed -i 's|APP_BUILDER_GIT_COMMIT=master|APP_BUILDER_GIT_COMMIT=${{ github.event.inputs.ref }}|g'
+          sed -i 's|APP_BUILDER_GIT_SOURCE_URL=https://github.com/kitodo/kitodo-production/|APP_BUILDER_GIT_SOURCE_URL=https://github.com/${{ github.event.inputs.repository }}/|g'
           
       - name: Run using docker
         run: | 
