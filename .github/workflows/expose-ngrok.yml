@@ -52,5 +52,5 @@ jobs:
       - name: Run ngrok
         run: |
           ngrok config add-authtoken ${{ secrets.NGROK_AUTH_TOKEN }}
-          ngrok http 8080
+          ngrok http --config ../config/ngrok.yml 80
 

@@ -1,0 +1,7 @@
+tunnels:
+  kitodo:
+    addr: 8080
+    proto: http    
+  dozzle:
+    addr: 8088
+    proto: http
