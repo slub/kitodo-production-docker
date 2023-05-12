@@ -10,7 +10,7 @@
    * [Single compose project](#single-compose-project)
    * [Multi compose project](#multi-compose-project)
  * [Makefile](#makefile)
- * [Workflow to build and run Kitodo.Production over ngrok](#workflow-to-build-and-run-kitodoproduction-over-ngrok)
+ * [Further information](#further-information)
 
 With the docker image provided, Kitodo.Production can be started in no time at all. A MySQL/MariaDB database and ElasticSearch must be present to start the application. There is also a Docker Compose file for a quick start.
 
@@ -116,7 +116,7 @@ docker compose -f docker-compose.yml -f ./overwrites/docker-compose-app-dev.yml 
 ```
 
 If you go into the container (with `docker exec -it CONTAINERNAME bash`) the tomcat can be restarted with the new application using the command `/deploy.sh`.
-
+F
 #### Log Viewer 
 
 The logs of the respective container can be accessed via the following command:
@@ -251,25 +251,7 @@ For more information use the following command:
 make help
 ```
 
-## Workflow to build and run Kitodo.Production over ngrok
+## Further information
 
-If you want to build and run Kitodo.Production from a specific branch of a repository fork or the base repository e.g. to perform a review or a visual test, then you are in the right place.
-
-This repository contains a workflow with the help of which you can brew and launch Kitodo.Production. Via ngrok you can then access Kitodo.Production, the log viewer and the file browser via a URL.
-
-To do this you have to fork this repository, register with ngrok and set the Auth token of ngrok as repository secret (Settings -> Secrets and variables -> Action -> New repository secret) with the name `NGROK_AUTH_TOKEN`.
-
-Under Actions of fork repository you will find the workflow `Build and run Kitodo.Production over ngrok`. With click on that workflow a page with last workflow runs will be opened. When you click the button `Run workflow` following popup will be displayed.
-
-![image](https://github.com/slub/kitodo-production-docker/assets/3832618/36cfa283-2a51-43b7-bf7f-857f65738581)
-
-As default the `master` branch of base Kitodo.Production repository will be used. Adjust the branch and repository inputs and click on `Run workflow`. If everything works out, Kitodo.Production will be built and launched against this repository and branch. This takes a few minutes. 
-
-When the workflow step `Run ngrok` is active, navigate to [ngrok Dashboard and open the agents](https://dashboard.ngrok.com/tunnels/agents) and click on the active agent.
-
-![image](https://github.com/slub/kitodo-production-docker/assets/3832618/b96debe4-1b76-43dc-903e-cda4d1dae4c0)
-
-In the panel you will see all exposed ports (Kitodo.Production for 8080, Log Viewer for 8088 and the File Browser 8090) mapped to a specific ngrok URL. Click any URL to navigate to the appropriate application and click on `Visit Site`. Don't forget to add the context path `/kitodo` to the Kitodo.Production URL.
-
-The stop the workflow, navigate to [ngrok Dashboard and open the agents](https://dashboard.ngrok.com/tunnels/agents) again and click the stop icon on the active agent and confirm this with the click on `Stop Session` button in the displayed popup.
+[Workflow to build and run Kitodo.Production over ngrok](https://github.com/slub/kitodo-production-docker/wiki/Workflow-to-build-and-run-Kitodo.Production-over-ngrok)
 
