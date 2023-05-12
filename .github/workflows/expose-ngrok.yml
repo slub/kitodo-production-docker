@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - name: "Check for NGROK_AUTH_TOKEN"
+      - name: Check for NGROK_AUTH_TOKEN
         env: 
             NGROK_AUTH_TOKEN: ${{ secrets.NGROK_AUTH_TOKEN }}
         if: ${{ env.NGROK_AUTH_TOKEN == '' }}
