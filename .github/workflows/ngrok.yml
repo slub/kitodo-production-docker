@@ -1,4 +1,4 @@
-name: Expose ngrok
+name: Build and run Kitodo.Production over ngrok
 
 on:
   # Allows you to run this workflow manually
@@ -14,7 +14,7 @@ on:
         default: 'kitodo/kitodo-production'
         
 jobs:
-  build:
+  build-and-run:
     name: Kitodo.Production with ngrok tunnel
     runs-on: ubuntu-latest
     
@@ -28,12 +28,12 @@ jobs:
           mv .env.example .env
           
           # Update .env
-          sed 's|APP_BUILDER_GIT_COMMIT=master|APP_BUILDER_GIT_COMMIT=${{ github.event.inputs.ref }}|g' .env
-          sed 's|APP_BUILDER_GIT_SOURCE_URL=https://github.com/kitodo/kitodo-production/|APP_BUILDER_GIT_SOURCE_URL=https://github.com/${{ github.event.inputs.repository }}/|g' .env
+          sed -i 's|APP_BUILDER_GIT_COMMIT=master|APP_BUILDER_GIT_COMMIT=${{ github.event.inputs.ref }}|g' .env
+          sed -i 's|APP_BUILDER_GIT_SOURCE_URL=https://github.com/kitodo/kitodo-production/|APP_BUILDER_GIT_SOURCE_URL=https://github.com/${{ github.event.inputs.repository }}/|g' .env
           
       - name: Run using docker
         run: | 
-          docker compose -f docker-compose.yml -f ./overwrites/docker-compose-app-builder-git.yml up -d --build
+          docker compose -f docker-compose.yml -f ./overwrites/docker-compose-app-builder-git.yml -f ./overwrites/docker-compose-logviewer.yml up -d --build
       
       - name: Install ngrok
         run: |
@@ -45,8 +45,5 @@ jobs:
 
       - name: Run ngrok
         run: |
-          ngrok config add-authtoken ${{ secrets.NGROK_AUTH_TOKEN }}
-          ngrok http 8080
+          ngrok start --config .github/config/ngrok.yml --authtoken ${{ secrets.NGROK_AUTH_TOKEN }} --all
 
-      - name: Wait
-        run: sleep 600
