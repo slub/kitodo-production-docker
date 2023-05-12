@@ -46,5 +46,5 @@ jobs:
       - name: Run ngrok
         run: |
           ngrok config add-authtoken ${{ secrets.NGROK_AUTH_TOKEN }}
-          ngrok start --config ../config/ngrok.yml kitodo dozzle
+          ngrok start --config .github/config/ngrok.yml kitodo dozzle
 
