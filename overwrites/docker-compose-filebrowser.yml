@@ -1,0 +1,10 @@
+services:
+
+    filebrowser:
+        image: filebrowser/filebrowser
+        volumes:
+            - ${APP_DATA}:/srv/kitodo/data
+            - ${APP_CONFIG}:/srv/kitodo/config
+        ports:
+            - ${FB_PORT}:80
+ 

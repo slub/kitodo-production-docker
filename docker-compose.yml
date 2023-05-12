@@ -12,6 +12,7 @@ services:
             
         volumes:
             - ${APP_DATA}:/usr/local/kitodo
+            - ${APP_CONFIG}:/usr/local/tomcat/webapps/kitodo/WEB-INF/classes
             - type: bind
               source: ./overwrites/app
               target: /tmp/kitodo/overwrites/data

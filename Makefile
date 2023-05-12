@@ -11,11 +11,11 @@ BUILDER_GIT_SOURCE_URL ?= https://github.com/kitodo/kitodo-production/
 
 ENVFILE = ./projects/${PROJECT_NAME}/.env
 ifeq (git,$(BUILDER))
-COMPOSE_FILE = docker-compose.yml:./overwrites/docker-compose-app-builder-git.yml:./overwrites/docker-compose-logviewer.yml
+COMPOSE_FILE = docker-compose.yml:./overwrites/docker-compose-app-builder-git.yml
 else ifeq (local,$(BUILDER))
-COMPOSE_FILE = docker-compose.yml:./overwrites/docker-compose-app-builder-local.yml:./overwrites/docker-compose-logviewer.yml
+COMPOSE_FILE = docker-compose.yml:./overwrites/docker-compose-app-builder-local.yml
 else
-COMPOSE_FILE = docker-compose.yml:./overwrites/docker-compose-app-builder-release.yml:./overwrites/docker-compose-logviewer.yml
+COMPOSE_FILE = docker-compose.yml:./overwrites/docker-compose-app-builder-release.yml
 endif
 
 DEBUG ?= false
@@ -26,6 +26,16 @@ endif
 DEV ?= false
 ifeq (true,$(DEV))
 COMPOSE_FILE := $(COMPOSE_FILE):./overwrites/docker-compose-app-dev.yml
+endif
+
+FILEBROWSER ?= true
+ifeq (true,$(FILEBROWSER))
+COMPOSE_FILE := $(COMPOSE_FILE):./overwrites/docker-compose-filebrowser.yml
+endif
+
+LOGVIEWER ?= true
+ifeq (true,$(LOGVIEWER))
+COMPOSE_FILE := $(COMPOSE_FILE):./overwrites/docker-compose-logviewer.yml
 endif
 
 # add compose file in project folder to compose files
@@ -45,6 +55,8 @@ info:
 		echo "BUILDER_GIT_COMMIT is $(BUILDER_GIT_COMMIT)";\
 		echo "BUILDER_GIT_SOURCE_URL is $(BUILDER_GIT_SOURCE_URL)";\
 	fi
+	$(info    LOGVIEWER is $(LOGVIEWER))
+	$(info    FILEBROWSER is $(FILEBROWSER))
 	$(info    DEBUG is $(DEBUG))
 	$(info    DEV is $(DEV))
 	$(info    COMPOSE_FILE is $(COMPOSE_FILE))
@@ -59,9 +71,10 @@ prepare: ./projects/${PROJECT_NAME}/.env
 	cp .env.example $@
 # Multiple compose projects variables
 	sed -i 's,COMPOSE_PROJECT_NAME=kitodo-production-docker,COMPOSE_PROJECT_NAME=${PROJECT_NAME},g' $@
-	sed -i 's,slub/kitodo-production,kitodo-production/${PROJECT_NAME},g' $@
+	sed -i 's,APP_IMAGE=slub/kitodo-production,APP_IMAGE=kitodo-production/${PROJECT_NAME},g' $@
 	sed -i 's,#APP_PROJECT_PATH,APP_PROJECT_PATH,g' $@
 	sed -i 's,#APP_DATA,APP_DATA,g' $@
+	sed -i 's,#APP_CONFIG,APP_CONFIG,g' $@
 # Git builder variables
 	sed -i 's,APP_BUILDER_GIT_COMMIT=master,APP_BUILDER_GIT_COMMIT=$(BUILDER_GIT_COMMIT),g' $@
 	sed -i 's,APP_BUILDER_GIT_SOURCE_URL=https://github.com/kitodo/kitodo-production/,APP_BUILDER_GIT_SOURCE_URL=$(BUILDER_GIT_SOURCE_URL),g' $@
