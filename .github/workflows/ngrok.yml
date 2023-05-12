@@ -33,7 +33,7 @@ jobs:
           
       - name: Run using docker
         run: | 
-          docker compose -f docker-compose.yml -f ./overwrites/docker-compose-app-builder-git.yml -f ./overwrites/docker-compose-logviewer.yml up -d --build
+          docker compose -f docker-compose.yml -f ./overwrites/docker-compose-app-builder-git.yml -f ./overwrites/docker-compose-logviewer.yml -f ./overwrites/docker-compose-filebrowser.yml up -d --build
       
       - name: Install ngrok
         run: |

@@ -7,3 +7,6 @@ tunnels:
   dozzle:
     addr: 8088
     proto: http
+  filebrowser:
+    addr: 8090
+    proto: http  
