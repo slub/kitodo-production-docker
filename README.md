@@ -10,7 +10,7 @@
    * [Single compose project](#single-compose-project)
    * [Multi compose project](#multi-compose-project)
  * [Makefile](#makefile)
- * [Build and run Kitodo.Production over ngrok](#build-and-run-kitodoproduction-over-ngrok)
+ * [Workflow to build and run Kitodo.Production over ngrok](#workflow-to-build-and-run-kitodoproduction-over-ngrok)
 
 With the docker image provided, Kitodo.Production can be started in no time at all. A MySQL/MariaDB database and ElasticSearch must be present to start the application. There is also a Docker Compose file for a quick start.
 
@@ -251,4 +251,18 @@ For more information use the following command:
 make help
 ```
 
-## Build and run Kitodo.Production over ngrok
+## Workflow to build and run Kitodo.Production over ngrok
+
+If you want to build and run Kitodo.Production from a specific branch of a repository fork or the base repository e.g. to perform a review or a visual test, then you are in the right place.
+
+This repository contains a workflow with the help of which you can brew and launch Kitodo.Production. Via ngrok you can then access Kitodo.Production, the log viewer and the file browser via a URL.
+
+To do this you have to fork this repository, register with ngrok and set the Auth token of ngrok as repository secret (Settings -> Secrets and variables -> Action -> New repository secret) with the name `NGROK_AUTH_TOKEN`.
+
+Under Actions of fork repository you will find the workflow `Build and run Kitodo.Production over ngrok`. With click on that workflow a page with last workflow runs will be opened. When you click the button `Run workflow` following popup will be displayed.
+
+![image](https://github.com/slub/kitodo-production-docker/assets/3832618/36cfa283-2a51-43b7-bf7f-857f65738581)
+
+As default the `master` branch of base Kitodo.Production repository will be used. Adjust the branch and repository inputs and click on `Run workflow`. If everything works out, Kitodo.Production will be built and launched against this repository and branch. This takes a few minutes. 
+
+When the workflow step `Run ngrok` is active, navigate to [ngrok Dashboard and open the agents](https://dashboard.ngrok.com/tunnels/agents)
