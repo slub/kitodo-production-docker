@@ -38,6 +38,7 @@ echo "Replace activemq config parameters with environment variables"
 /bin/sed -i "s/#activeMQ.results.topic=/activeMQ.results.topic=/g" $KITODO_CONFIG
 /bin/sed -i "s/#activeMQ.results.timeToLive=/activeMQ.results.timeToLive=/g" $KITODO_CONFIG
 /bin/sed -i "s/#activeMQ.finalizeStep.queue=/activeMQ.finalizeStep.queue=/g" $KITODO_CONFIG
+/bin/sed -i "s/#activeMQ.taskAction.queue=/activeMQ.taskAction.queue=/g" $KITODO_CONFIG
 
 if $JPDA; then
 	echo "Starting tomcat in debug mode"
