@@ -116,7 +116,7 @@ docker compose -f docker-compose.yml -f ./overwrites/docker-compose-app-dev.yml 
 ```
 
 If you go into the container (with `docker exec -it CONTAINERNAME bash`) the tomcat can be restarted with the new application using the command `/deploy.sh`.
-F
+
 #### Log Viewer 
 
 The logs of the respective container can be accessed via the following command:
@@ -131,6 +131,8 @@ It is more convenient to use the log viewer service "Dozzle" with the following 
 docker compose -f docker-compose.yml -f ./overwrites/docker-compose-logviewer.yml up -d
 ```
 
+*You can reach the Log Viewer under http `localhost:8088`.*
+
 #### File Browser 
 
 File Browser provides a file managing interface for Kitodo.Production config and data directories. It can be used to upload, delete, preview, rename and edit files of these directories.
@@ -138,6 +140,8 @@ File Browser provides a file managing interface for Kitodo.Production config and
 ```
 docker compose -f docker-compose.yml -f ./overwrites/docker-compose-filebrowser.yml up -d
 ```
+
+*You can reach the File Browser under http `localhost:8090`. Currently the default login with username `admin` and password `admin` is used.*
 
 ### Hooks to extend and overwrite app data
 
