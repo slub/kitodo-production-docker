@@ -29,11 +29,11 @@ if [ ! -f "$ALL_FILES" ]; then
   fi
 
   echo "Initialize config modules directory."
-  cp -pr /tmp/kitodo/kitodo-config-modules/* /usr/local/kitodo/
+  cp -Ppr /tmp/kitodo/kitodo-config-modules/* /usr/local/kitodo/
 
   if [ "$(ls -A /tmp/kitodo/overwrites/data)" ]; then
     echo "Overwrite /usr/local/kitodo/ with data of /tmp/kitodo/overwrites/data."
-    cp -pr /tmp/kitodo/overwrites/data/* /usr/local/kitodo/
+    cp -Ppr /tmp/kitodo/overwrites/data/* /usr/local/kitodo/
   fi
 
 else
