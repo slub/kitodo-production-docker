@@ -5,9 +5,9 @@ ifndef PROJECT_NAME
 $(error PROJECT_NAME is not set)
 endif
 
-BUILDER ?= release
-BUILDER_GIT_COMMIT ?= master
-BUILDER_GIT_SOURCE_URL ?= https://github.com/kitodo/kitodo-production/
+BUILDER ?= git
+BUILDER_GIT_REF ?= master
+BUILDER_GIT_REPOSITORY ?= kitodo/kitodo-production
 
 ENVFILE = ./projects/${PROJECT_NAME}/.env
 ifeq (git,$(BUILDER))
@@ -52,8 +52,8 @@ info:
 	$(info    PROJECT_NAME is $(PROJECT_NAME))
 	$(info    BUILDER is $(BUILDER))
 	@if [ "$(BUILDER)" = "git" ]; then\
-		echo "BUILDER_GIT_COMMIT is $(BUILDER_GIT_COMMIT)";\
-		echo "BUILDER_GIT_SOURCE_URL is $(BUILDER_GIT_SOURCE_URL)";\
+		echo "BUILDER_GIT_REF is $(BUILDER_GIT_REF)";\
+		echo "BUILDER_GIT_REPOSITORY is $(BUILDER_GIT_REPOSITORY)";\
 	fi
 	$(info    LOGVIEWER is $(LOGVIEWER))
 	$(info    FILEBROWSER is $(FILEBROWSER))
@@ -76,8 +76,8 @@ prepare: ./projects/${PROJECT_NAME}/.env
 	sed -i 's,#APP_DATA,APP_DATA,g' $@
 	sed -i 's,#APP_CONFIG,APP_CONFIG,g' $@
 # Git builder variables
-	sed -i 's,APP_BUILDER_GIT_COMMIT=master,APP_BUILDER_GIT_COMMIT=$(BUILDER_GIT_COMMIT),g' $@
-	sed -i 's,APP_BUILDER_GIT_SOURCE_URL=https://github.com/kitodo/kitodo-production/,APP_BUILDER_GIT_SOURCE_URL=$(BUILDER_GIT_SOURCE_URL),g' $@
+	sed -i 's,APP_BUILDER_GIT_REF=master,APP_BUILDER_GIT_REF=$(BUILDER_GIT_REF),g' $@
+	sed -i 's,APP_BUILDER_GIT_REPOSITORY=kitodo/kitodo-production,APP_BUILDER_GIT_REPOSITORY=$(BUILDER_GIT_REPOSITORY),g' $@
 
 build:
 	docker compose --env-file ${ENVFILE} build --no-cache
@@ -113,8 +113,8 @@ Targets:
 Variables:
 	- PROJECT_NAME name of project 
 	- BUILDER type of builder (e.g. release, git, local)
-	- BUILDER_GIT_COMMIT branch or commit number (is used when BUILDER=git)
-	- BUILDER_GIT_SOURCE_URL repository url of BUILDER_GIT_COMMIT (is used when BUILDER=git)
+	- BUILDER_GIT_REF branch or commit number (is used when BUILDER=git)
+	- BUILDER_GIT_REPOSITORY repository url of BUILDER_GIT_REF (is used when BUILDER=git)
 EOF
 endef
 export HELP

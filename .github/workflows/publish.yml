@@ -53,8 +53,8 @@ jobs:
             VCS_REF=${{ env.vcs_ref }}
             VCS_URL=https://github.com/kitodo/kitodo-production/
             BUILDER_TYPE=git
-            BUILDER_GIT_COMMIT=master
-            BUILDER_GIT_SOURCE_URL=https://github.com/kitodo/kitodo-production/
+            BUILDER_GIT_REF=master
+            BUILDER_GIT_REPOSITORY=kitodo/kitodo-production
           cache-from: type=gha
           cache-to: type=gha,mode=max
 

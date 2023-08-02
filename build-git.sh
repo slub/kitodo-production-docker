@@ -2,37 +2,38 @@
 
 set -e
 
-if [ "x$BUILDER_GIT_COMMIT" = "x" ]; then
-  if [ "x$BUILDER_GIT_SOURCE_URL" = "x" ]; then
-    echo "Syntax: docker-compose run kitodo [<BUILDER_GIT_COMMIT>] [<BUILDER_GIT_SOURCE_URL>]"
-	echo "Either BUILDER_GIT_COMMIT or BUILDER_GIT_SOURCE_URL must be given."
-	echo "Use \"master\" for BUILDER_GIT_COMMIT to get the latest commit."
-	exit 1
+if [ -z "$BUILDER_GIT_REF" ]; then
+  if [ -z "$BUILDER_GIT_REPOSITORY" ]; then
+    echo "Syntax: docker-compose run kitodo [<BUILDER_GIT_REF>] [<BUILDER_GIT_REPOSITORY>]"
+	  echo "Either BUILDER_GIT_REF or BUILDER_GIT_REPOSITORY must be given."
+	  echo "Use \"master\" for BUILDER_GIT_REF to get the latest commit."
+	  exit 1
   fi
-  BUILDER_GIT_COMMIT="master"
+  BUILDER_GIT_REF="master"
 fi
-if [ "x$BUILDER_GIT_SOURCE_URL" = "x" ]; then
-  if [ $BUILDER_GIT_COMMIT = "master" ]; then
-	BUILDER_GIT_SOURCE_URL="https://github.com/kitodo/kitodo-production/archive/master.zip"
+if [ -z "$BUILDER_GIT_REPOSITORY" ]; then
+  if [ $BUILDER_GIT_REF = "master" ]; then
+	  BUILDER_GIT_SOURCE_URL="https://github.com/kitodo/kitodo-production/archive/master.zip"
   else
-    BUILDER_GIT_SOURCE_URL="https://github.com/kitodo/kitodo-production/archive/$BUILDER_GIT_COMMIT.zip"
+    BUILDER_GIT_SOURCE_URL="https://github.com/kitodo/kitodo-production/archive/$BUILDER_GIT_REF.zip"
   fi
 elif [ `echo "$BUILDER_GIT_SOURCE_URL" | rev | cut -c 1-4` != 'piz.' ]; then
   if [ `echo "$BUILDER_GIT_SOURCE_URL" | rev | cut -c 1-1` != '/' ]; then
     BUILDER_GIT_SOURCE_URL="${BUILDER_GIT_SOURCE_URL}/"
   fi
-  BUILDER_GIT_SOURCE_URL="${BUILDER_GIT_SOURCE_URL}archive/$BUILDER_GIT_COMMIT.zip"
+  BUILDER_GIT_SOURCE_URL="${BUILDER_GIT_SOURCE_URL}archive/$BUILDER_GIT_REF.zip"
 fi
 
+
 echo "Download source files"
-echo "using commit $BUILDER_GIT_COMMIT"
+echo "using commit $BUILDER_GIT_REF"
 echo "using $BUILDER_GIT_SOURCE_URL as download location"
 
-curl -L $BUILDER_GIT_SOURCE_URL > checkout.zip
-unzip -qq checkout.zip 
+curl $BUILDER_GIT_SOURCE_URL -L -o checkout.zip
+unzip -q checkout.zip 
 
 DIR=`ls -1 . | grep kitodo-prod`
-if [ x$DIR = "x" ]; then
+if [ -z "$DIR" ]; then
   echo "No Kitodo Production directory found in zip"
   exit 1
 fi

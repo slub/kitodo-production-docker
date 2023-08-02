@@ -40,6 +40,11 @@ echo "Replace activemq config parameters with environment variables"
 /bin/sed -i "s/#activeMQ.finalizeStep.queue=/activeMQ.finalizeStep.queue=/g" $KITODO_CONFIG
 /bin/sed -i "s/#activeMQ.taskAction.queue=/activeMQ.taskAction.queue=/g" $KITODO_CONFIG
 
+if [ -n "$APP_FOOTER_INFO" ]; then
+	echo "Show info in footer"
+	/bin/sed -i "s|Version #{HelperForm.version}|Version #{HelperForm.version} ($APP_FOOTER_INFO)|" $CATALINA_HOME/webapps/kitodo/WEB-INF/templates/includes/footer.xhtml
+fi
+
 if $JPDA; then
 	echo "Starting tomcat in debug mode"
 	/usr/local/tomcat/bin/catalina.sh jpda start 

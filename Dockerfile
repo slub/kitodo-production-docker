@@ -33,7 +33,7 @@ RUN mkdir /data/ && \
 
 
 # Kitodo.Production Git Builder
-FROM maven:3.8.5-openjdk-11 AS kitodo-builder-git
+FROM maven:3.8.6-openjdk-11-slim AS kitodo-builder-git
 
 RUN apt-get update && \
 	apt-get install -y \
@@ -42,10 +42,13 @@ RUN apt-get update && \
 	mariadb-server \
 	wget
 	
-ARG BUILDER_GIT_COMMIT=master
-ARG BUILDER_GIT_SOURCE_URL=https://github.com/kitodo/kitodo-production/
+ARG BUILDER_GIT_REF=master
+ARG BUILDER_GIT_REPOSITORY=kitodo/kitodo-production
+ARG BUILDER_GIT_SERVER_URL=https://github.com
+ARG BUILDER_GIT_SOURCE_URL=${BUILDER_GIT_SERVER_URL}/${BUILDER_GIT_REPOSITORY}/
 
 ENV JAVA_OPTS="-Djava.awt.headless=true -XX:+UseConcMarkSweepGC -Xmx2048m -Xms1024m -XX:MaxPermSize=512m"
+ENV MAVEN_OPTS="-Xms256m -Xmx512m"
 
 COPY wait-for-it.sh /wait-for-it.sh
 COPY build-git.sh /build.sh
@@ -61,32 +64,33 @@ FROM kitodo-builder-${BUILDER_TYPE} AS kitodo-builder
 
 
 # Kitodo.Production
-FROM tomcat:9.0.62-jre11-openjdk-slim AS kitodo
+FROM tomcat:9.0.65-jre11-openjdk-slim AS kitodo
 
-MAINTAINER markus.weigelt@slub-dresden.de
-
-ARG GH_REF
-ARG GH_REPOSITORY
+ARG GIT_REF=master
+ARG GIT_REPOSITORY=kitodo/kitodo-production
+ARG GIT_SERVER_URL=https://github.com
 ARG BUILD_DATE
 
 LABEL \
     maintainer="https://slub-dresden.de" \
     org.label-schema.vendor="Saxon State and University Library Dresden" \
     org.label-schema.name="Kitodo.Production" \
-    org.label-schema.vcs-ref=$GH_REF \
-    org.label-schema.vcs-url="https://github.com/${GH_REPOSITORY}/" \
+    org.label-schema.vcs-ref=$GIT_REF \
+    org.label-schema.vcs-url="${GIT_SERVER_URL}/${GIT_REPOSITORY}/" \
     org.label-schema.build-date=$BUILD_DATE \
     org.opencontainers.image.vendor="Saxon State and University Library Dresden" \
     org.opencontainers.image.title="Kitodo.Production" \
     org.opencontainers.image.description="Kitodo.Production is the workflow management module in the Kitodo suite." \
-    org.opencontainers.image.source="https://github.com/${GH_REPOSITORY}/" \
-    org.opencontainers.image.documentation="https://github.com/${GH_REPOSITORY}/blob/${GH_REF}/README.md" \
-    org.opencontainers.image.revision=$GH_REF \
+    org.opencontainers.image.source="${GIT_SERVER_URL}/${GIT_REPOSITORY}/" \
+    org.opencontainers.image.documentation="${GIT_SERVER_URL}/${GIT_REPOSITORY}/blob/${GIT_REF}/README.md" \
+    org.opencontainers.image.revision=$GIT_REF \
     org.opencontainers.image.created=$BUILD_DATE
 
 ENV JAVA_OPTS="-Djava.awt.headless=true -XX:+UseConcMarkSweepGC -Xmx2048m -Xms1024m -XX:MaxPermSize=512m"
 ENV JPDA=false
 ENV JPDA_ADDRESS=*:5005
+
+ENV APP_FOOTER_INFO=""
 
 ENV DB_HOST=localhost
 ENV DB_PORT=3306
