@@ -14,7 +14,7 @@ services:
             - ${APP_DATA}:/usr/local/kitodo
             - ${APP_CONFIG}:/usr/local/tomcat/webapps/kitodo/WEB-INF/classes
             - type: bind
-              source: ./overwrites/app/data
+              source: ${APP_OVERWRITES_DATA}
               target: /tmp/kitodo/overwrites/data
             - type: bind
               source: ./overwrites/app/sql/kitodo_post_init.sql
