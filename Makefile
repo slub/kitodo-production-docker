@@ -1,10 +1,6 @@
 SHELL = /bin/bash
 
-PROJECT_NAME ?=
-ifndef PROJECT_NAME
-$(error PROJECT_NAME is not set)
-endif
-
+PROJECT_NAME ?= default
 BUILDER ?= git
 BUILDER_GIT_REF ?= master
 BUILDER_GIT_REPOSITORY ?= kitodo/kitodo-production
