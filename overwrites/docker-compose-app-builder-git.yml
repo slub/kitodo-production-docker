@@ -5,5 +5,10 @@ services:
         build:
             args:
                 BUILDER_TYPE: git
-                BUILDER_GIT_COMMIT: ${APP_BUILDER_GIT_COMMIT}
-                BUILDER_GIT_SOURCE_URL: ${APP_BUILDER_GIT_SOURCE_URL}
+                BUILDER_GIT_REF: ${APP_BUILDER_GIT_REF}
+                BUILDER_GIT_REPOSITORY: ${APP_BUILDER_GIT_REPOSITORY}
+
+        environment:
+            APP_FOOTER_INFO: "Repository: <a href=\"https://github.com/${APP_BUILDER_GIT_REPOSITORY}/\">${APP_BUILDER_GIT_REPOSITORY}</a>, Ref: <a href=\"https://github.com/${APP_BUILDER_GIT_REPOSITORY}/tree/${APP_BUILDER_GIT_REF}\">${APP_BUILDER_GIT_REF}</a>"
+            GIT_REF: ${APP_BUILDER_GIT_REF}
+            GIT_REPOSITORY: ${APP_BUILDER_GIT_REPOSITORY}
