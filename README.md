@@ -260,3 +260,9 @@ make help
 
 [Workflow to build and run Kitodo.Production over ngrok](https://github.com/slub/kitodo-production-docker/wiki/Workflow-to-build-and-run-Kitodo.Production-over-ngrok)
 
+## Maintainer
+
+If you have any questions or encounter any problems, please do not hesitate to contact me.
+
+- [Markus Weigelt](https://github.com/markusweigelt)
+
