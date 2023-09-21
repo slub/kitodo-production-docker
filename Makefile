@@ -66,14 +66,14 @@ prepare: ./projects/${PROJECT_NAME}/.env
 	mkdir -p ./projects/${PROJECT_NAME}/
 	cp .env.example $@
 # Multiple compose projects variables
-	sed -i 's,COMPOSE_PROJECT_NAME=kitodo-production-docker,COMPOSE_PROJECT_NAME=${PROJECT_NAME},g' $@
-	sed -i 's,APP_IMAGE=slub/kitodo-production,APP_IMAGE=kitodo-production/${PROJECT_NAME},g' $@
-	sed -i 's,#APP_PROJECT_PATH,APP_PROJECT_PATH,g' $@
-	sed -i 's,#APP_DATA,APP_DATA,g' $@
-	sed -i 's,#APP_CONFIG,APP_CONFIG,g' $@
+	sed -i'' -e 's,COMPOSE_PROJECT_NAME=kitodo-production-docker,COMPOSE_PROJECT_NAME=${PROJECT_NAME},g' $@
+	sed -i'' -e 's,APP_IMAGE=slub/kitodo-production,APP_IMAGE=kitodo-production/${PROJECT_NAME},g' $@
+	sed -i'' -e 's,#APP_PROJECT_PATH,APP_PROJECT_PATH,g' $@
+	sed -i'' -e 's,#APP_DATA,APP_DATA,g' $@
+	sed -i'' -e 's,#APP_CONFIG,APP_CONFIG,g' $@
 # Git builder variables
-	sed -i 's,APP_BUILDER_GIT_REF=master,APP_BUILDER_GIT_REF=$(BUILDER_GIT_REF),g' $@
-	sed -i 's,APP_BUILDER_GIT_REPOSITORY=kitodo/kitodo-production,APP_BUILDER_GIT_REPOSITORY=$(BUILDER_GIT_REPOSITORY),g' $@
+	sed -i'' -e 's,APP_BUILDER_GIT_REF=master,APP_BUILDER_GIT_REF=$(BUILDER_GIT_REF),g' $@
+	sed -i'' -e 's,APP_BUILDER_GIT_REPOSITORY=kitodo/kitodo-production,APP_BUILDER_GIT_REPOSITORY=$(BUILDER_GIT_REPOSITORY),g' $@
 
 build:
 	docker compose --env-file ${ENVFILE} build --no-cache
