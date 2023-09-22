@@ -9,6 +9,6 @@ services:
                 BUILDER_GIT_REPOSITORY: ${APP_BUILDER_GIT_REPOSITORY}
 
         environment:
-            APP_FOOTER_INFO: "Repository: <a href=\"https://github.com/${APP_BUILDER_GIT_REPOSITORY}/\">${APP_BUILDER_GIT_REPOSITORY}</a>, Ref: <a href=\"https://github.com/${APP_BUILDER_GIT_REPOSITORY}/tree/${APP_BUILDER_GIT_REF}\">${APP_BUILDER_GIT_REF}</a>"
+            APP_FOOTER_INFO: "Project: ${COMPOSE_PROJECT_NAME}, Repository: <a href=\"https://github.com/${APP_BUILDER_GIT_REPOSITORY}/\">${APP_BUILDER_GIT_REPOSITORY}</a>, Ref: <a href=\"https://github.com/${APP_BUILDER_GIT_REPOSITORY}/tree/${APP_BUILDER_GIT_REF}\">${APP_BUILDER_GIT_REF}</a>"
             GIT_REF: ${APP_BUILDER_GIT_REF}
             GIT_REPOSITORY: ${APP_BUILDER_GIT_REPOSITORY}
