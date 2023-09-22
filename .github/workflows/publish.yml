@@ -12,10 +12,9 @@ env:
 
 jobs:
 
-  build:
-
+  build-publish:
     runs-on: ubuntu-latest
-
+    if: github.repository_owner == 'SLUB'
     steps:
       - name: Checkout Kitodo.Production Docker Repository
         uses: actions/checkout@v3
