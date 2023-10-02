@@ -32,14 +32,18 @@ echo "Replace database config parameters with environment variables"
 echo "Replace elasticsearch config parameters with environment variables"
 /bin/sed -i "s,^\(elasticsearch.host\)=.*,\1=${ES_HOST}," $KITODO_CONFIG
 
-echo "Replace activemq config parameters with environment variables"
-/bin/sed -i "s/localhost:61616/${MQ_HOST}:${MQ_PORT}/g" $KITODO_CONFIG
-/bin/sed -i "s/#activeMQ.hostURL=/activeMQ.hostURL=/g" $KITODO_CONFIG
-/bin/sed -i "s/#activeMQ.results.topic=/activeMQ.results.topic=/g" $KITODO_CONFIG
-/bin/sed -i "s/#activeMQ.results.timeToLive=/activeMQ.results.timeToLive=/g" $KITODO_CONFIG
-/bin/sed -i "s/#activeMQ.finalizeStep.queue=/activeMQ.finalizeStep.queue=/g" $KITODO_CONFIG
-/bin/sed -i "s/#activeMQ.taskAction.queue=/activeMQ.taskAction.queue=/g" $KITODO_CONFIG
+# optionaly configure ActiveMQ
+if [ -n "$MQ_HOST" ]; then
+	echo "Replace activemq config parameters with environment variables"
+	/bin/sed -i "s/localhost:61616/${MQ_HOST}:${MQ_PORT}/g" $KITODO_CONFIG
+	/bin/sed -i "s/#activeMQ.hostURL=/activeMQ.hostURL=/g" $KITODO_CONFIG
+	/bin/sed -i "s/#activeMQ.results.topic=/activeMQ.results.topic=/g" $KITODO_CONFIG
+	/bin/sed -i "s/#activeMQ.results.timeToLive=/activeMQ.results.timeToLive=/g" $KITODO_CONFIG
+	/bin/sed -i "s/#activeMQ.finalizeStep.queue=/activeMQ.finalizeStep.queue=/g" $KITODO_CONFIG
+	/bin/sed -i "s/#activeMQ.taskAction.queue=/activeMQ.taskAction.queue=/g" $KITODO_CONFIG
+fi
 
+# optionaly overwrite footer
 if [ -n "$APP_FOOTER_INFO" ]; then
 	echo "Show info in footer"
 	/bin/sed -i "s|Version #{HelperForm.version}|Version #{HelperForm.version} ($APP_FOOTER_INFO)|" $CATALINA_HOME/webapps/kitodo/WEB-INF/templates/includes/footer.xhtml
